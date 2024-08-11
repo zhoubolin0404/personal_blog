@@ -1,9 +1,0 @@
----
-title: "心理语言学"
-author: "周博霖"
-date: "`r Sys.Date()`"
-categories: [学习笔记,心理语言学]
-image: "cover.jpeg"
----
-
-这是笔记

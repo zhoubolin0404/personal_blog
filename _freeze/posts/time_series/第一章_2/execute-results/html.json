@@ -1,0 +1,15 @@
+{
+  "hash": "fe0e945a462f7db89daef5f7fd4aafda",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"时间序列分析：第一章_2\"\nauthor: \"周博霖\"\ndate: \"2024/8/11\"\ncategories: [学习笔记,统计方法,时间序列分析]\nimage: \"cover.png\"\nbibliography: references.bib\ncsl: apa.csl\n---\n\n\n\n\n主要参考书籍为Shumway和Stoffer[-@Shumway_2017]的Time Series Analysis and Its Applications: With R Examples。",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

@@ -1,0 +1,15 @@
+---
+title: "心理语言学"
+author: "周博霖"
+date: "2024/8/9"
+categories: [学习笔记,心理语言学]
+image: "cover.jpeg"
+---
+
+# 脑区和功能
+
+| 脑区                      	| 言语功能 	| 图片 	                                        |
+|------------------------   	|----------	|------	                                        |
+| 布洛卡区(Broca's Area)    	|          	| ![Broca's Area](Broca's Area.jpg)         	|
+| 威尔尼克区(Wernicke's Area)   |          	| ![Wernicke's Area](Wernicke's Area.jpg)     	|
+|                        	    |          	|                                           	|

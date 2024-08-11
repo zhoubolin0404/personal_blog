@@ -1,0 +1,18 @@
+---
+title: "时间序列分析：第一章_2"
+author: "周博霖"
+date: "2024/8/11"
+categories: [学习笔记,统计方法,时间序列分析]
+image: "cover.png"
+bibliography: references.bib
+csl: apa.csl
+---
+
+```{r chapter-status, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+library(tidyverse)
+library(webexercises)
+library(astsa)
+library(xts)
+```
+
+主要参考书籍为Shumway和Stoffer[-@Shumway_2017]的Time Series Analysis and Its Applications: With R Examples。
