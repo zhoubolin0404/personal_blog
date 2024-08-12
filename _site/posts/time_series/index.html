@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="周博霖">
-<meta name="dcterms.date" content="2024-08-11">
+<meta name="dcterms.date" content="2024-08-12">
 
 <title>Zhou Bolin’s blog - 时间序列分析：第一章_1</title>
 <style>
@@ -215,7 +215,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">发布于</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">August 11, 2024</p>
+        <p class="date">August 12, 2024</p>
       </div>
     </div>
     
@@ -250,10 +250,10 @@ window.Quarto = {
 <li><strong>时域方法</strong>(<em>time domain approach</em>)：对滞后关系的研究最重要(例如：今天发生的事如何影响明天将要发生的事)</li>
 <li><strong>频域方法</strong>(<em>frequency domain approach</em>)：对周期的研究最重要(例如：繁荣和萧条时期是什么样的经济周期)</li>
 </ul>
-<section id="时间序列数据" class="level1">
-<h1>时间序列数据</h1>
-<section id="强生公司季度每股收益" class="level2">
-<h2 class="anchored" data-anchor-id="强生公司季度每股收益">强生公司季度每股收益</h2>
+<section id="时间序列数据" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> 时间序列数据</h1>
+<section id="强生公司季度每股收益" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="强生公司季度每股收益"><span class="header-section-number">1.1</span> 强生公司季度每股收益</h2>
 <p><code>jj</code>：强生公司的季度每股收益，从1960年第一季度到1980年最后一季度的84个季度(共21年)。</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(astsa)</span>
@@ -299,9 +299,10 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="全球变暖" class="level2">
-<h2 class="anchored" data-anchor-id="全球变暖">全球变暖</h2>
-<p>这里我使用了最新数据，老数据<code>globtemp</code>计划被删除。 <code>gtemp_land</code>：1850年到2023年，每年地球陆地年平均温度偏差(以摄氏度为单位，相对于1991-2020年的平均值)。</p>
+<section id="全球变暖" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="全球变暖"><span class="header-section-number">1.2</span> 全球变暖</h2>
+<p>这里我使用了最新数据，老数据<code>globtemp</code>计划被删除。</p>
+<p><code>gtemp_land</code>：1850年到2023年，每年地球陆地年平均温度偏差(以摄氏度为单位，相对于1991-2020年的平均值)。</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>gtemp_land</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -327,7 +328,7 @@ Frequency = 1
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(gtemp_land, <span class="at">col=</span><span class="dv">4</span>, <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">xlab =</span> <span class="st">"时间"</span>, <span class="at">ylab =</span> <span class="st">"全球温度偏差/℃"</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(gtemp_land, <span class="at">col =</span> <span class="dv">4</span>, <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">xlab =</span> <span class="st">"时间"</span>, <span class="at">ylab =</span> <span class="st">"全球温度偏差/℃"</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-全球变暖" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -342,8 +343,8 @@ Frequency = 1
 </div>
 </div>
 </section>
-<section id="语音数据" class="level2">
-<h2 class="anchored" data-anchor-id="语音数据">语音数据</h2>
+<section id="语音数据" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="语音数据"><span class="header-section-number">1.3</span> 语音数据</h2>
 <p><code>speech</code>：为“aaa…hhh”这一短语录制的0.1秒(1000采样点)语音样本。</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(speech)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -371,8 +372,8 @@ $class
 </div>
 </div>
 </section>
-<section id="道琼斯工业平均指数" class="level2">
-<h2 class="anchored" data-anchor-id="道琼斯工业平均指数">道琼斯工业平均指数</h2>
+<section id="道琼斯工业平均指数" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="道琼斯工业平均指数"><span class="header-section-number">1.4</span> 道琼斯工业平均指数</h2>
 <p><code>djia</code>：从2006年4月20日到2016年4月20日，道琼斯工业平均指数的每日数值</p>
 <p><code>djia</code>数据目前只使用其中的收盘价(<code>Close</code>，不确定是昨收还是今收，不过这也不重要)。</p>
 <p>假设<span class="math inline">\(x_t\)</span>是实际值，则<span class="math inline">\(r_t=\frac{x_t-x_{t-1}}{x_{t-1}}\)</span>是收益率，那么<span class="math inline">\(1+r_t=\frac{x_t}{x_{t-1}}\)</span>，则有<span class="math inline">\(log(1+r_t)=log(\frac{x_t}{x_{t-1}})=log(x_t)-log(x_{t-1})\approx r_t\)</span>(<span class="math inline">\(r_t\)</span>很小，泰勒级数展开后成立)。</p>
@@ -382,7 +383,7 @@ $class
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>djiar <span class="ot">=</span> <span class="fu">diff</span>(<span class="fu">log</span>(djia<span class="sc">$</span>Close))[<span class="sc">-</span><span class="dv">1</span>]</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(djiar, <span class="at">col=</span><span class="dv">4</span>, <span class="at">main=</span><span class="st">"DJIA Returns"</span>) </span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(djiar, <span class="at">col =</span> <span class="dv">4</span>, <span class="at">main =</span> <span class="st">"DJIA Returns"</span>) </span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-djiar" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -397,14 +398,14 @@ $class
 </div>
 </div>
 </section>
-<section id="厄尔尼诺和鱼群" class="level2">
-<h2 class="anchored" data-anchor-id="厄尔尼诺和鱼群">厄尔尼诺和鱼群</h2>
+<section id="厄尔尼诺和鱼群" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="厄尔尼诺和鱼群"><span class="header-section-number">1.5</span> 厄尔尼诺和鱼群</h2>
 <p><code>soi</code>：1950-1987年间453个月的南方涛动指数(SOI)</p>
 <p><code>rec</code>：1950-1987年间453个月的新鱼数量指数(Recruitment)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>)) </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(soi, <span class="at">col=</span><span class="dv">4</span>, <span class="at">xlab=</span><span class="st">""</span>, <span class="at">ylab=</span><span class="st">""</span>, <span class="at">main=</span><span class="st">"Southern Oscillation Index"</span>)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(rec, <span class="at">col=</span><span class="dv">4</span>, <span class="at">xlab=</span><span class="st">""</span>, <span class="at">ylab=</span><span class="st">""</span>, <span class="at">main=</span><span class="st">"Recruitment"</span>) </span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>)) </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(soi, <span class="at">col =</span> <span class="dv">4</span>, <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">main =</span> <span class="st">"Southern Oscillation Index"</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(rec, <span class="at">col =</span> <span class="dv">4</span>, <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">main =</span> <span class="st">"Recruitment"</span>) </span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-SOI" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -419,8 +420,8 @@ $class
 </div>
 </div>
 </section>
-<section id="fmri成像" class="level2">
-<h2 class="anchored" data-anchor-id="fmri成像">fMRi成像</h2>
+<section id="fmri成像" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="fmri成像"><span class="header-section-number">1.6</span> fMRi成像</h2>
 <p><code>fmri1</code>：由8个位置的平均fMRI 血氧水平依赖(BOLD)信号组成的数据集。刺激持续32秒，然后停止32秒。信号周期为64秒，采样率为每2秒1次，采样时间为256秒(<span class="math inline">\(n=128\)</span>)。</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))  </span>
@@ -481,8 +482,8 @@ $class
 </div>
 </div>
 </section>
-<section id="地震和爆炸" class="level2">
-<h2 class="anchored" data-anchor-id="地震和爆炸">地震和爆炸</h2>
+<section id="地震和爆炸" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="地震和爆炸"><span class="header-section-number">1.7</span> 地震和爆炸</h2>
 <p><code>EQ5</code>：某地区地震的纵波和横波(两阶段) <code>EXP6</code>：某地区爆炸的纵波和横波(两阶段)</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">1</span>)</span>

@@ -6,6 +6,7 @@ categories: [学习笔记,统计方法,时间序列分析]
 image: "cover.png"
 bibliography: references.bib
 csl: apa.csl
+number-sections: true
 ---
 
 ```{r chapter-status, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
