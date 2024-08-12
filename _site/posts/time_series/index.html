@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="周博霖">
-<meta name="dcterms.date" content="2024-08-12">
+<meta name="dcterms.date" content="2024-08-10">
 
-<title>Zhou Bolin’s blog - 时间序列分析：第一章_1</title>
+<title>Zhou Bolin’s blog - 时间序列分析：第一章</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -193,7 +193,7 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">时间序列分析：第一章_1</h1>
+      <h1 class="title">时间序列分析：第一章</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">学习笔记</div>
                 <div class="quarto-category">统计方法</div>
@@ -215,10 +215,16 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">发布于</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">August 12, 2024</p>
+        <p class="date">August 10, 2024</p>
       </div>
     </div>
     
+      <div>
+      <div class="quarto-title-meta-heading">修改于</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date-modified">August 12, 2024</p>
+      </div>
+    </div>
       
     </div>
     
@@ -240,6 +246,13 @@ window.Quarto = {
   <li><a href="#厄尔尼诺和鱼群" id="toc-厄尔尼诺和鱼群" class="nav-link" data-scroll-target="#厄尔尼诺和鱼群"><span class="header-section-number">1.5</span> 厄尔尼诺和鱼群</a></li>
   <li><a href="#fmri成像" id="toc-fmri成像" class="nav-link" data-scroll-target="#fmri成像"><span class="header-section-number">1.6</span> fMRI成像</a></li>
   <li><a href="#地震和爆炸" id="toc-地震和爆炸" class="nav-link" data-scroll-target="#地震和爆炸"><span class="header-section-number">1.7</span> 地震和爆炸</a></li>
+  </ul></li>
+  <li><a href="#时间序列统计模型" id="toc-时间序列统计模型" class="nav-link" data-scroll-target="#时间序列统计模型"><span class="header-section-number">2</span> 时间序列统计模型</a>
+  <ul class="collapse">
+  <li><a href="#白噪声white-noise" id="toc-白噪声white-noise" class="nav-link" data-scroll-target="#白噪声white-noise"><span class="header-section-number">2.1</span> 白噪声(White Noise)</a></li>
+  <li><a href="#移动平均值moving-averages和过滤filtering" id="toc-移动平均值moving-averages和过滤filtering" class="nav-link" data-scroll-target="#移动平均值moving-averages和过滤filtering"><span class="header-section-number">2.2</span> 移动平均值(Moving Averages)和过滤(Filtering)</a></li>
+  <li><a href="#自回归autoregressions" id="toc-自回归autoregressions" class="nav-link" data-scroll-target="#自回归autoregressions"><span class="header-section-number">2.3</span> 自回归(Autoregressions)</a></li>
+  <li><a href="#带漂移项drift的随机游走random-walk" id="toc-带漂移项drift的随机游走random-walk" class="nav-link" data-scroll-target="#带漂移项drift的随机游走random-walk"><span class="header-section-number">2.4</span> 带漂移项(Drift)的随机游走(Random Walk)</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -519,6 +532,80 @@ $class
 </div>
 </div>
 </div>
+</section>
+</section>
+<section id="时间序列统计模型" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> 时间序列统计模型</h1>
+<section id="白噪声white-noise" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="白噪声white-noise"><span class="header-section-number">2.1</span> 白噪声(White Noise)</h2>
+<p>白噪声：符合<span class="math inline">\(w_t\sim wn(0,\sigma_w^2)\)</span>的不相关随机变量</p>
+<p>独立同分布(independent and identically distributed，iid)的噪声：<span class="math inline">\(w_t\sim iid(0,\sigma_w^2)\)</span></p>
+<p>高斯白噪声(Gaussian white noise)：<span class="math inline">\(w_t\sim iidN(0,\sigma_w^2)\)</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>w <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">500</span>, <span class="dv">0</span>, <span class="dv">1</span>)                                   <span class="co"># 500 N(0,1) variates</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>v <span class="ot">=</span> stats<span class="sc">::</span><span class="fu">filter</span>(w, <span class="at">sides =</span> <span class="dv">2</span>, <span class="at">filter =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="dv">3</span>))  <span class="co"># moving average</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(w, <span class="at">col =</span> <span class="dv">4</span>, <span class="at">main =</span> <span class="st">"white noise"</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(v, <span class="at">col =</span> <span class="dv">4</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>), <span class="at">main =</span> <span class="st">"moving average"</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-white_noise" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-white_noise-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-white_noise-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-white_noise-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;10: 高斯白噪声序列(上)和高斯白噪声序列的三点移动平均值(下)
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="移动平均值moving-averages和过滤filtering" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="移动平均值moving-averages和过滤filtering"><span class="header-section-number">2.2</span> 移动平均值(Moving Averages)和过滤(Filtering)</h2>
+<p>用移动平均值<span class="math inline">\(v_t\)</span>替换，从而对<span class="math inline">\(w_t\)</span>进行平滑处理。<a href="#fig-white_noise" class="quarto-xref">图&nbsp;10</a>下方图片就是三点移动平均值，其中<span class="math inline">\(v_t=\frac{1}{3}(w_{t-1}+w_t+w_{t+1})\)</span>。从实际效果来讲，实现了较慢的振荡被突出，较快的振荡被掩盖。这种序列一般称为<strong>滤波序列</strong>(<em>filtered series</em>)。</p>
+<p><code>filter()</code>函数通俗来讲是用来消除噪声的(滤波)，生成<a href="#fig-white_noise" class="quarto-xref">图&nbsp;10</a>的代码中，参数<code>filter = rep(1/3, 3)</code>其实就是<code>filter = c(1/3, 1/3, 1/3)</code>，分别表示<span class="math inline">\(w_{t+1}\)</span>、<span class="math inline">\(w_t\)</span>和<span class="math inline">\(w_{t-1}\)</span>的系数。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(x,                <span class="co"># ts数据</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>       filter,           <span class="co"># 一个逆时间顺序的滤波器系数向量</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">method =</span> <span class="fu">c</span>(<span class="st">"convolution"</span>, <span class="st">"recursive"</span>), <span class="co"># 卷积和递归，卷积是移动平均，递归是自回归，默认卷积</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">sides =</span> <span class="dv">2</span>,        <span class="co"># 只用于卷积，1表示单边滤波(只考虑前面的值)，2表示双边滤波(两边都考虑)</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">circular =</span> F,     <span class="co"># 只用于卷积，是否末尾和开头相连</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>       init)             <span class="co"># 只用于递归，初始值，默认0</span></span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="自回归autoregressions" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="自回归autoregressions"><span class="header-section-number">2.3</span> 自回归(Autoregressions)</h2>
+<p>可以换种方式替换<span class="math inline">\(w_t\)</span>，即<span class="math inline">\(x_t=x_{t-1}-0.9x_{t-2}+w_t\)</span>。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>w <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">550</span>,<span class="dv">0</span>,<span class="dv">1</span>)  <span class="co"># 50 extra to avoid startup problems</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> stats<span class="sc">::</span><span class="fu">filter</span>(w, <span class="at">filter=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="sc">-</span>.<span class="dv">9</span>), <span class="at">method=</span><span class="st">"recursive"</span>)[<span class="sc">-</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>)]</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(x, <span class="at">col=</span><span class="dv">4</span>, <span class="at">main=</span><span class="st">"自回归"</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-autoregressions" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-autoregressions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-autoregressions-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-autoregressions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;11: 自回归序列
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><a href="#fig-autoregressions" class="quarto-xref">图&nbsp;11</a>的生成代码中，<code>init</code>参数默认为0，即<span class="math inline">\(x_1=w_1\)</span>、<span class="math inline">\(x_2=x_1+w_2=w_1+w_2\)</span>，之后<span class="math inline">\(x_3=x_2-0.9x_1+w_3\)</span>。<span class="math inline">\(x_1\)</span>和<span class="math inline">\(x_2\)</span>显然是不符合要求的，常用做法是去除这一部分，<a href="#fig-autoregressions" class="quarto-xref">图&nbsp;11</a>的生成代码中多生成了50个数据，之后去除了。</p>
+</section>
+<section id="带漂移项drift的随机游走random-walk" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="带漂移项drift的随机游走random-walk"><span class="header-section-number">2.4</span> 带漂移项(Drift)的随机游走(Random Walk)</h2>
+<p>回忆一下之前提到的全球变暖的相关数据。</p>
+<p>带漂移项的随机游走模型适合处理<a href="#fig-全球变暖" class="quarto-xref">图&nbsp;2</a>所展示的数据。该模型中</p>
+<p><span id="eq-rw"><span class="math display">\[
+x_t=\delta+x_{t-1}+w_t
+\tag{1}\]</span></span></p>
+<p>其中<span class="math inline">\(t=1,\ 2,\ \cdots\)</span>，<span class="math inline">\(x_0=0\)</span>，<span class="math inline">\(w_t\)</span>为白噪声，常数<span class="math inline">\(\delta\)</span>为漂移项。当<span class="math inline">\(\delta=0\)</span>时，<a href="#eq-rw" class="quarto-xref">式&nbsp;1</a>为随机游走。</p>
 
 
 

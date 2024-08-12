@@ -1,7 +1,7 @@
 ---
-title: "时间序列分析：第一章_1"
+title: "时间序列分析：第一章"
 author: "周博霖"
-date: "2024/8/12"
+date: "2024/8/10"
 categories: [学习笔记,统计方法,时间序列分析]
 image: "cover.png"
 bibliography: references.bib
@@ -9,6 +9,7 @@ csl: apa.csl
 number-sections: true
 toc: true
 toc-depth: 2
+date-modified: "2024/8/12"
 ---
 
 ```{r chapter-status, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
@@ -168,3 +169,65 @@ tsplot(EQ5,  col = 4, main = "地震")
 tsplot(EXP6, col = 4, main = "爆炸")
 ```
 
+# 时间序列统计模型
+
+## 白噪声(White Noise)
+
+白噪声：符合$w_t\sim wn(0,\sigma_w^2)$的不相关随机变量
+
+独立同分布(independent and identically distributed，iid)的噪声：$w_t\sim iid(0,\sigma_w^2)$
+
+高斯白噪声(Gaussian white noise)：$w_t\sim iidN(0,\sigma_w^2)$
+
+```{r}
+#| label: fig-white_noise
+#| fig-cap: 高斯白噪声序列(上)和高斯白噪声序列的三点移动平均值(下)
+set.seed(1)
+w = rnorm(500, 0, 1)                                   # 500 N(0,1) variates
+v = stats::filter(w, sides = 2, filter = rep(1/3, 3))  # moving average
+par(mfrow = c(2, 1))
+tsplot(w, col = 4, main = "white noise")
+tsplot(v, col = 4, ylim = c(-3, 3), main = "moving average")
+```
+
+## 移动平均值(Moving Averages)和过滤(Filtering)
+
+用移动平均值$v_t$替换，从而对$w_t$进行平滑处理。[@fig-white_noise]下方图片就是三点移动平均值，其中$v_t=\frac{1}{3}(w_{t-1}+w_t+w_{t+1})$。从实际效果来讲，实现了较慢的振荡被突出，较快的振荡被掩盖。这种序列一般称为**滤波序列**(*filtered series*)。
+
+`filter()`函数通俗来讲是用来消除噪声的(滤波)，生成[@fig-white_noise]的代码中，参数`filter = rep(1/3, 3)`其实就是`filter = c(1/3, 1/3, 1/3)`，分别表示$w_{t+1}$、$w_t$和$w_{t-1}$的系数。
+
+```{r, eval=FALSE}
+filter(x,                # ts数据
+       filter,           # 一个逆时间顺序的滤波器系数向量
+       method = c("convolution", "recursive"), # 卷积和递归，卷积是移动平均，递归是自回归，默认卷积
+       sides = 2,        # 只用于卷积，1表示单边滤波(只考虑前面的值)，2表示双边滤波(两边都考虑)
+       circular = F,     # 只用于卷积，是否末尾和开头相连
+       init)             # 只用于递归，初始值，默认0
+```
+
+## 自回归(Autoregressions)
+
+可以换种方式替换$w_t$，即$x_t=x_{t-1}-0.9x_{t-2}+w_t$。
+
+```{r}
+#| label: fig-autoregressions
+#| fig-cap: 自回归序列
+set.seed(1)
+w = rnorm(550,0,1)  # 50 extra to avoid startup problems
+x = stats::filter(w, filter=c(1,-.9), method="recursive")[-(1:50)]
+tsplot(x, col=4, main="自回归")
+```
+
+[@fig-autoregressions]的生成代码中，`init`参数默认为0，即$x_1=w_1$、$x_2=x_1+w_2=w_1+w_2$，之后$x_3=x_2-0.9x_1+w_3$。$x_1$和$x_2$显然是不符合要求的，常用做法是去除这一部分，[@fig-autoregressions]的生成代码中多生成了50个数据，之后去除了。
+
+## 带漂移项(Drift)的随机游走(Random Walk)
+
+回忆一下之前提到的全球变暖的相关数据。
+
+带漂移项的随机游走模型适合处理[@fig-全球变暖]所展示的数据。该模型中
+
+$$
+x_t=\delta+x_{t-1}+w_t
+$${#eq-rw}
+
+其中$t=1,\ 2,\ \cdots$，$x_0=0$，$w_t$为白噪声，常数$\delta$为漂移项。当$\delta=0$时，[@eq-rw]为随机游走。
