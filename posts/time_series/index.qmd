@@ -120,7 +120,7 @@ tsplot(soi, col = 4, xlab = "", ylab = "", main = "Southern Oscillation Index")
 tsplot(rec, col = 4, xlab = "", ylab = "", main = "Recruitment") 
 ```
 
-## fMRi成像
+## fMRI成像
 
 `fmri1`：由8个位置的平均fMRI 血氧水平依赖(BOLD)信号组成的数据集。刺激持续32秒，然后停止32秒。信号周期为64秒，采样率为每2秒1次，采样时间为256秒($n=128$)。
 
