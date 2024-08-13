@@ -67,7 +67,7 @@ gtemp_land
 ```
 
 ```{r Global_Warming}
-#| label: fig-全球变暖
+#| label: fig-gm
 #| fig-cap: 全球陆地年平均温度偏差(1850-2023)
 tsplot(gtemp_land, col = 4, type = "o", xlab = "时间", ylab = "全球温度偏差/℃")
 ```
@@ -222,7 +222,7 @@ tsplot(x, col = 4, main = "自回归")
 
 ## 带漂移项(Drift)的随机游走(Random Walk)
 
-带漂移项的随机游走模型适合处理[@fig-全球变暖]所展示的全球变暖相关数据。该模型中
+带漂移项的随机游走模型适合处理[@fig-gm]所展示的全球变暖相关数据。该模型中
 
 $$
 x_t=\delta+x_{t-1}+w_t
