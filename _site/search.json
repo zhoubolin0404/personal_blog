@@ -74,14 +74,21 @@
     "href": "posts/time_series/index.html#自回归autoregressions",
     "title": "时间序列分析：第一章",
     "section": "2.3 自回归(Autoregressions)",
-    "text": "2.3 自回归(Autoregressions)\n可以换种方式替换\\(w_t\\)，即\\(x_t=x_{t-1}-0.9x_{t-2}+w_t\\)。\n\nset.seed(1)\nw = rnorm(550,0,1)  # 50 extra to avoid startup problems\nx = stats::filter(w, filter=c(1,-.9), method=\"recursive\")[-(1:50)]\ntsplot(x, col=4, main=\"自回归\")\n\n\n\n\n\n\n\n图 11: 自回归序列\n\n\n\n\n\n图 11的生成代码中，init参数默认为0，即\\(x_1=w_1\\)、\\(x_2=x_1+w_2=w_1+w_2\\)，之后\\(x_3=x_2-0.9x_1+w_3\\)。\\(x_1\\)和\\(x_2\\)显然是不符合要求的，常用做法是去除这一部分，图 11的生成代码中多生成了50个数据，之后去除了。"
+    "text": "2.3 自回归(Autoregressions)\n可以换种方式替换\\(w_t\\)，即\\(x_t=x_{t-1}-0.9x_{t-2}+w_t\\)。\n\nset.seed(1)\nw = rnorm(550,0,1)  # 50 extra to avoid startup problems\nx = stats::filter(w, filter = c(1, -.9), method = \"recursive\")[-(1:50)]\ntsplot(x, col = 4, main = \"自回归\")\n\n\n\n\n\n\n\n图 11: 自回归序列\n\n\n\n\n\n生成图 11的代码中，init参数默认为0，即\\(x_1=w_1\\)、\\(x_2=x_1+w_2=w_1+w_2\\)，之后\\(x_3=x_2-0.9x_1+w_3\\)。\\(x_1\\)和\\(x_2\\)显然是不符合要求的，常用方法是去除这一部分，生成图 11的代码中多生成了50个数据，之后去除了。"
   },
   {
     "objectID": "posts/time_series/index.html#带漂移项drift的随机游走random-walk",
     "href": "posts/time_series/index.html#带漂移项drift的随机游走random-walk",
     "title": "时间序列分析：第一章",
     "section": "2.4 带漂移项(Drift)的随机游走(Random Walk)",
-    "text": "2.4 带漂移项(Drift)的随机游走(Random Walk)\n回忆一下之前提到的全球变暖的相关数据。\n带漂移项的随机游走模型适合处理图 2所展示的数据。该模型中\n\\[\nx_t=\\delta+x_{t-1}+w_t\n\\tag{1}\\]\n其中\\(t=1,\\ 2,\\ \\cdots\\)，\\(x_0=0\\)，\\(w_t\\)为白噪声，常数\\(\\delta\\)为漂移项。当\\(\\delta=0\\)时，式 1为随机游走。"
+    "text": "2.4 带漂移项(Drift)的随机游走(Random Walk)\n带漂移项的随机游走模型适合处理图 2所展示的全球变暖相关数据。该模型中\n\\[\nx_t=\\delta+x_{t-1}+w_t\n\\tag{1}\\]\n其中\\(t=1,\\ 2,\\ \\cdots\\)，\\(x_0=0\\)，\\(w_t\\)为白噪声，常数\\(\\delta\\)为漂移项。当\\(\\delta=0\\)时，式 1为随机游走。\n式 1还可以转化为\\(x_t=\\delta t+\\sum_{j=1}^{t}w_j\\)，可见当\\(\\delta=0\\)时，\\(x_t\\)就是白噪声累加和。\n\nset.seed(154)\nw = rnorm(200)\nx = cumsum(w)\nwd = w + .2\nxd = cumsum(wd)\ntsplot(xd, ylim = c(-5, 55), main = \"random walk\", ylab = '')\nlines(x, col = 4) \nclip(0, 200, 0, 50)\nabline(h = 0, col = 4, lty = 2)\nabline(a = 0, b = .2, lty = 2)\n\n\n\n\n\n\n\n图 12: 随机游走图\n\n\n\n\n\n图 12中\\(\\sigma_w=1\\)，黑色实线的漂移项\\(\\delta=0.2\\)，黑色虚线是斜率为0.2的直线，蓝色实线为随机游走(无漂移项，即\\(\\delta=0\\))，蓝色虚线表示\\(y=0\\)的直线。"
+  },
+  {
+    "objectID": "posts/time_series/index.html#噪声信号signal-in-noise",
+    "href": "posts/time_series/index.html#噪声信号signal-in-noise",
+    "title": "时间序列分析：第一章",
+    "section": "2.5 噪声信号(Signal in Noise)",
+    "text": "2.5 噪声信号(Signal in Noise)\n很多时间序列模型都是假设由固定周期性变化的信号和随机噪声叠加构成的，图 6说表示的fMRI序列就有很明显的周期性。\n现在令：\n\\[\nx_t=2\\cos(2\\pi\\frac{t+15}{50})+w_t\n\\tag{2}\\]\n其中\\(t=1,\\ 2,\\ \\cdots,\\ 500\\)，第一项\\(2\\cos(2\\pi\\frac{t+15}{50})\\)就是信号。\n正弦波形还可以写成：\n\\[\nA\\cos(2\\pi\\omega t+\\phi)\n\\]\n其中\\(A\\)是振幅，\\(\\omega\\)是振荡频率，\\(\\phi\\)是相位。式 2中\\(A=2\\)，\\(\\omega=\\frac{1}{50}\\)(50个时间点为一个周期)，\\(\\phi=\\frac{2\\pi15}{50}=0.6\\pi\\)。\n\ncs = 2 * cos(2 * pi * (1:500) / 50 + .6 * pi)\nw = rnorm(500, 0, 1)\npar(mfrow = c(3, 1))\ntsplot(cs, ylab = \"\", main = expression(x[t] == 2 * cos(2 * pi * t / 50 + .6 * pi)))\ntsplot(cs + w, ylab = \"\", main = expression(x[t] == 2 * cos(2 * pi * t / 50 + .6 * pi) + N(0, 1)))\ntsplot(cs + 5 * w, ylab = \"\", main = expression(x[t] == 2 * cos(2 * pi * t / 50 + .6 * pi) + N(0, 25)))\n\n\n\n\n\n\n\n图 13: 余弦波和可加性高斯白噪声污染的余弦图\n\n\n\n\n\n图 13中间的图和下面的图分别加上了\\(\\sigma_w=1\\)和\\(\\sigma_w=5\\)的白噪声。信号被遮掩的程度取决于信号幅度和\\(\\sigma_w\\)的大小。信号幅度和\\(\\sigma_w\\)之比称为信噪比(signal-to-noise ratio，SNR)。SNR越大，检测信号就越容易，反之越难。例如图 13中，中间的图就比较容易看出信号，下面的图就比较困难。通常我们关心的是信号。"
   },
   {
     "objectID": "index.html",

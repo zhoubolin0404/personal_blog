@@ -222,7 +222,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">修改于</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">August 12, 2024</p>
+        <p class="date-modified">August 13, 2024</p>
       </div>
     </div>
       
@@ -253,7 +253,9 @@ window.Quarto = {
   <li><a href="#移动平均值moving-averages和过滤filtering" id="toc-移动平均值moving-averages和过滤filtering" class="nav-link" data-scroll-target="#移动平均值moving-averages和过滤filtering"><span class="header-section-number">2.2</span> 移动平均值(Moving Averages)和过滤(Filtering)</a></li>
   <li><a href="#自回归autoregressions" id="toc-自回归autoregressions" class="nav-link" data-scroll-target="#自回归autoregressions"><span class="header-section-number">2.3</span> 自回归(Autoregressions)</a></li>
   <li><a href="#带漂移项drift的随机游走random-walk" id="toc-带漂移项drift的随机游走random-walk" class="nav-link" data-scroll-target="#带漂移项drift的随机游走random-walk"><span class="header-section-number">2.4</span> 带漂移项(Drift)的随机游走(Random Walk)</a></li>
+  <li><a href="#噪声信号signal-in-noise" id="toc-噪声信号signal-in-noise" class="nav-link" data-scroll-target="#噪声信号signal-in-noise"><span class="header-section-number">2.5</span> 噪声信号(Signal in Noise)</a></li>
   </ul></li>
+  <li><a href="#相关性测量" id="toc-相关性测量" class="nav-link" data-scroll-target="#相关性测量"><span class="header-section-number">3</span> 相关性测量</a></li>
   </ul>
 </nav>
     </div>
@@ -581,8 +583,8 @@ $class
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>w <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">550</span>,<span class="dv">0</span>,<span class="dv">1</span>)  <span class="co"># 50 extra to avoid startup problems</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> stats<span class="sc">::</span><span class="fu">filter</span>(w, <span class="at">filter=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="sc">-</span>.<span class="dv">9</span>), <span class="at">method=</span><span class="st">"recursive"</span>)[<span class="sc">-</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>)]</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(x, <span class="at">col=</span><span class="dv">4</span>, <span class="at">main=</span><span class="st">"自回归"</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> stats<span class="sc">::</span><span class="fu">filter</span>(w, <span class="at">filter =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span>.<span class="dv">9</span>), <span class="at">method =</span> <span class="st">"recursive"</span>)[<span class="sc">-</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>)]</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(x, <span class="at">col =</span> <span class="dv">4</span>, <span class="at">main =</span> <span class="st">"自回归"</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-autoregressions" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -596,20 +598,84 @@ $class
 </div>
 </div>
 </div>
-<p><a href="#fig-autoregressions" class="quarto-xref">图&nbsp;11</a>的生成代码中，<code>init</code>参数默认为0，即<span class="math inline">\(x_1=w_1\)</span>、<span class="math inline">\(x_2=x_1+w_2=w_1+w_2\)</span>，之后<span class="math inline">\(x_3=x_2-0.9x_1+w_3\)</span>。<span class="math inline">\(x_1\)</span>和<span class="math inline">\(x_2\)</span>显然是不符合要求的，常用做法是去除这一部分，<a href="#fig-autoregressions" class="quarto-xref">图&nbsp;11</a>的生成代码中多生成了50个数据，之后去除了。</p>
+<p>生成<a href="#fig-autoregressions" class="quarto-xref">图&nbsp;11</a>的代码中，<code>init</code>参数默认为0，即<span class="math inline">\(x_1=w_1\)</span>、<span class="math inline">\(x_2=x_1+w_2=w_1+w_2\)</span>，之后<span class="math inline">\(x_3=x_2-0.9x_1+w_3\)</span>。<span class="math inline">\(x_1\)</span>和<span class="math inline">\(x_2\)</span>显然是不符合要求的，常用方法是去除这一部分，生成<a href="#fig-autoregressions" class="quarto-xref">图&nbsp;11</a>的代码中多生成了50个数据，之后去除了。</p>
 </section>
 <section id="带漂移项drift的随机游走random-walk" class="level2" data-number="2.4">
 <h2 data-number="2.4" class="anchored" data-anchor-id="带漂移项drift的随机游走random-walk"><span class="header-section-number">2.4</span> 带漂移项(Drift)的随机游走(Random Walk)</h2>
-<p>回忆一下之前提到的全球变暖的相关数据。</p>
-<p>带漂移项的随机游走模型适合处理<a href="#fig-全球变暖" class="quarto-xref">图&nbsp;2</a>所展示的数据。该模型中</p>
+<p>带漂移项的随机游走模型适合处理<a href="#fig-全球变暖" class="quarto-xref">图&nbsp;2</a>所展示的全球变暖相关数据。该模型中</p>
 <p><span id="eq-rw"><span class="math display">\[
 x_t=\delta+x_{t-1}+w_t
 \tag{1}\]</span></span></p>
 <p>其中<span class="math inline">\(t=1,\ 2,\ \cdots\)</span>，<span class="math inline">\(x_0=0\)</span>，<span class="math inline">\(w_t\)</span>为白噪声，常数<span class="math inline">\(\delta\)</span>为漂移项。当<span class="math inline">\(\delta=0\)</span>时，<a href="#eq-rw" class="quarto-xref">式&nbsp;1</a>为随机游走。</p>
-
-
-
+<p><a href="#eq-rw" class="quarto-xref">式&nbsp;1</a>还可以转化为<span class="math inline">\(x_t=\delta t+\sum_{j=1}^{t}w_j\)</span>，可见当<span class="math inline">\(\delta=0\)</span>时，<span class="math inline">\(x_t\)</span>就是白噪声累加和。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">154</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>w <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">200</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">cumsum</span>(w)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>wd <span class="ot">=</span> w <span class="sc">+</span> .<span class="dv">2</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>xd <span class="ot">=</span> <span class="fu">cumsum</span>(wd)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(xd, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="dv">55</span>), <span class="at">main =</span> <span class="st">"random walk"</span>, <span class="at">ylab =</span> <span class="st">''</span>)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x, <span class="at">col =</span> <span class="dv">4</span>) </span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="fu">clip</span>(<span class="dv">0</span>, <span class="dv">200</span>, <span class="dv">0</span>, <span class="dv">50</span>)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="dv">4</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> <span class="dv">0</span>, <span class="at">b =</span> .<span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-rw" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rw-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-rw-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rw-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;12: 随机游走图
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><a href="#fig-rw" class="quarto-xref">图&nbsp;12</a>中<span class="math inline">\(\sigma_w=1\)</span>，黑色实线的漂移项<span class="math inline">\(\delta=0.2\)</span>，黑色虚线是斜率为0.2的直线，蓝色实线为随机游走(无漂移项，即<span class="math inline">\(\delta=0\)</span>)，蓝色虚线表示<span class="math inline">\(y=0\)</span>的直线。</p>
 </section>
+<section id="噪声信号signal-in-noise" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="噪声信号signal-in-noise"><span class="header-section-number">2.5</span> 噪声信号(Signal in Noise)</h2>
+<p>很多时间序列模型都是假设由固定周期性变化的信号和随机噪声叠加构成的，<a href="#fig-fMRI" class="quarto-xref">图&nbsp;6</a>说表示的fMRI序列就有很明显的周期性。</p>
+<p>现在令：</p>
+<p><span id="eq-cos"><span class="math display">\[
+x_t=2\cos(2\pi\frac{t+15}{50})+w_t
+\tag{2}\]</span></span></p>
+<p>其中<span class="math inline">\(t=1,\ 2,\ \cdots,\ 500\)</span>，第一项<span class="math inline">\(2\cos(2\pi\frac{t+15}{50})\)</span>就是信号。</p>
+<p>正弦波形还可以写成：</p>
+<p><span class="math display">\[
+A\cos(2\pi\omega t+\phi)
+\]</span></p>
+<p>其中<span class="math inline">\(A\)</span>是振幅，<span class="math inline">\(\omega\)</span>是振荡频率，<span class="math inline">\(\phi\)</span>是相位。<a href="#eq-cos" class="quarto-xref">式&nbsp;2</a>中<span class="math inline">\(A=2\)</span>，<span class="math inline">\(\omega=\frac{1}{50}\)</span>(50个时间点为一个周期)，<span class="math inline">\(\phi=\frac{2\pi15}{50}=0.6\pi\)</span>。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>cs <span class="ot">=</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">cos</span>(<span class="dv">2</span> <span class="sc">*</span> pi <span class="sc">*</span> (<span class="dv">1</span><span class="sc">:</span><span class="dv">500</span>) <span class="sc">/</span> <span class="dv">50</span> <span class="sc">+</span> .<span class="dv">6</span> <span class="sc">*</span> pi)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>w <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">500</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>))</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(cs, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">main =</span> <span class="fu">expression</span>(x[t] <span class="sc">==</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">cos</span>(<span class="dv">2</span> <span class="sc">*</span> pi <span class="sc">*</span> t <span class="sc">/</span> <span class="dv">50</span> <span class="sc">+</span> .<span class="dv">6</span> <span class="sc">*</span> pi)))</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(cs <span class="sc">+</span> w, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">main =</span> <span class="fu">expression</span>(x[t] <span class="sc">==</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">cos</span>(<span class="dv">2</span> <span class="sc">*</span> pi <span class="sc">*</span> t <span class="sc">/</span> <span class="dv">50</span> <span class="sc">+</span> .<span class="dv">6</span> <span class="sc">*</span> pi) <span class="sc">+</span> <span class="fu">N</span>(<span class="dv">0</span>, <span class="dv">1</span>)))</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(cs <span class="sc">+</span> <span class="dv">5</span> <span class="sc">*</span> w, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">main =</span> <span class="fu">expression</span>(x[t] <span class="sc">==</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">cos</span>(<span class="dv">2</span> <span class="sc">*</span> pi <span class="sc">*</span> t <span class="sc">/</span> <span class="dv">50</span> <span class="sc">+</span> .<span class="dv">6</span> <span class="sc">*</span> pi) <span class="sc">+</span> <span class="fu">N</span>(<span class="dv">0</span>, <span class="dv">25</span>)))</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-cos" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-cos-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;13: 余弦波和可加性高斯白噪声污染的余弦图
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><a href="#fig-cos" class="quarto-xref">图&nbsp;13</a>中间的图和下面的图分别加上了<span class="math inline">\(\sigma_w=1\)</span>和<span class="math inline">\(\sigma_w=5\)</span>的白噪声。信号被遮掩的程度取决于信号幅度和<span class="math inline">\(\sigma_w\)</span>的大小。信号幅度和<span class="math inline">\(\sigma_w\)</span>之比称为信噪比(signal-to-noise ratio，SNR)。SNR越大，检测信号就越容易，反之越难。例如<a href="#fig-cos" class="quarto-xref">图&nbsp;13</a>中，中间的图就比较容易看出信号，下面的图就比较困难。通常我们关心的是信号。</p>
+</section>
+</section>
+<section id="相关性测量" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> 相关性测量</h1>
+<p>相关性是时间序列分析的基本特征，所以最常用的描述性度量是用协方差和相关函数表示。</p>
+
+
+
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">参考文献</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">

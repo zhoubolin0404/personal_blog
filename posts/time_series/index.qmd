@@ -9,7 +9,7 @@ csl: apa.csl
 number-sections: true
 toc: true
 toc-depth: 2
-date-modified: "2024/8/12"
+date-modified: "2024/8/13"
 ---
 
 ```{r chapter-status, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
@@ -214,20 +214,83 @@ filter(x,                # ts数据
 #| fig-cap: 自回归序列
 set.seed(1)
 w = rnorm(550,0,1)  # 50 extra to avoid startup problems
-x = stats::filter(w, filter=c(1,-.9), method="recursive")[-(1:50)]
-tsplot(x, col=4, main="自回归")
+x = stats::filter(w, filter = c(1, -.9), method = "recursive")[-(1:50)]
+tsplot(x, col = 4, main = "自回归")
 ```
 
-[@fig-autoregressions]的生成代码中，`init`参数默认为0，即$x_1=w_1$、$x_2=x_1+w_2=w_1+w_2$，之后$x_3=x_2-0.9x_1+w_3$。$x_1$和$x_2$显然是不符合要求的，常用做法是去除这一部分，[@fig-autoregressions]的生成代码中多生成了50个数据，之后去除了。
+生成[@fig-autoregressions]的代码中，`init`参数默认为0，即$x_1=w_1$、$x_2=x_1+w_2=w_1+w_2$，之后$x_3=x_2-0.9x_1+w_3$。$x_1$和$x_2$显然是不符合要求的，常用方法是去除这一部分，生成[@fig-autoregressions]的代码中多生成了50个数据，之后去除了。
 
 ## 带漂移项(Drift)的随机游走(Random Walk)
 
-回忆一下之前提到的全球变暖的相关数据。
-
-带漂移项的随机游走模型适合处理[@fig-全球变暖]所展示的数据。该模型中
+带漂移项的随机游走模型适合处理[@fig-全球变暖]所展示的全球变暖相关数据。该模型中
 
 $$
 x_t=\delta+x_{t-1}+w_t
 $${#eq-rw}
 
 其中$t=1,\ 2,\ \cdots$，$x_0=0$，$w_t$为白噪声，常数$\delta$为漂移项。当$\delta=0$时，[@eq-rw]为随机游走。
+
+[@eq-rw]还可以转化为$x_t=\delta t+\sum_{j=1}^{t}w_j$，可见当$\delta=0$时，$x_t$就是白噪声累加和。
+
+```{r}
+#| label: fig-rw
+#| fig-cap: 随机游走图
+set.seed(154)
+w = rnorm(200)
+x = cumsum(w)
+wd = w + .2
+xd = cumsum(wd)
+tsplot(xd, ylim = c(-5, 55), main = "random walk", ylab = '')
+lines(x, col = 4) 
+clip(0, 200, 0, 50)
+abline(h = 0, col = 4, lty = 2)
+abline(a = 0, b = .2, lty = 2)
+```
+
+[@fig-rw]中$\sigma_w=1$，黑色实线的漂移项$\delta=0.2$，黑色虚线是斜率为0.2的直线，蓝色实线为随机游走(无漂移项，即$\delta=0$)，蓝色虚线表示$y=0$的直线。
+
+## 噪声信号(Signal in Noise)
+
+很多时间序列模型都是假设由固定周期性变化的信号和随机噪声叠加构成的，[@fig-fMRI]说表示的fMRI序列就有很明显的周期性。
+
+现在令：
+
+$$
+x_t=2\cos(2\pi\frac{t+15}{50})+w_t
+$${#eq-cos}
+
+其中$t=1,\ 2,\ \cdots,\ 500$，第一项$2\cos(2\pi\frac{t+15}{50})$就是信号。
+
+正弦波形还可以写成：
+
+$$
+A\cos(2\pi\omega t+\phi)
+$$
+
+其中$A$是振幅，$\omega$是振荡频率，$\phi$是相位。[@eq-cos]中$A=2$，$\omega=\frac{1}{50}$(50个时间点为一个周期)，$\phi=\frac{2\pi15}{50}=0.6\pi$。
+
+```{r}
+#| label: fig-cos
+#| fig-cap: 余弦波和可加性高斯白噪声污染的余弦图
+cs = 2 * cos(2 * pi * (1:500) / 50 + .6 * pi)
+w = rnorm(500, 0, 1)
+par(mfrow = c(3, 1))
+tsplot(cs, ylab = "", main = expression(x[t] == 2 * cos(2 * pi * t / 50 + .6 * pi)))
+tsplot(cs + w, ylab = "", main = expression(x[t] == 2 * cos(2 * pi * t / 50 + .6 * pi) + N(0, 1)))
+tsplot(cs + 5 * w, ylab = "", main = expression(x[t] == 2 * cos(2 * pi * t / 50 + .6 * pi) + N(0, 25)))
+```
+
+[@fig-cos]中间的图和下面的图分别加上了$\sigma_w=1$和$\sigma_w=5$的白噪声。信号被遮掩的程度取决于信号幅度和$\sigma_w$的大小。信号幅度和$\sigma_w$之比称为信噪比(signal-to-noise ratio，SNR)。SNR越大，检测信号就越容易，反之越难。例如[@fig-cos]中，中间的图就比较容易看出信号，下面的图就比较困难。通常我们关心的是信号。
+
+# 相关性测量
+
+相关性是时间序列分析的基本特征，所以最常用的描述性度量是用协方差和相关函数表示。
+
+
+
+
+
+
+
+
+
