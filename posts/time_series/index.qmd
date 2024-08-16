@@ -9,7 +9,7 @@ csl: apa.csl
 number-sections: true
 toc: true
 toc-depth: 2
-date-modified: "2024/8/13"
+date-modified: "2024/8/16"
 ---
 
 ```{r chapter-status, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
@@ -251,7 +251,7 @@ abline(a = 0, b = .2, lty = 2)
 
 ## 噪声信号(Signal in Noise)
 
-很多时间序列模型都是假设由固定周期性变化的信号和随机噪声叠加构成的，[@fig-fMRI]说表示的fMRI序列就有很明显的周期性。
+很多时间序列模型都是假设由固定周期性变化的信号和随机噪声叠加构成的，[@fig-fMRI]所表示的fMRI序列就有很明显的周期性。
 
 现在令：
 
@@ -284,13 +284,53 @@ tsplot(cs + 5 * w, ylab = "", main = expression(x[t] == 2 * cos(2 * pi * t / 50 
 
 # 相关性测量
 
-相关性是时间序列分析的基本特征，所以最常用的描述性度量是用协方差和相关函数表示。
+相关性是时间序列分析的基本特征，所以最常用的描述性度量是协方差和相关函数。边际分布函数$F_t(x)=P\{x_t\leq x\}$、相应的边际密度函数$f_t(x)=\frac{\partial F_t(x)}{\partial x}$和平均函数都是有用的边际描述指标。
 
+## 平均函数
 
+$$
+\mu_{xt}=\operatorname{E}(x_t)=\int_{-\infty}^{\infty}xf_t(x)\operatorname{d}x
+$${#eq-ave}
 
+### 移动平均序列的平均函数
 
+平均函数和白噪声相同，以[@fig-white_noise]里的情况为例。
 
+白噪声序列$w_t$有$\mu_{wt}=\operatorname{E}(w_t)=0$，进行平滑后有$\mu_{vt}=\operatorname{E}(v_t)=\frac{1}{3}[\operatorname{E}(w_{t-1})+\operatorname{E}(w_t)+\operatorname{E}(w_{t-1})]=0$，平均函数不变。
 
+### 带漂移项的随机游走的平均函数
 
+平均函数为一条直线，以[@eq-rw]为例。
 
+已知$\operatorname{E}(w_t)=0$，$\delta$为常数，有：
+
+$$
+\mu_{x_t}=\operatorname{E}(x_t)=\delta t+\sum_{j=1}^{t}\operatorname{E}(w_j)=\delta t
+$$
+
+这是一条斜率为$\delta$的直线，[@fig-rw]中的虚线就是其平均函数。
+
+### 信号加噪声的平均函数
+
+平均函数为余弦波，以[@eq-cos]为例。
+
+$$
+\mu_{xt}=\operatorname{E}(x_t)=\operatorname{E}[2cos(2\pi\frac{t+15}{50})+w_t]=2cos(2\pi\frac{t+15}{50})+\operatorname{E}(w_t)=2cos(2\pi\frac{t+15}{50})
+$$
+
+## 自协方差函数(Autocovariance Function)
+
+对于任意$s$和$t$，**自协方差函数**被定义为二阶矩函数：
+
+$$
+\gamma_x(s,t)=\operatorname{cov}(x_s,x_t)=\operatorname{E}[(x_s-\mu_s)(x_t-\mu_t)]
+$${#eq-acov}
+
+自协方差衡量在不同时间观察到的同一时间序列的两点间的*线性*依赖性。平滑的时间序列，即使$t$和$s$相隔很远，自协方差函数也会比较大；而波动大的时间序列，自协方差函数几乎为0。
+
+从经典统计数据角度来看，如果$\gamma_x(s,t)=0$，$x_s$和$x_t$非线性相关(可能有其他依赖结构)。但如果$x_s$和$x_t$是二元正态分布，$\gamma_x(s,t)=0$说明相互独立。对于$s=t$，自协方差就是方差，即：
+
+$$
+\gamma_x(t,t)=\operatorname{E}[(x_t-\mu_t)^2]=\operatorname{var}(x_t)
+$$
 

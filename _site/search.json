@@ -88,7 +88,21 @@
     "href": "posts/time_series/index.html#噪声信号signal-in-noise",
     "title": "时间序列分析：第一章",
     "section": "2.5 噪声信号(Signal in Noise)",
-    "text": "2.5 噪声信号(Signal in Noise)\n很多时间序列模型都是假设由固定周期性变化的信号和随机噪声叠加构成的，图 6说表示的fMRI序列就有很明显的周期性。\n现在令：\n\\[\nx_t=2\\cos(2\\pi\\frac{t+15}{50})+w_t\n\\tag{2}\\]\n其中\\(t=1,\\ 2,\\ \\cdots,\\ 500\\)，第一项\\(2\\cos(2\\pi\\frac{t+15}{50})\\)就是信号。\n正弦波形还可以写成：\n\\[\nA\\cos(2\\pi\\omega t+\\phi)\n\\]\n其中\\(A\\)是振幅，\\(\\omega\\)是振荡频率，\\(\\phi\\)是相位。式 2中\\(A=2\\)，\\(\\omega=\\frac{1}{50}\\)(50个时间点为一个周期)，\\(\\phi=\\frac{2\\pi15}{50}=0.6\\pi\\)。\n\ncs = 2 * cos(2 * pi * (1:500) / 50 + .6 * pi)\nw = rnorm(500, 0, 1)\npar(mfrow = c(3, 1))\ntsplot(cs, ylab = \"\", main = expression(x[t] == 2 * cos(2 * pi * t / 50 + .6 * pi)))\ntsplot(cs + w, ylab = \"\", main = expression(x[t] == 2 * cos(2 * pi * t / 50 + .6 * pi) + N(0, 1)))\ntsplot(cs + 5 * w, ylab = \"\", main = expression(x[t] == 2 * cos(2 * pi * t / 50 + .6 * pi) + N(0, 25)))\n\n\n\n\n\n\n\n图 13: 余弦波和可加性高斯白噪声污染的余弦图\n\n\n\n\n\n图 13中间的图和下面的图分别加上了\\(\\sigma_w=1\\)和\\(\\sigma_w=5\\)的白噪声。信号被遮掩的程度取决于信号幅度和\\(\\sigma_w\\)的大小。信号幅度和\\(\\sigma_w\\)之比称为信噪比(signal-to-noise ratio，SNR)。SNR越大，检测信号就越容易，反之越难。例如图 13中，中间的图就比较容易看出信号，下面的图就比较困难。通常我们关心的是信号。"
+    "text": "2.5 噪声信号(Signal in Noise)\n很多时间序列模型都是假设由固定周期性变化的信号和随机噪声叠加构成的，图 6所表示的fMRI序列就有很明显的周期性。\n现在令：\n\\[\nx_t=2\\cos(2\\pi\\frac{t+15}{50})+w_t\n\\tag{2}\\]\n其中\\(t=1,\\ 2,\\ \\cdots,\\ 500\\)，第一项\\(2\\cos(2\\pi\\frac{t+15}{50})\\)就是信号。\n正弦波形还可以写成：\n\\[\nA\\cos(2\\pi\\omega t+\\phi)\n\\]\n其中\\(A\\)是振幅，\\(\\omega\\)是振荡频率，\\(\\phi\\)是相位。式 2中\\(A=2\\)，\\(\\omega=\\frac{1}{50}\\)(50个时间点为一个周期)，\\(\\phi=\\frac{2\\pi15}{50}=0.6\\pi\\)。\n\ncs = 2 * cos(2 * pi * (1:500) / 50 + .6 * pi)\nw = rnorm(500, 0, 1)\npar(mfrow = c(3, 1))\ntsplot(cs, ylab = \"\", main = expression(x[t] == 2 * cos(2 * pi * t / 50 + .6 * pi)))\ntsplot(cs + w, ylab = \"\", main = expression(x[t] == 2 * cos(2 * pi * t / 50 + .6 * pi) + N(0, 1)))\ntsplot(cs + 5 * w, ylab = \"\", main = expression(x[t] == 2 * cos(2 * pi * t / 50 + .6 * pi) + N(0, 25)))\n\n\n\n\n\n\n\n图 13: 余弦波和可加性高斯白噪声污染的余弦图\n\n\n\n\n\n图 13中间的图和下面的图分别加上了\\(\\sigma_w=1\\)和\\(\\sigma_w=5\\)的白噪声。信号被遮掩的程度取决于信号幅度和\\(\\sigma_w\\)的大小。信号幅度和\\(\\sigma_w\\)之比称为信噪比(signal-to-noise ratio，SNR)。SNR越大，检测信号就越容易，反之越难。例如图 13中，中间的图就比较容易看出信号，下面的图就比较困难。通常我们关心的是信号。"
+  },
+  {
+    "objectID": "posts/time_series/index.html#平均函数",
+    "href": "posts/time_series/index.html#平均函数",
+    "title": "时间序列分析：第一章",
+    "section": "3.1 平均函数",
+    "text": "3.1 平均函数\n\\[\n\\mu_{xt}=\\operatorname{E}(x_t)=\\int_{-\\infty}^{\\infty}xf_t(x)\\operatorname{d}x\n\\tag{3}\\]\n\n3.1.1 移动平均序列的平均函数\n平均函数和白噪声相同，以图 10里的情况为例。\n白噪声序列\\(w_t\\)有\\(\\mu_{wt}=\\operatorname{E}(w_t)=0\\)，进行平滑后有\\(\\mu_{vt}=\\operatorname{E}(v_t)=\\frac{1}{3}[\\operatorname{E}(w_{t-1})+\\operatorname{E}(w_t)+\\operatorname{E}(w_{t-1})]=0\\)，平均函数不变。\n\n\n3.1.2 带漂移项的随机游走的平均函数\n平均函数为一条直线，以式 1为例。\n已知\\(\\operatorname{E}(w_t)=0\\)，\\(\\delta\\)为常数，有：\n\\[\n\\mu_{x_t}=\\operatorname{E}(x_t)=\\delta t+\\sum_{j=1}^{t}\\operatorname{E}(w_j)=\\delta t\n\\]\n这是一条斜率为\\(\\delta\\)的直线，图 12中的虚线就是其平均函数。\n\n\n3.1.3 信号加噪声的平均函数\n平均函数为余弦波，以式 2为例。\n\\[\n\\mu_{xt}=\\operatorname{E}(x_t)=\\operatorname{E}[2cos(2\\pi\\frac{t+15}{50})+w_t]=2cos(2\\pi\\frac{t+15}{50})+\\operatorname{E}(w_t)=2cos(2\\pi\\frac{t+15}{50})\n\\]"
+  },
+  {
+    "objectID": "posts/time_series/index.html#自协方差函数autocovariance-function",
+    "href": "posts/time_series/index.html#自协方差函数autocovariance-function",
+    "title": "时间序列分析：第一章",
+    "section": "3.2 自协方差函数(Autocovariance Function)",
+    "text": "3.2 自协方差函数(Autocovariance Function)\n对于任意\\(s\\)和\\(t\\)，自协方差函数被定义为二阶矩函数：\n\\[\n\\gamma_x(s,t)=\\operatorname{cov}(x_s,x_t)=\\operatorname{E}[(x_s-\\mu_s)(x_t-\\mu_t)]\n\\tag{4}\\]\n自协方差衡量在不同时间观察到的同一时间序列的两点间的线性依赖性。平滑的时间序列，即使\\(t\\)和\\(s\\)相隔很远，自协方差函数也会比较大；而波动大的时间序列，自协方差函数几乎为0。\n从经典统计数据角度来看，如果\\(\\gamma_x(s,t)=0\\)，\\(x_s\\)和\\(x_t\\)非线性相关(可能有其他依赖结构)。但如果\\(x_s\\)和\\(x_t\\)是二元正态分布，\\(\\gamma_x(s,t)=0\\)说明相互独立。对于\\(s=t\\)，自协方差就是方差，即：\n\\[\n\\gamma_x(t,t)=\\operatorname{E}[(x_t-\\mu_t)^2]=\\operatorname{var}(x_t)\n\\]"
   },
   {
     "objectID": "index.html",

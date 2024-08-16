@@ -222,7 +222,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">修改于</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">August 13, 2024</p>
+        <p class="date-modified">August 16, 2024</p>
       </div>
     </div>
       
@@ -255,7 +255,11 @@ window.Quarto = {
   <li><a href="#带漂移项drift的随机游走random-walk" id="toc-带漂移项drift的随机游走random-walk" class="nav-link" data-scroll-target="#带漂移项drift的随机游走random-walk"><span class="header-section-number">2.4</span> 带漂移项(Drift)的随机游走(Random Walk)</a></li>
   <li><a href="#噪声信号signal-in-noise" id="toc-噪声信号signal-in-noise" class="nav-link" data-scroll-target="#噪声信号signal-in-noise"><span class="header-section-number">2.5</span> 噪声信号(Signal in Noise)</a></li>
   </ul></li>
-  <li><a href="#相关性测量" id="toc-相关性测量" class="nav-link" data-scroll-target="#相关性测量"><span class="header-section-number">3</span> 相关性测量</a></li>
+  <li><a href="#相关性测量" id="toc-相关性测量" class="nav-link" data-scroll-target="#相关性测量"><span class="header-section-number">3</span> 相关性测量</a>
+  <ul class="collapse">
+  <li><a href="#平均函数" id="toc-平均函数" class="nav-link" data-scroll-target="#平均函数"><span class="header-section-number">3.1</span> 平均函数</a></li>
+  <li><a href="#自协方差函数autocovariance-function" id="toc-自协方差函数autocovariance-function" class="nav-link" data-scroll-target="#自协方差函数autocovariance-function"><span class="header-section-number">3.2</span> 自协方差函数(Autocovariance Function)</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -636,7 +640,7 @@ x_t=\delta+x_{t-1}+w_t
 </section>
 <section id="噪声信号signal-in-noise" class="level2" data-number="2.5">
 <h2 data-number="2.5" class="anchored" data-anchor-id="噪声信号signal-in-noise"><span class="header-section-number">2.5</span> 噪声信号(Signal in Noise)</h2>
-<p>很多时间序列模型都是假设由固定周期性变化的信号和随机噪声叠加构成的，<a href="#fig-fMRI" class="quarto-xref">图&nbsp;6</a>说表示的fMRI序列就有很明显的周期性。</p>
+<p>很多时间序列模型都是假设由固定周期性变化的信号和随机噪声叠加构成的，<a href="#fig-fMRI" class="quarto-xref">图&nbsp;6</a>所表示的fMRI序列就有很明显的周期性。</p>
 <p>现在令：</p>
 <p><span id="eq-cos"><span class="math display">\[
 x_t=2\cos(2\pi\frac{t+15}{50})+w_t
@@ -672,10 +676,49 @@ A\cos(2\pi\omega t+\phi)
 </section>
 <section id="相关性测量" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> 相关性测量</h1>
-<p>相关性是时间序列分析的基本特征，所以最常用的描述性度量是用协方差和相关函数表示。</p>
+<p>相关性是时间序列分析的基本特征，所以最常用的描述性度量是协方差和相关函数。边际分布函数<span class="math inline">\(F_t(x)=P\{x_t\leq x\}\)</span>、相应的边际密度函数<span class="math inline">\(f_t(x)=\frac{\partial F_t(x)}{\partial x}\)</span>和平均函数都是有用的边际描述指标。</p>
+<section id="平均函数" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="平均函数"><span class="header-section-number">3.1</span> 平均函数</h2>
+<p><span id="eq-ave"><span class="math display">\[
+\mu_{xt}=\operatorname{E}(x_t)=\int_{-\infty}^{\infty}xf_t(x)\operatorname{d}x
+\tag{3}\]</span></span></p>
+<section id="移动平均序列的平均函数" class="level3" data-number="3.1.1">
+<h3 data-number="3.1.1" class="anchored" data-anchor-id="移动平均序列的平均函数"><span class="header-section-number">3.1.1</span> 移动平均序列的平均函数</h3>
+<p>平均函数和白噪声相同，以<a href="#fig-white_noise" class="quarto-xref">图&nbsp;10</a>里的情况为例。</p>
+<p>白噪声序列<span class="math inline">\(w_t\)</span>有<span class="math inline">\(\mu_{wt}=\operatorname{E}(w_t)=0\)</span>，进行平滑后有<span class="math inline">\(\mu_{vt}=\operatorname{E}(v_t)=\frac{1}{3}[\operatorname{E}(w_{t-1})+\operatorname{E}(w_t)+\operatorname{E}(w_{t-1})]=0\)</span>，平均函数不变。</p>
+</section>
+<section id="带漂移项的随机游走的平均函数" class="level3" data-number="3.1.2">
+<h3 data-number="3.1.2" class="anchored" data-anchor-id="带漂移项的随机游走的平均函数"><span class="header-section-number">3.1.2</span> 带漂移项的随机游走的平均函数</h3>
+<p>平均函数为一条直线，以<a href="#eq-rw" class="quarto-xref">式&nbsp;1</a>为例。</p>
+<p>已知<span class="math inline">\(\operatorname{E}(w_t)=0\)</span>，<span class="math inline">\(\delta\)</span>为常数，有：</p>
+<p><span class="math display">\[
+\mu_{x_t}=\operatorname{E}(x_t)=\delta t+\sum_{j=1}^{t}\operatorname{E}(w_j)=\delta t
+\]</span></p>
+<p>这是一条斜率为<span class="math inline">\(\delta\)</span>的直线，<a href="#fig-rw" class="quarto-xref">图&nbsp;12</a>中的虚线就是其平均函数。</p>
+</section>
+<section id="信号加噪声的平均函数" class="level3" data-number="3.1.3">
+<h3 data-number="3.1.3" class="anchored" data-anchor-id="信号加噪声的平均函数"><span class="header-section-number">3.1.3</span> 信号加噪声的平均函数</h3>
+<p>平均函数为余弦波，以<a href="#eq-cos" class="quarto-xref">式&nbsp;2</a>为例。</p>
+<p><span class="math display">\[
+\mu_{xt}=\operatorname{E}(x_t)=\operatorname{E}[2cos(2\pi\frac{t+15}{50})+w_t]=2cos(2\pi\frac{t+15}{50})+\operatorname{E}(w_t)=2cos(2\pi\frac{t+15}{50})
+\]</span></p>
+</section>
+</section>
+<section id="自协方差函数autocovariance-function" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="自协方差函数autocovariance-function"><span class="header-section-number">3.2</span> 自协方差函数(Autocovariance Function)</h2>
+<p>对于任意<span class="math inline">\(s\)</span>和<span class="math inline">\(t\)</span>，<strong>自协方差函数</strong>被定义为二阶矩函数：</p>
+<p><span id="eq-acov"><span class="math display">\[
+\gamma_x(s,t)=\operatorname{cov}(x_s,x_t)=\operatorname{E}[(x_s-\mu_s)(x_t-\mu_t)]
+\tag{4}\]</span></span></p>
+<p>自协方差衡量在不同时间观察到的同一时间序列的两点间的<em>线性</em>依赖性。平滑的时间序列，即使<span class="math inline">\(t\)</span>和<span class="math inline">\(s\)</span>相隔很远，自协方差函数也会比较大；而波动大的时间序列，自协方差函数几乎为0。</p>
+<p>从经典统计数据角度来看，如果<span class="math inline">\(\gamma_x(s,t)=0\)</span>，<span class="math inline">\(x_s\)</span>和<span class="math inline">\(x_t\)</span>非线性相关(可能有其他依赖结构)。但如果<span class="math inline">\(x_s\)</span>和<span class="math inline">\(x_t\)</span>是二元正态分布，<span class="math inline">\(\gamma_x(s,t)=0\)</span>说明相互独立。对于<span class="math inline">\(s=t\)</span>，自协方差就是方差，即：</p>
+<p><span class="math display">\[
+\gamma_x(t,t)=\operatorname{E}[(x_t-\mu_t)^2]=\operatorname{var}(x_t)
+\]</span></p>
 
 
 
+</section>
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">参考文献</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
