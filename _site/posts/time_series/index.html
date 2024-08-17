@@ -250,7 +250,7 @@ window.Quarto = {
   <li><a href="#时间序列统计模型" id="toc-时间序列统计模型" class="nav-link" data-scroll-target="#时间序列统计模型"><span class="header-section-number">2</span> 时间序列统计模型</a>
   <ul class="collapse">
   <li><a href="#白噪声white-noise" id="toc-白噪声white-noise" class="nav-link" data-scroll-target="#白噪声white-noise"><span class="header-section-number">2.1</span> 白噪声(White Noise)</a></li>
-  <li><a href="#移动平均值moving-averages和过滤filtering" id="toc-移动平均值moving-averages和过滤filtering" class="nav-link" data-scroll-target="#移动平均值moving-averages和过滤filtering"><span class="header-section-number">2.2</span> 移动平均值(Moving Averages)和过滤(Filtering)</a></li>
+  <li><a href="#sec-moveave" id="toc-sec-moveave" class="nav-link" data-scroll-target="#sec-moveave"><span class="header-section-number">2.2</span> 移动平均值(Moving Averages)和过滤(Filtering)</a></li>
   <li><a href="#自回归autoregressions" id="toc-自回归autoregressions" class="nav-link" data-scroll-target="#自回归autoregressions"><span class="header-section-number">2.3</span> 自回归(Autoregressions)</a></li>
   <li><a href="#带漂移项drift的随机游走random-walk" id="toc-带漂移项drift的随机游走random-walk" class="nav-link" data-scroll-target="#带漂移项drift的随机游走random-walk"><span class="header-section-number">2.4</span> 带漂移项(Drift)的随机游走(Random Walk)</a></li>
   <li><a href="#噪声信号signal-in-noise" id="toc-噪声信号signal-in-noise" class="nav-link" data-scroll-target="#噪声信号signal-in-noise"><span class="header-section-number">2.5</span> 噪声信号(Signal in Noise)</a></li>
@@ -568,8 +568,8 @@ $class
 </div>
 </div>
 </section>
-<section id="移动平均值moving-averages和过滤filtering" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="移动平均值moving-averages和过滤filtering"><span class="header-section-number">2.2</span> 移动平均值(Moving Averages)和过滤(Filtering)</h2>
+<section id="sec-moveave" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="sec-moveave"><span class="header-section-number">2.2</span> 移动平均值(Moving Averages)和过滤(Filtering)</h2>
 <p>用移动平均值<span class="math inline">\(v_t\)</span>替换，从而对<span class="math inline">\(w_t\)</span>进行平滑处理。<a href="#fig-white_noise" class="quarto-xref">图&nbsp;10</a>下方图片就是三点移动平均值，其中<span class="math inline">\(v_t=\frac{1}{3}(w_{t-1}+w_t+w_{t+1})\)</span>。从实际效果来讲，实现了较慢的振荡被突出，较快的振荡被掩盖。这种序列一般称为<strong>滤波序列</strong>(<em>filtered series</em>)。</p>
 <p><code>filter()</code>函数通俗来讲是用来消除噪声的(滤波)，生成<a href="#fig-white_noise" class="quarto-xref">图&nbsp;10</a>的代码中，参数<code>filter = rep(1/3, 3)</code>其实就是<code>filter = c(1/3, 1/3, 1/3)</code>，分别表示<span class="math inline">\(w_{t+1}\)</span>、<span class="math inline">\(w_t\)</span>和<span class="math inline">\(w_{t-1}\)</span>的系数。</p>
 <div class="cell">
@@ -715,9 +715,74 @@ A\cos(2\pi\omega t+\phi)
 <p><span class="math display">\[
 \gamma_x(t,t)=\operatorname{E}[(x_t-\mu_t)^2]=\operatorname{var}(x_t)
 \]</span></p>
+<section id="白噪声的自协方差" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="白噪声的自协方差"><span class="header-section-number">3.2.1</span> 白噪声的自协方差</h3>
+<p>白噪声序列<span class="math inline">\(w_t\)</span>有<span class="math inline">\(\operatorname{E}(w_t)=0\)</span>，且</p>
+<p><span class="math display">\[
+\gamma_w(s,t)=\operatorname{cov}(w_s,w_t)=\begin{cases}
+\sigma_w^2 &amp; s=t\\
+0 &amp; s\neq t
+\end{cases}
+\]</span></p>
+</section>
+<section id="线性组合的协方差" class="level3" data-number="3.2.2">
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="线性组合的协方差"><span class="header-section-number">3.2.2</span> 线性组合的协方差</h3>
+<p>我们经常要计算滤波序列之间的自协方差，可以用到下面的性质：</p>
+<p>如果有随机变量</p>
+<p><span class="math display">\[
+U=\sum_{j=1}^ma_jX_j\ 和\ V=\sum_{k=1}^rb_kY_k
+\]</span></p>
+<p>分别是随机变量<span class="math inline">\(\{X_j\}\)</span>和<span class="math inline">\(\{Y_k\}\)</span>的线性组合，则它们的协方差为：</p>
+<p><span class="math display">\[
+\operatorname{cov}(U,V)=\sum_{j=1}^m\sum_{k=1}^ra_jb_k\operatorname{cov}(X_j,Y_k)
+\]</span></p>
+<p>且<span class="math inline">\(\operatorname{var}(U)=\operatorname{cov}(U,U)\)</span>。</p>
+</section>
+<section id="移动平均值的自协方差" class="level3" data-number="3.2.3">
+<h3 data-number="3.2.3" class="anchored" data-anchor-id="移动平均值的自协方差"><span class="header-section-number">3.2.3</span> 移动平均值的自协方差</h3>
+<p>以<a href="#sec-moveave" class="quarto-xref">小节&nbsp;2.2</a>中的例子为例。变换后的滤波序列有：</p>
+<p><span class="math display">\[
+\gamma_v(s,t)=\operatorname{cov}(v_s,v_t)=\operatorname{cov}\{\frac{1}{3}(w_{s-1}+w_s+w_{s+1}),\frac{1}{3}(w_{t-1}+w_t+w_{t+1})\}
+\]</span></p>
+<p>当<span class="math inline">\(s=t\)</span>时：</p>
+<p><span class="math display">\[
+\begin{aligned}
+\gamma_v(t,t)&amp;=\frac{1}{9}\operatorname{cov}\{(w_{t-1}+w_t+w_{t+1}),(w_{t-1}+w_t+w_{t+1})\}\\
+&amp;=\frac{1}{9}[\operatorname{cov}(w_{t-1},w_{t-1})+\operatorname{cov}(w_{t},w_{t})+\operatorname{cov}(w_{t+1},w_{t+1})]\\
+&amp;=\frac{3}{9}\sigma_w^2
+\end{aligned}
+\]</span></p>
+<p>当<span class="math inline">\(s=t+1\)</span>时：</p>
+<p><span class="math display">\[
+\begin{aligned}
+\gamma_v(t+1,t)&amp;=\frac{1}{9}\operatorname{cov}\{(w_t+w_{t+1}+w_{t+2}),(w_{t-1}+w_t+w_{t+1})\}\\
+&amp;=\frac{1}{9}[\operatorname{cov}(w_t,w_t)+\operatorname{cov}(w_{t+1},w_{t+1})+\operatorname{cov}(w_{t+2},w_{t-1})]\\
+&amp;=\frac{1}{9}[\operatorname{cov}(w_t,w_t)+\operatorname{cov}(w_{t+1},w_{t+1})+0]\\
+&amp;=\frac{2}{9}\sigma_w^2
+\end{aligned}
+\]</span></p>
+<p>通过类似计算，我们得到<span class="math inline">\(\gamma_v(t-1,t)=\gamma_v(t+1,t)=\frac{2}{9}\sigma_w^2\)</span>，<span class="math inline">\(\gamma_v(t-2,t)=\gamma_v(t+2,t)=\frac{1}{9}\sigma_w^2\)</span>，当<span class="math inline">\(|t-s|&gt;2\)</span>时为0。即：</p>
+<p><span class="math display">\[
+\gamma_v(s,t)=\begin{cases}
+\frac{3}{9}\sigma_w^2&amp;s=t\\
+\frac{2}{9}\sigma_w^2&amp;|s-t|=1\\
+\frac{1}{9}\sigma_w^2&amp;|s-t|=2\\
+0&amp;|s-t|&gt;2
+\end{cases}
+\]</span></p>
+<p>平滑后序列的协方差函数随两时间点间的间隔增加而减小，其协方差只取决于时间间隔或滞后，不取决于时间点在时间序列中的绝对位置。</p>
+</section>
+<section id="随机游走的自协方差" class="level3" data-number="3.2.4">
+<h3 data-number="3.2.4" class="anchored" data-anchor-id="随机游走的自协方差"><span class="header-section-number">3.2.4</span> 随机游走的自协方差</h3>
+<p>随机游走模型<span class="math inline">\(x_t=\sum_{j=1}^tw_j\)</span>，有</p>
+<p><span class="math display">\[
+\gamma_x(s,t)=\operatorname{cov}(x_s,x_t)=\operatorname{cov}(\sum_{j=1}^sw_j,\sum_{k=1}^tw_k)=\operatorname{min}\{s,t\}\sigma_w^2
+\]</span></p>
+<p>随机游走的自协方差函数取决于特定的时间值<span class="math inline">\(s\)</span>和<span class="math inline">\(t\)</span>，不取决于时间间隔或滞后。且<span class="math inline">\(\operatorname{var}(x_t)=\gamma_x(t,t)=t\sigma_w^2\)</span>。</p>
 
 
 
+</section>
 </section>
 </section>
 

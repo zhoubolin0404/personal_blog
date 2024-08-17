@@ -190,7 +190,7 @@ tsplot(w, col = 4, main = "white noise")
 tsplot(v, col = 4, ylim = c(-3, 3), main = "moving average")
 ```
 
-## 移动平均值(Moving Averages)和过滤(Filtering)
+## 移动平均值(Moving Averages)和过滤(Filtering){#sec-moveave}
 
 用移动平均值$v_t$替换，从而对$w_t$进行平滑处理。[@fig-white_noise]下方图片就是三点移动平均值，其中$v_t=\frac{1}{3}(w_{t-1}+w_t+w_{t+1})$。从实际效果来讲，实现了较慢的振荡被突出，较快的振荡被掩盖。这种序列一般称为**滤波序列**(*filtered series*)。
 
@@ -333,4 +333,96 @@ $${#eq-acov}
 $$
 \gamma_x(t,t)=\operatorname{E}[(x_t-\mu_t)^2]=\operatorname{var}(x_t)
 $$
+
+### 白噪声的自协方差
+
+白噪声序列$w_t$有$\operatorname{E}(w_t)=0$，且
+
+$$
+\gamma_w(s,t)=\operatorname{cov}(w_s,w_t)=\begin{cases}
+\sigma_w^2 & s=t\\
+0 & s\neq t
+\end{cases}
+$$
+
+### 线性组合的协方差
+
+我们经常要计算滤波序列之间的自协方差，可以用到下面的性质：
+
+如果有随机变量
+
+$$
+U=\sum_{j=1}^ma_jX_j\ 和\ V=\sum_{k=1}^rb_kY_k
+$$
+
+分别是随机变量$\{X_j\}$和$\{Y_k\}$的线性组合，则它们的协方差为：
+
+$$
+\operatorname{cov}(U,V)=\sum_{j=1}^m\sum_{k=1}^ra_jb_k\operatorname{cov}(X_j,Y_k)
+$$
+
+且$\operatorname{var}(U)=\operatorname{cov}(U,U)$。
+
+### 移动平均值的自协方差
+
+以[@sec-moveave]中的例子为例。变换后的滤波序列有：
+
+$$
+\gamma_v(s,t)=\operatorname{cov}(v_s,v_t)=\operatorname{cov}\{\frac{1}{3}(w_{s-1}+w_s+w_{s+1}),\frac{1}{3}(w_{t-1}+w_t+w_{t+1})\}
+$$
+
+当$s=t$时：
+
+$$
+\begin{aligned}
+\gamma_v(t,t)&=\frac{1}{9}\operatorname{cov}\{(w_{t-1}+w_t+w_{t+1}),(w_{t-1}+w_t+w_{t+1})\}\\
+&=\frac{1}{9}[\operatorname{cov}(w_{t-1},w_{t-1})+\operatorname{cov}(w_{t},w_{t})+\operatorname{cov}(w_{t+1},w_{t+1})]\\
+&=\frac{3}{9}\sigma_w^2
+\end{aligned}
+$$
+
+当$s=t+1$时：
+
+$$
+\begin{aligned}
+\gamma_v(t+1,t)&=\frac{1}{9}\operatorname{cov}\{(w_t+w_{t+1}+w_{t+2}),(w_{t-1}+w_t+w_{t+1})\}\\
+&=\frac{1}{9}[\operatorname{cov}(w_t,w_t)+\operatorname{cov}(w_{t+1},w_{t+1})+\operatorname{cov}(w_{t+2},w_{t-1})]\\
+&=\frac{1}{9}[\operatorname{cov}(w_t,w_t)+\operatorname{cov}(w_{t+1},w_{t+1})+0]\\
+&=\frac{2}{9}\sigma_w^2
+\end{aligned}
+$$
+
+通过类似计算，我们得到$\gamma_v(t-1,t)=\gamma_v(t+1,t)=\frac{2}{9}\sigma_w^2$，$\gamma_v(t-2,t)=\gamma_v(t+2,t)=\frac{1}{9}\sigma_w^2$，当$|t-s|>2$时为0。即：
+
+$$
+\gamma_v(s,t)=\begin{cases}
+\frac{3}{9}\sigma_w^2&s=t\\
+\frac{2}{9}\sigma_w^2&|s-t|=1\\
+\frac{1}{9}\sigma_w^2&|s-t|=2\\
+0&|s-t|>2
+\end{cases}
+$$
+
+平滑后序列的协方差函数随两时间点间的间隔增加而减小，其协方差只取决于时间间隔或滞后，不取决于时间点在时间序列中的绝对位置。
+
+### 随机游走的自协方差
+
+随机游走模型$x_t=\sum_{j=1}^tw_j$，有
+
+$$
+\gamma_x(s,t)=\operatorname{cov}(x_s,x_t)=\operatorname{cov}(\sum_{j=1}^sw_j,\sum_{k=1}^tw_k)=\operatorname{min}\{s,t\}\sigma_w^2
+$$
+
+随机游走的自协方差函数取决于特定的时间值$s$和$t$，不取决于时间间隔或滞后。且$\operatorname{var}(x_t)=\gamma_x(t,t)=t\sigma_w^2$。
+
+
+
+
+
+
+
+
+
+
+
 
