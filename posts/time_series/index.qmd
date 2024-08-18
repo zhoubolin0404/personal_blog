@@ -415,7 +415,41 @@ $$
 
 随机游走的自协方差函数取决于特定的时间值$s$和$t$，不取决于时间间隔或滞后。且$\operatorname{var}(x_t)=\gamma_x(t,t)=t\sigma_w^2$。
 
+## 自相关函数(autocorrelation function，ACF)
 
+$$
+\rho(s,t)=\frac{\gamma(s,t)}{\sqrt{\gamma(s,s)\gamma(t,t)}}
+$$
+
+ACF用来衡量序列中不同时间点之间的依赖性，常用来检测周期性、趋势和模式。
+
+### 交叉协方差函数(cross-covariance function)
+
+$$
+\gamma_{xy}(s,t)=\operatorname{cov}(x_s,y_t)=\operatorname{E}[(x_s-\mu_{xs})(y_t-\mu_{yt})]
+$$
+
+交叉协方差函数用于衡量两个时间序列在不同滞后下的协方差。
+
+### 交叉相关函数(cross-correlation function，CCF)
+
+$$
+\rho_{xy}(s,t)=\frac{\gamma_{xy}(s,t)}{\sqrt{\gamma_x(s,s)\gamma_y(t,t)}}
+$$
+
+CCF用于衡量两个时间序列之间在不同滞后下的线性关系。它类似于自相关函数，但用于评估两个不同时间序列之间的相关性，而不仅仅是同一个序列的内部相关性。
+
+# 平稳时间序列(Stationary Time Series)
+
+## 严格平稳(strictly stationary)
+
+如果时间序列每个值的集合$\{x_{t_1},\ x_{t_2},\ \cdots,\ x_{t_k}\}$的概率等于时间移动后值的集合$\{x_{t_1+h},\ x_{t_2+h},\ \cdots,\ x_{t_k+h}\}$的概率，即
+
+$$
+\Pr\{x_{t_1}\le c_1,\cdots,x_{t_k}\le c_k\}=\Pr\{x_{t_1+h}\le c_1,\cdots,x_{t_k+h}\le c_k\}
+$$
+
+其中所有$k=1,\ 2,\ \cdots$，所有时间点$t_1,\ t_2,\ \cdots,\ t_k$，所有数值$c_1,\ c_2,\ \cdots,\ c_k$和所有时间移动$h=0,\ \pm1,\ \pm2,\ \cdots$。
 
 
 

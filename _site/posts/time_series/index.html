@@ -259,6 +259,11 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#平均函数" id="toc-平均函数" class="nav-link" data-scroll-target="#平均函数"><span class="header-section-number">3.1</span> 平均函数</a></li>
   <li><a href="#自协方差函数autocovariance-function" id="toc-自协方差函数autocovariance-function" class="nav-link" data-scroll-target="#自协方差函数autocovariance-function"><span class="header-section-number">3.2</span> 自协方差函数(Autocovariance Function)</a></li>
+  <li><a href="#自相关函数autocorrelation-functionacf" id="toc-自相关函数autocorrelation-functionacf" class="nav-link" data-scroll-target="#自相关函数autocorrelation-functionacf"><span class="header-section-number">3.3</span> 自相关函数(autocorrelation function，ACF)</a></li>
+  </ul></li>
+  <li><a href="#平稳时间序列stationary-time-series" id="toc-平稳时间序列stationary-time-series" class="nav-link" data-scroll-target="#平稳时间序列stationary-time-series"><span class="header-section-number">4</span> 平稳时间序列(Stationary Time Series)</a>
+  <ul class="collapse">
+  <li><a href="#严格平稳strictly-stationary" id="toc-严格平稳strictly-stationary" class="nav-link" data-scroll-target="#严格平稳strictly-stationary"><span class="header-section-number">4.1</span> 严格平稳(strictly stationary)</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -779,10 +784,42 @@ U=\sum_{j=1}^ma_jX_j\ 和\ V=\sum_{k=1}^rb_kY_k
 \gamma_x(s,t)=\operatorname{cov}(x_s,x_t)=\operatorname{cov}(\sum_{j=1}^sw_j,\sum_{k=1}^tw_k)=\operatorname{min}\{s,t\}\sigma_w^2
 \]</span></p>
 <p>随机游走的自协方差函数取决于特定的时间值<span class="math inline">\(s\)</span>和<span class="math inline">\(t\)</span>，不取决于时间间隔或滞后。且<span class="math inline">\(\operatorname{var}(x_t)=\gamma_x(t,t)=t\sigma_w^2\)</span>。</p>
-
-
-
 </section>
+</section>
+<section id="自相关函数autocorrelation-functionacf" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="自相关函数autocorrelation-functionacf"><span class="header-section-number">3.3</span> 自相关函数(autocorrelation function，ACF)</h2>
+<p><span class="math display">\[
+\rho(s,t)=\frac{\gamma(s,t)}{\sqrt{\gamma(s,s)\gamma(t,t)}}
+\]</span></p>
+<p>ACF用来衡量序列中不同时间点之间的依赖性，常用来检测周期性、趋势和模式。</p>
+<section id="交叉协方差函数cross-covariance-function" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="交叉协方差函数cross-covariance-function"><span class="header-section-number">3.3.1</span> 交叉协方差函数(cross-covariance function)</h3>
+<p><span class="math display">\[
+\gamma_{xy}(s,t)=\operatorname{cov}(x_s,y_t)=\operatorname{E}[(x_s-\mu_{xs})(y_t-\mu_{yt})]
+\]</span></p>
+<p>交叉协方差函数用于衡量两个时间序列在不同滞后下的协方差。</p>
+</section>
+<section id="交叉相关函数cross-correlation-functionccf" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="交叉相关函数cross-correlation-functionccf"><span class="header-section-number">3.3.2</span> 交叉相关函数(cross-correlation function，CCF)</h3>
+<p><span class="math display">\[
+\rho_{xy}(s,t)=\frac{\gamma_{xy}(s,t)}{\sqrt{\gamma_x(s,s)\gamma_y(t,t)}}
+\]</span></p>
+<p>CCF用于衡量两个时间序列之间在不同滞后下的线性关系。它类似于自相关函数，但用于评估两个不同时间序列之间的相关性，而不仅仅是同一个序列的内部相关性。</p>
+</section>
+</section>
+</section>
+<section id="平稳时间序列stationary-time-series" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> 平稳时间序列(Stationary Time Series)</h1>
+<section id="严格平稳strictly-stationary" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="严格平稳strictly-stationary"><span class="header-section-number">4.1</span> 严格平稳(strictly stationary)</h2>
+<p>如果时间序列每个值的集合<span class="math inline">\(\{x_{t_1},\ x_{t_2},\ \cdots,\ x_{t_k}\}\)</span>的概率等于时间移动后值的集合<span class="math inline">\(\{x_{t_1+h},\ x_{t_2+h},\ \cdots,\ x_{t_k+h}\}\)</span>的概率，即</p>
+<p><span class="math display">\[
+\Pr\{x_{t_1}\le c_1,\cdots,x_{t_k}\le c_k\}=\Pr\{x_{t_1+h}\le c_1,\cdots,x_{t_k+h}\le c_k\}
+\]</span></p>
+<p>其中所有<span class="math inline">\(k=1,\ 2,\ \cdots\)</span>，所有时间点<span class="math inline">\(t_1,\ t_2,\ \cdots,\ t_k\)</span>，所有数值<span class="math inline">\(c_1,\ c_2,\ \cdots,\ c_k\)</span>和所有时间移动<span class="math inline">\(h=0,\ \pm1,\ \pm2,\ \cdots\)</span>。</p>
+
+
+
 </section>
 </section>
 
