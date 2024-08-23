@@ -9,7 +9,7 @@ csl: apa.csl
 number-sections: true
 toc: true
 toc-depth: 2
-date-modified: "2024/8/16"
+date-modified: "2024/8/23"
 ---
 
 ```{r chapter-status, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
@@ -290,7 +290,7 @@ tsplot(cs + 5 * w, ylab = "", main = expression(x[t] == 2 * cos(2 * pi * t / 50 
 
 $$
 \mu_{xt}=\operatorname{E}(x_t)=\int_{-\infty}^{\infty}xf_t(x)\operatorname{d}x
-$${#eq-ave}
+$$
 
 ### 移动平均序列的平均函数
 
@@ -324,7 +324,7 @@ $$
 
 $$
 \gamma_x(s,t)=\operatorname{cov}(x_s,x_t)=\operatorname{E}[(x_s-\mu_s)(x_t-\mu_t)]
-$${#eq-acov}
+$$
 
 自协方差衡量在不同时间观察到的同一时间序列的两点间的*线性*依赖性。平滑的时间序列，即使$t$和$s$相隔很远，自协方差函数也会比较大；而波动大的时间序列，自协方差函数几乎为0。
 
@@ -447,9 +447,37 @@ CCF用于衡量两个时间序列之间在不同滞后下的线性关系。它�
 
 $$
 \Pr\{x_{t_1}\le c_1,\cdots,x_{t_k}\le c_k\}=\Pr\{x_{t_1+h}\le c_1,\cdots,x_{t_k+h}\le c_k\}
-$$
+$${#eq-stationary}
 
 其中所有$k=1,\ 2,\ \cdots$，所有时间点$t_1,\ t_2,\ \cdots,\ t_k$，所有数值$c_1,\ c_2,\ \cdots,\ c_k$和所有时间移动$h=0,\ \pm1,\ \pm2,\ \cdots$。
+
+当$k=1$时，[@eq-stationary]变为对任意$s$和$t$
+
+$$
+\Pr\{x_s\le c\}=\Pr\{x_t\le c\}
+$${#eq-stationaryk1}
+
+可见严格平稳的时间序列对于所有$s$和$t$，$\mu_s=\mu_t$，因此$\mu_t$必定为常数。
+
+当$k=2$时，[@eq-stationary]又变为对任意$s$和$t$以及位移$h$
+
+$$
+\Pr\{x_s\le c_1,x_t\le c_2\}=\Pr\{x_{s+h}\le c_1,x_{t+h}\le c_2\}
+$${#eq-stationaryk2}
+
+根据[@eq-stationaryk1]和[@eq-stationaryk2]可推知，对任意$s$和$t$以及位移$h$
+
+$$
+\gamma(s,t)=\gamma(s+h,t+h)
+$$
+
+严格平稳的时间序列自协方差函数取决于$s$和$t$之间的时间差异，而不是具体时间点。
+
+## 弱平稳(Weakly Stationary)
+
+
+
+
 
 
 

@@ -222,7 +222,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">修改于</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">August 16, 2024</p>
+        <p class="date-modified">August 23, 2024</p>
       </div>
     </div>
       
@@ -264,6 +264,7 @@ window.Quarto = {
   <li><a href="#平稳时间序列stationary-time-series" id="toc-平稳时间序列stationary-time-series" class="nav-link" data-scroll-target="#平稳时间序列stationary-time-series"><span class="header-section-number">4</span> 平稳时间序列(Stationary Time Series)</a>
   <ul class="collapse">
   <li><a href="#严格平稳strictly-stationary" id="toc-严格平稳strictly-stationary" class="nav-link" data-scroll-target="#严格平稳strictly-stationary"><span class="header-section-number">4.1</span> 严格平稳(strictly stationary)</a></li>
+  <li><a href="#弱平稳weakly-stationary" id="toc-弱平稳weakly-stationary" class="nav-link" data-scroll-target="#弱平稳weakly-stationary"><span class="header-section-number">4.2</span> 弱平稳(Weakly Stationary)</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -684,9 +685,9 @@ A\cos(2\pi\omega t+\phi)
 <p>相关性是时间序列分析的基本特征，所以最常用的描述性度量是协方差和相关函数。边际分布函数<span class="math inline">\(F_t(x)=P\{x_t\leq x\}\)</span>、相应的边际密度函数<span class="math inline">\(f_t(x)=\frac{\partial F_t(x)}{\partial x}\)</span>和平均函数都是有用的边际描述指标。</p>
 <section id="平均函数" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="平均函数"><span class="header-section-number">3.1</span> 平均函数</h2>
-<p><span id="eq-ave"><span class="math display">\[
+<p><span class="math display">\[
 \mu_{xt}=\operatorname{E}(x_t)=\int_{-\infty}^{\infty}xf_t(x)\operatorname{d}x
-\tag{3}\]</span></span></p>
+\]</span></p>
 <section id="移动平均序列的平均函数" class="level3" data-number="3.1.1">
 <h3 data-number="3.1.1" class="anchored" data-anchor-id="移动平均序列的平均函数"><span class="header-section-number">3.1.1</span> 移动平均序列的平均函数</h3>
 <p>平均函数和白噪声相同，以<a href="#fig-white_noise" class="quarto-xref">图&nbsp;10</a>里的情况为例。</p>
@@ -712,9 +713,9 @@ A\cos(2\pi\omega t+\phi)
 <section id="自协方差函数autocovariance-function" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="自协方差函数autocovariance-function"><span class="header-section-number">3.2</span> 自协方差函数(Autocovariance Function)</h2>
 <p>对于任意<span class="math inline">\(s\)</span>和<span class="math inline">\(t\)</span>，<strong>自协方差函数</strong>被定义为二阶矩函数：</p>
-<p><span id="eq-acov"><span class="math display">\[
+<p><span class="math display">\[
 \gamma_x(s,t)=\operatorname{cov}(x_s,x_t)=\operatorname{E}[(x_s-\mu_s)(x_t-\mu_t)]
-\tag{4}\]</span></span></p>
+\]</span></p>
 <p>自协方差衡量在不同时间观察到的同一时间序列的两点间的<em>线性</em>依赖性。平滑的时间序列，即使<span class="math inline">\(t\)</span>和<span class="math inline">\(s\)</span>相隔很远，自协方差函数也会比较大；而波动大的时间序列，自协方差函数几乎为0。</p>
 <p>从经典统计数据角度来看，如果<span class="math inline">\(\gamma_x(s,t)=0\)</span>，<span class="math inline">\(x_s\)</span>和<span class="math inline">\(x_t\)</span>非线性相关(可能有其他依赖结构)。但如果<span class="math inline">\(x_s\)</span>和<span class="math inline">\(x_t\)</span>是二元正态分布，<span class="math inline">\(\gamma_x(s,t)=0\)</span>说明相互独立。对于<span class="math inline">\(s=t\)</span>，自协方差就是方差，即：</p>
 <p><span class="math display">\[
@@ -813,17 +814,34 @@ U=\sum_{j=1}^ma_jX_j\ 和\ V=\sum_{k=1}^rb_kY_k
 <section id="严格平稳strictly-stationary" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="严格平稳strictly-stationary"><span class="header-section-number">4.1</span> 严格平稳(strictly stationary)</h2>
 <p>如果时间序列每个值的集合<span class="math inline">\(\{x_{t_1},\ x_{t_2},\ \cdots,\ x_{t_k}\}\)</span>的概率等于时间移动后值的集合<span class="math inline">\(\{x_{t_1+h},\ x_{t_2+h},\ \cdots,\ x_{t_k+h}\}\)</span>的概率，即</p>
-<p><span class="math display">\[
+<p><span id="eq-stationary"><span class="math display">\[
 \Pr\{x_{t_1}\le c_1,\cdots,x_{t_k}\le c_k\}=\Pr\{x_{t_1+h}\le c_1,\cdots,x_{t_k+h}\le c_k\}
-\]</span></p>
+\tag{3}\]</span></span></p>
 <p>其中所有<span class="math inline">\(k=1,\ 2,\ \cdots\)</span>，所有时间点<span class="math inline">\(t_1,\ t_2,\ \cdots,\ t_k\)</span>，所有数值<span class="math inline">\(c_1,\ c_2,\ \cdots,\ c_k\)</span>和所有时间移动<span class="math inline">\(h=0,\ \pm1,\ \pm2,\ \cdots\)</span>。</p>
+<p>当<span class="math inline">\(k=1\)</span>时，<a href="#eq-stationary" class="quarto-xref">式&nbsp;3</a>变为对任意<span class="math inline">\(s\)</span>和<span class="math inline">\(t\)</span></p>
+<p><span id="eq-stationaryk1"><span class="math display">\[
+\Pr\{x_s\le c\}=\Pr\{x_t\le c\}
+\tag{4}\]</span></span></p>
+<p>可见严格平稳的时间序列对于所有<span class="math inline">\(s\)</span>和<span class="math inline">\(t\)</span>，<span class="math inline">\(\mu_s=\mu_t\)</span>，因此<span class="math inline">\(\mu_t\)</span>必定为常数。</p>
+<p>当<span class="math inline">\(k=2\)</span>时，<a href="#eq-stationary" class="quarto-xref">式&nbsp;3</a>又变为对任意<span class="math inline">\(s\)</span>和<span class="math inline">\(t\)</span>以及位移<span class="math inline">\(h\)</span></p>
+<p><span id="eq-stationaryk2"><span class="math display">\[
+\Pr\{x_s\le c_1,x_t\le c_2\}=\Pr\{x_{s+h}\le c_1,x_{t+h}\le c_2\}
+\tag{5}\]</span></span></p>
+<p>根据<a href="#eq-stationaryk1" class="quarto-xref">式&nbsp;4</a>和<a href="#eq-stationaryk2" class="quarto-xref">式&nbsp;5</a>可推知，对任意<span class="math inline">\(s\)</span>和<span class="math inline">\(t\)</span>以及位移<span class="math inline">\(h\)</span></p>
+<p><span class="math display">\[
+\gamma(s,t)=\gamma(s+h,t+h)
+\]</span></p>
+<p>严格平稳的时间序列自协方差函数取决于<span class="math inline">\(s\)</span>和<span class="math inline">\(t\)</span>之间的时间差异，而不是具体时间点。</p>
+</section>
+<section id="弱平稳weakly-stationary" class="level2" data-number="4.2">
+
 
 
 
 </section>
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">参考文献</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">4.2 弱平稳(Weakly Stationary)</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
 <div id="ref-Shumway_2017" class="csl-entry" role="listitem">
 Shumway, R. H., &amp; Stoffer, D. S. (2017). <em>Time series analysis and its applications: With r examples</em> (4th ed.). Springer Cham. <a href="https://doi.org/10.1007/978-3-319-52452-8">https://doi.org/10.1007/978-3-319-52452-8</a>
 </div>
