@@ -9,7 +9,7 @@ csl: apa.csl
 number-sections: true
 toc: true
 toc-depth: 2
-date-modified: "2024/8/23"
+date-modified: "2024/8/26"
 ---
 
 ```{r chapter-status, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
@@ -24,6 +24,12 @@ library(xts)
 该书第五版正在制作，配套`astsa`包中的部分数据集会逐渐更新，所以后期也许会换成第五版内容。
 
 该内容为学习笔记，会很碎片化，同时参考了作者在[github](https://github.com/nickpoison/tsa4/blob/master/textRcode.md)上给出的代码。
+
+:::{.callout-tip}
+该框表明这部分完全是个人理解，可能有误。
+
+一切错误和想讨论的内容欢迎联系邮箱(zhoubolin0404@126.com)，感谢！
+:::
 
 时间序列分析适用情境：
 
@@ -171,7 +177,7 @@ tsplot(EXP6, col = 4, main = "爆炸")
 
 # 时间序列统计模型
 
-## 白噪声(White Noise)
+## 白噪声(White Noise){#sec-whitenoise}
 
 白噪声：符合$w_t\sim wn(0,\sigma_w^2)$的不相关随机变量
 
@@ -205,7 +211,7 @@ filter(x,                # ts数据
        init)             # 只用于递归，初始值，默认0
 ```
 
-## 自回归(Autoregressions)
+## 自回归(Autoregressions){#sec-autoregressions}
 
 可以换种方式替换$w_t$，即$x_t=x_{t-1}-0.9x_{t-2}+w_t$。
 
@@ -290,7 +296,7 @@ tsplot(cs + 5 * w, ylab = "", main = expression(x[t] == 2 * cos(2 * pi * t / 50 
 
 $$
 \mu_{xt}=\operatorname{E}(x_t)=\int_{-\infty}^{\infty}xf_t(x)\operatorname{d}x
-$$
+$${#eq-meanf}
 
 ### 移动平均序列的平均函数
 
@@ -324,7 +330,7 @@ $$
 
 $$
 \gamma_x(s,t)=\operatorname{cov}(x_s,x_t)=\operatorname{E}[(x_s-\mu_s)(x_t-\mu_t)]
-$$
+$${#eq-autof}
 
 自协方差衡量在不同时间观察到的同一时间序列的两点间的*线性*依赖性。平滑的时间序列，即使$t$和$s$相隔很远，自协方差函数也会比较大；而波动大的时间序列，自协方差函数几乎为0。
 
@@ -415,7 +421,7 @@ $$
 
 随机游走的自协方差函数取决于特定的时间值$s$和$t$，不取决于时间间隔或滞后。且$\operatorname{var}(x_t)=\gamma_x(t,t)=t\sigma_w^2$。
 
-## 自相关函数(autocorrelation function，ACF)
+## 自相关函数(Autocorrelation Function，ACF)
 
 $$
 \rho(s,t)=\frac{\gamma(s,t)}{\sqrt{\gamma(s,s)\gamma(t,t)}}
@@ -423,7 +429,7 @@ $$
 
 ACF用来衡量序列中不同时间点之间的依赖性，常用来检测周期性、趋势和模式。
 
-### 交叉协方差函数(cross-covariance function)
+### 交叉协方差函数(Cross-covariance Function)
 
 $$
 \gamma_{xy}(s,t)=\operatorname{cov}(x_s,y_t)=\operatorname{E}[(x_s-\mu_{xs})(y_t-\mu_{yt})]
@@ -441,7 +447,7 @@ CCF用于衡量两个时间序列之间在不同滞后下的线性关系。它�
 
 # 平稳时间序列(Stationary Time Series)
 
-## 严格平稳(strictly stationary)
+## 严格平稳(Strictly Stationary)
 
 如果时间序列每个值的集合$\{x_{t_1},\ x_{t_2},\ \cdots,\ x_{t_k}\}$的概率等于时间移动后值的集合$\{x_{t_1+h},\ x_{t_2+h},\ \cdots,\ x_{t_k+h}\}$的概率，即
 
@@ -475,15 +481,57 @@ $$
 
 ## 弱平稳(Weakly Stationary)
 
+弱平稳时间序列$x_t$是一个方差有限的随机过程，满足以下条件：
 
+(1) [@eq-meanf]中定义的均值函数$\mu_t$是常数，不依赖于时间$t$；
 
+(2) [@eq-autof]中定义的自协方差函数$\gamma(s,t)$仅取决于$s$和$t$的差值$|s-t|$而不是具体的$s$或者$t$的取值。
 
+:::{.callout-tip}
+条件1和2可推导出方差恒定，同时方差恒定和自协方差函数仅取决于时差可以推导出均值恒定，但均值恒定和方差恒定不能推导出自协方差函数仅取决于时差。
 
+严格平稳要求序列的所有阶矩(如均值、方差、偏度、峰度等)都不随时间变化(如抛硬币，理想情况下随时随刻抛正反面分布情况不变)，弱平稳的要求则宽松一些，只要求前两阶矩(均值、方差)恒定。
 
+阶矩用来衡量数据的分布情况。
 
+一阶矩$\operatorname{E}[X]$衡量均值($\mu$)；二阶矩$\operatorname{E}[(X-\mu)^2]$衡量方差($\sigma^2$)；三阶矩$\operatorname{E}[(X-\mu)^3]$衡量偏度($\gamma_1$)；四阶矩$\operatorname{E}[(X-\mu)^4]$衡量峰度($\gamma_2$)；五阶矩表达式为$\operatorname{E}[(X-\mu)^5]$，衡量更高的维度。
+:::
 
+我们很难从单个数据集中评估出严格平稳，更多的是使用弱平稳。
 
+:::{.callout-note}
+为了方便，之后使用**平稳**表示弱平稳，**严平稳**表示严格平稳。
+:::
 
+方差有限的严平稳也是弱平稳。
+
+:::{.callout-note}
+平稳时间序列的均值$\operatorname{E}(x_t)=\mu_t$与时间$t$无关，方便起见用$\mu$表示$\mu_t$。
+
+平稳时间序列$x_t$的自协方差函数$\gamma(s,t)$仅取决于时差$|s-t|$，令$s=t+h$，$h$表示时移或滞后，则
+
+$$
+\gamma(t+h,t)=\operatorname{cov}(x_{t+h},x_t)=\operatorname{cov}(x_h,x_0)=\gamma(h,0)
+$$
+
+方便起见简写为$\gamma(h)$。
+:::
+
+平稳时间序列的自协方差函数为：
+
+$$
+\gamma(h)=\operatorname{cov}(x_{t+h},x_t)=\operatorname{E}[(x_{t+h}-\mu)(x_t-\mu)]
+$$
+
+平稳时间序列的自相关函数为：
+
+$$
+\rho(h)=\frac{\gamma(t+h,t)}{\sqrt{\gamma(t+h,t+h)\gamma(t,t)}}=\frac{\gamma(h)}{\gamma(0)}
+$$
+
+## 白噪声的平稳性
+
+[@sec-whitenoise]和[@sec-autoregressions]
 
 
 

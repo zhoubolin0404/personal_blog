@@ -222,7 +222,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">修改于</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">August 23, 2024</p>
+        <p class="date-modified">August 26, 2024</p>
       </div>
     </div>
       
@@ -249,9 +249,9 @@ window.Quarto = {
   </ul></li>
   <li><a href="#时间序列统计模型" id="toc-时间序列统计模型" class="nav-link" data-scroll-target="#时间序列统计模型"><span class="header-section-number">2</span> 时间序列统计模型</a>
   <ul class="collapse">
-  <li><a href="#白噪声white-noise" id="toc-白噪声white-noise" class="nav-link" data-scroll-target="#白噪声white-noise"><span class="header-section-number">2.1</span> 白噪声(White Noise)</a></li>
+  <li><a href="#sec-whitenoise" id="toc-sec-whitenoise" class="nav-link" data-scroll-target="#sec-whitenoise"><span class="header-section-number">2.1</span> 白噪声(White Noise)</a></li>
   <li><a href="#sec-moveave" id="toc-sec-moveave" class="nav-link" data-scroll-target="#sec-moveave"><span class="header-section-number">2.2</span> 移动平均值(Moving Averages)和过滤(Filtering)</a></li>
-  <li><a href="#自回归autoregressions" id="toc-自回归autoregressions" class="nav-link" data-scroll-target="#自回归autoregressions"><span class="header-section-number">2.3</span> 自回归(Autoregressions)</a></li>
+  <li><a href="#sec-autoregressions" id="toc-sec-autoregressions" class="nav-link" data-scroll-target="#sec-autoregressions"><span class="header-section-number">2.3</span> 自回归(Autoregressions)</a></li>
   <li><a href="#带漂移项drift的随机游走random-walk" id="toc-带漂移项drift的随机游走random-walk" class="nav-link" data-scroll-target="#带漂移项drift的随机游走random-walk"><span class="header-section-number">2.4</span> 带漂移项(Drift)的随机游走(Random Walk)</a></li>
   <li><a href="#噪声信号signal-in-noise" id="toc-噪声信号signal-in-noise" class="nav-link" data-scroll-target="#噪声信号signal-in-noise"><span class="header-section-number">2.5</span> 噪声信号(Signal in Noise)</a></li>
   </ul></li>
@@ -259,12 +259,13 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#平均函数" id="toc-平均函数" class="nav-link" data-scroll-target="#平均函数"><span class="header-section-number">3.1</span> 平均函数</a></li>
   <li><a href="#自协方差函数autocovariance-function" id="toc-自协方差函数autocovariance-function" class="nav-link" data-scroll-target="#自协方差函数autocovariance-function"><span class="header-section-number">3.2</span> 自协方差函数(Autocovariance Function)</a></li>
-  <li><a href="#自相关函数autocorrelation-functionacf" id="toc-自相关函数autocorrelation-functionacf" class="nav-link" data-scroll-target="#自相关函数autocorrelation-functionacf"><span class="header-section-number">3.3</span> 自相关函数(autocorrelation function，ACF)</a></li>
+  <li><a href="#自相关函数autocorrelation-functionacf" id="toc-自相关函数autocorrelation-functionacf" class="nav-link" data-scroll-target="#自相关函数autocorrelation-functionacf"><span class="header-section-number">3.3</span> 自相关函数(Autocorrelation Function，ACF)</a></li>
   </ul></li>
   <li><a href="#平稳时间序列stationary-time-series" id="toc-平稳时间序列stationary-time-series" class="nav-link" data-scroll-target="#平稳时间序列stationary-time-series"><span class="header-section-number">4</span> 平稳时间序列(Stationary Time Series)</a>
   <ul class="collapse">
-  <li><a href="#严格平稳strictly-stationary" id="toc-严格平稳strictly-stationary" class="nav-link" data-scroll-target="#严格平稳strictly-stationary"><span class="header-section-number">4.1</span> 严格平稳(strictly stationary)</a></li>
+  <li><a href="#严格平稳strictly-stationary" id="toc-严格平稳strictly-stationary" class="nav-link" data-scroll-target="#严格平稳strictly-stationary"><span class="header-section-number">4.1</span> 严格平稳(Strictly Stationary)</a></li>
   <li><a href="#弱平稳weakly-stationary" id="toc-弱平稳weakly-stationary" class="nav-link" data-scroll-target="#弱平稳weakly-stationary"><span class="header-section-number">4.2</span> 弱平稳(Weakly Stationary)</a></li>
+  <li><a href="#白噪声的平稳性" id="toc-白噪声的平稳性" class="nav-link" data-scroll-target="#白噪声的平稳性"><span class="header-section-number">4.3</span> 白噪声的平稳性</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -279,6 +280,20 @@ window.Quarto = {
 <p>主要参考书籍为Shumway和Stoffer<span class="citation" data-cites="Shumway_2017">(<a href="#ref-Shumway_2017" role="doc-biblioref">2017</a>)</span>的Time Series Analysis and Its Applications: With R Examples。</p>
 <p>该书第五版正在制作，配套<code>astsa</code>包中的部分数据集会逐渐更新，所以后期也许会换成第五版内容。</p>
 <p>该内容为学习笔记，会很碎片化，同时参考了作者在<a href="https://github.com/nickpoison/tsa4/blob/master/textRcode.md">github</a>上给出的代码。</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+提示
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>该框表明这部分完全是个人理解，可能有误。</p>
+<p>一切错误和想讨论的内容欢迎联系邮箱(zhoubolin0404@126.com)，感谢！</p>
+</div>
+</div>
 <p>时间序列分析适用情境：</p>
 <ul>
 <li><strong>金融</strong>：每日股市配额、每月失业人口</li>
@@ -548,8 +563,8 @@ $class
 </section>
 <section id="时间序列统计模型" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> 时间序列统计模型</h1>
-<section id="白噪声white-noise" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="白噪声white-noise"><span class="header-section-number">2.1</span> 白噪声(White Noise)</h2>
+<section id="sec-whitenoise" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="sec-whitenoise"><span class="header-section-number">2.1</span> 白噪声(White Noise)</h2>
 <p>白噪声：符合<span class="math inline">\(w_t\sim wn(0,\sigma_w^2)\)</span>的不相关随机变量</p>
 <p>独立同分布(independent and identically distributed，iid)的噪声：<span class="math inline">\(w_t\sim iid(0,\sigma_w^2)\)</span></p>
 <p>高斯白噪声(Gaussian white noise)：<span class="math inline">\(w_t\sim iidN(0,\sigma_w^2)\)</span></p>
@@ -587,8 +602,8 @@ $class
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>       init)             <span class="co"># 只用于递归，初始值，默认0</span></span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="自回归autoregressions" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="自回归autoregressions"><span class="header-section-number">2.3</span> 自回归(Autoregressions)</h2>
+<section id="sec-autoregressions" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="sec-autoregressions"><span class="header-section-number">2.3</span> 自回归(Autoregressions)</h2>
 <p>可以换种方式替换<span class="math inline">\(w_t\)</span>，即<span class="math inline">\(x_t=x_{t-1}-0.9x_{t-2}+w_t\)</span>。</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
@@ -685,9 +700,9 @@ A\cos(2\pi\omega t+\phi)
 <p>相关性是时间序列分析的基本特征，所以最常用的描述性度量是协方差和相关函数。边际分布函数<span class="math inline">\(F_t(x)=P\{x_t\leq x\}\)</span>、相应的边际密度函数<span class="math inline">\(f_t(x)=\frac{\partial F_t(x)}{\partial x}\)</span>和平均函数都是有用的边际描述指标。</p>
 <section id="平均函数" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="平均函数"><span class="header-section-number">3.1</span> 平均函数</h2>
-<p><span class="math display">\[
+<p><span id="eq-meanf"><span class="math display">\[
 \mu_{xt}=\operatorname{E}(x_t)=\int_{-\infty}^{\infty}xf_t(x)\operatorname{d}x
-\]</span></p>
+\tag{3}\]</span></span></p>
 <section id="移动平均序列的平均函数" class="level3" data-number="3.1.1">
 <h3 data-number="3.1.1" class="anchored" data-anchor-id="移动平均序列的平均函数"><span class="header-section-number">3.1.1</span> 移动平均序列的平均函数</h3>
 <p>平均函数和白噪声相同，以<a href="#fig-white_noise" class="quarto-xref">图&nbsp;10</a>里的情况为例。</p>
@@ -713,9 +728,9 @@ A\cos(2\pi\omega t+\phi)
 <section id="自协方差函数autocovariance-function" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="自协方差函数autocovariance-function"><span class="header-section-number">3.2</span> 自协方差函数(Autocovariance Function)</h2>
 <p>对于任意<span class="math inline">\(s\)</span>和<span class="math inline">\(t\)</span>，<strong>自协方差函数</strong>被定义为二阶矩函数：</p>
-<p><span class="math display">\[
+<p><span id="eq-autof"><span class="math display">\[
 \gamma_x(s,t)=\operatorname{cov}(x_s,x_t)=\operatorname{E}[(x_s-\mu_s)(x_t-\mu_t)]
-\]</span></p>
+\tag{4}\]</span></span></p>
 <p>自协方差衡量在不同时间观察到的同一时间序列的两点间的<em>线性</em>依赖性。平滑的时间序列，即使<span class="math inline">\(t\)</span>和<span class="math inline">\(s\)</span>相隔很远，自协方差函数也会比较大；而波动大的时间序列，自协方差函数几乎为0。</p>
 <p>从经典统计数据角度来看，如果<span class="math inline">\(\gamma_x(s,t)=0\)</span>，<span class="math inline">\(x_s\)</span>和<span class="math inline">\(x_t\)</span>非线性相关(可能有其他依赖结构)。但如果<span class="math inline">\(x_s\)</span>和<span class="math inline">\(x_t\)</span>是二元正态分布，<span class="math inline">\(\gamma_x(s,t)=0\)</span>说明相互独立。对于<span class="math inline">\(s=t\)</span>，自协方差就是方差，即：</p>
 <p><span class="math display">\[
@@ -788,13 +803,13 @@ U=\sum_{j=1}^ma_jX_j\ 和\ V=\sum_{k=1}^rb_kY_k
 </section>
 </section>
 <section id="自相关函数autocorrelation-functionacf" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="自相关函数autocorrelation-functionacf"><span class="header-section-number">3.3</span> 自相关函数(autocorrelation function，ACF)</h2>
+<h2 data-number="3.3" class="anchored" data-anchor-id="自相关函数autocorrelation-functionacf"><span class="header-section-number">3.3</span> 自相关函数(Autocorrelation Function，ACF)</h2>
 <p><span class="math display">\[
 \rho(s,t)=\frac{\gamma(s,t)}{\sqrt{\gamma(s,s)\gamma(t,t)}}
 \]</span></p>
 <p>ACF用来衡量序列中不同时间点之间的依赖性，常用来检测周期性、趋势和模式。</p>
 <section id="交叉协方差函数cross-covariance-function" class="level3" data-number="3.3.1">
-<h3 data-number="3.3.1" class="anchored" data-anchor-id="交叉协方差函数cross-covariance-function"><span class="header-section-number">3.3.1</span> 交叉协方差函数(cross-covariance function)</h3>
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="交叉协方差函数cross-covariance-function"><span class="header-section-number">3.3.1</span> 交叉协方差函数(Cross-covariance Function)</h3>
 <p><span class="math display">\[
 \gamma_{xy}(s,t)=\operatorname{cov}(x_s,y_t)=\operatorname{E}[(x_s-\mu_{xs})(y_t-\mu_{yt})]
 \]</span></p>
@@ -812,36 +827,102 @@ U=\sum_{j=1}^ma_jX_j\ 和\ V=\sum_{k=1}^rb_kY_k
 <section id="平稳时间序列stationary-time-series" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> 平稳时间序列(Stationary Time Series)</h1>
 <section id="严格平稳strictly-stationary" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="严格平稳strictly-stationary"><span class="header-section-number">4.1</span> 严格平稳(strictly stationary)</h2>
+<h2 data-number="4.1" class="anchored" data-anchor-id="严格平稳strictly-stationary"><span class="header-section-number">4.1</span> 严格平稳(Strictly Stationary)</h2>
 <p>如果时间序列每个值的集合<span class="math inline">\(\{x_{t_1},\ x_{t_2},\ \cdots,\ x_{t_k}\}\)</span>的概率等于时间移动后值的集合<span class="math inline">\(\{x_{t_1+h},\ x_{t_2+h},\ \cdots,\ x_{t_k+h}\}\)</span>的概率，即</p>
 <p><span id="eq-stationary"><span class="math display">\[
 \Pr\{x_{t_1}\le c_1,\cdots,x_{t_k}\le c_k\}=\Pr\{x_{t_1+h}\le c_1,\cdots,x_{t_k+h}\le c_k\}
-\tag{3}\]</span></span></p>
+\tag{5}\]</span></span></p>
 <p>其中所有<span class="math inline">\(k=1,\ 2,\ \cdots\)</span>，所有时间点<span class="math inline">\(t_1,\ t_2,\ \cdots,\ t_k\)</span>，所有数值<span class="math inline">\(c_1,\ c_2,\ \cdots,\ c_k\)</span>和所有时间移动<span class="math inline">\(h=0,\ \pm1,\ \pm2,\ \cdots\)</span>。</p>
-<p>当<span class="math inline">\(k=1\)</span>时，<a href="#eq-stationary" class="quarto-xref">式&nbsp;3</a>变为对任意<span class="math inline">\(s\)</span>和<span class="math inline">\(t\)</span></p>
+<p>当<span class="math inline">\(k=1\)</span>时，<a href="#eq-stationary" class="quarto-xref">式&nbsp;5</a>变为对任意<span class="math inline">\(s\)</span>和<span class="math inline">\(t\)</span></p>
 <p><span id="eq-stationaryk1"><span class="math display">\[
 \Pr\{x_s\le c\}=\Pr\{x_t\le c\}
-\tag{4}\]</span></span></p>
+\tag{6}\]</span></span></p>
 <p>可见严格平稳的时间序列对于所有<span class="math inline">\(s\)</span>和<span class="math inline">\(t\)</span>，<span class="math inline">\(\mu_s=\mu_t\)</span>，因此<span class="math inline">\(\mu_t\)</span>必定为常数。</p>
-<p>当<span class="math inline">\(k=2\)</span>时，<a href="#eq-stationary" class="quarto-xref">式&nbsp;3</a>又变为对任意<span class="math inline">\(s\)</span>和<span class="math inline">\(t\)</span>以及位移<span class="math inline">\(h\)</span></p>
+<p>当<span class="math inline">\(k=2\)</span>时，<a href="#eq-stationary" class="quarto-xref">式&nbsp;5</a>又变为对任意<span class="math inline">\(s\)</span>和<span class="math inline">\(t\)</span>以及位移<span class="math inline">\(h\)</span></p>
 <p><span id="eq-stationaryk2"><span class="math display">\[
 \Pr\{x_s\le c_1,x_t\le c_2\}=\Pr\{x_{s+h}\le c_1,x_{t+h}\le c_2\}
-\tag{5}\]</span></span></p>
-<p>根据<a href="#eq-stationaryk1" class="quarto-xref">式&nbsp;4</a>和<a href="#eq-stationaryk2" class="quarto-xref">式&nbsp;5</a>可推知，对任意<span class="math inline">\(s\)</span>和<span class="math inline">\(t\)</span>以及位移<span class="math inline">\(h\)</span></p>
+\tag{7}\]</span></span></p>
+<p>根据<a href="#eq-stationaryk1" class="quarto-xref">式&nbsp;6</a>和<a href="#eq-stationaryk2" class="quarto-xref">式&nbsp;7</a>可推知，对任意<span class="math inline">\(s\)</span>和<span class="math inline">\(t\)</span>以及位移<span class="math inline">\(h\)</span></p>
 <p><span class="math display">\[
 \gamma(s,t)=\gamma(s+h,t+h)
 \]</span></p>
 <p>严格平稳的时间序列自协方差函数取决于<span class="math inline">\(s\)</span>和<span class="math inline">\(t\)</span>之间的时间差异，而不是具体时间点。</p>
 </section>
 <section id="弱平稳weakly-stationary" class="level2" data-number="4.2">
-
+<h2 data-number="4.2" class="anchored" data-anchor-id="弱平稳weakly-stationary"><span class="header-section-number">4.2</span> 弱平稳(Weakly Stationary)</h2>
+<p>弱平稳时间序列<span class="math inline">\(x_t\)</span>是一个方差有限的随机过程，满足以下条件：</p>
+<ol type="1">
+<li><p><a href="#eq-meanf" class="quarto-xref">式&nbsp;3</a>中定义的均值函数<span class="math inline">\(\mu_t\)</span>是常数，不依赖于时间<span class="math inline">\(t\)</span>；</p></li>
+<li><p><a href="#eq-autof" class="quarto-xref">式&nbsp;4</a>中定义的自协方差函数<span class="math inline">\(\gamma(s,t)\)</span>仅取决于<span class="math inline">\(s\)</span>和<span class="math inline">\(t\)</span>的差值<span class="math inline">\(|s-t|\)</span>而不是具体的<span class="math inline">\(s\)</span>或者<span class="math inline">\(t\)</span>的取值。</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+提示
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>条件1和2可推导出方差恒定，同时方差恒定和自协方差函数仅取决于时差可以推导出均值恒定，但均值恒定和方差恒定不能推导出自协方差函数仅取决于时差。</p>
+<p>严格平稳要求序列的所有阶矩(如均值、方差、偏度、峰度等)都不随时间变化(如抛硬币，理想情况下随时随刻抛正反面分布情况不变)，弱平稳的要求则宽松一些，只要求前两阶矩(均值、方差)恒定。</p>
+<p>阶矩用来衡量数据的分布情况。</p>
+<p>一阶矩<span class="math inline">\(\operatorname{E}[X]\)</span>衡量均值(<span class="math inline">\(\mu\)</span>)；二阶矩<span class="math inline">\(\operatorname{E}[(X-\mu)^2]\)</span>衡量方差(<span class="math inline">\(\sigma^2\)</span>)；三阶矩<span class="math inline">\(\operatorname{E}[(X-\mu)^3]\)</span>衡量偏度(<span class="math inline">\(\gamma_1\)</span>)；四阶矩<span class="math inline">\(\operatorname{E}[(X-\mu)^4]\)</span>衡量峰度(<span class="math inline">\(\gamma_2\)</span>)；五阶矩表达式为<span class="math inline">\(\operatorname{E}[(X-\mu)^5]\)</span>，衡量更高的维度。</p>
+</div>
+</div>
+<p>我们很难从单个数据集中评估出严格平稳，更多的是使用弱平稳。</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+注释
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>为了方便，之后使用<strong>平稳</strong>表示弱平稳，<strong>严平稳</strong>表示严格平稳。</p>
+</div>
+</div>
+<p>方差有限的严平稳也是弱平稳。</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+注释
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>平稳时间序列的均值<span class="math inline">\(\operatorname{E}(x_t)=\mu_t\)</span>与时间<span class="math inline">\(t\)</span>无关，方便起见用<span class="math inline">\(\mu\)</span>表示<span class="math inline">\(\mu_t\)</span>。</p>
+<p>平稳时间序列<span class="math inline">\(x_t\)</span>的自协方差函数<span class="math inline">\(\gamma(s,t)\)</span>仅取决于时差<span class="math inline">\(|s-t|\)</span>，令<span class="math inline">\(s=t+h\)</span>，<span class="math inline">\(h\)</span>表示时移或滞后，则</p>
+<p><span class="math display">\[
+\gamma(t+h,t)=\operatorname{cov}(x_{t+h},x_t)=\operatorname{cov}(x_h,x_0)=\gamma(h,0)
+\]</span></p>
+<p>方便起见简写为<span class="math inline">\(\gamma(h)\)</span>。</p>
+</div>
+</div>
+<p>平稳时间序列的自协方差函数为：</p>
+<p><span class="math display">\[
+\gamma(h)=\operatorname{cov}(x_{t+h},x_t)=\operatorname{E}[(x_{t+h}-\mu)(x_t-\mu)]
+\]</span></p>
+<p>平稳时间序列的自相关函数为：</p>
+<p><span class="math display">\[
+\rho(h)=\frac{\gamma(t+h,t)}{\sqrt{\gamma(t+h,t+h)\gamma(t,t)}}=\frac{\gamma(h)}{\gamma(0)}
+\]</span></p>
+</section>
+<section id="白噪声的平稳性" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="白噪声的平稳性"><span class="header-section-number">4.3</span> 白噪声的平稳性</h2>
+<p><a href="#sec-whitenoise" class="quarto-xref">小节&nbsp;2.1</a>和<a href="#sec-autoregressions" class="quarto-xref">小节&nbsp;2.3</a></p>
 
 
 
 </section>
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">4.2 弱平稳(Weakly Stationary)</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">参考文献</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
 <div id="ref-Shumway_2017" class="csl-entry" role="listitem">
 Shumway, R. H., &amp; Stoffer, D. S. (2017). <em>Time series analysis and its applications: With r examples</em> (4th ed.). Springer Cham. <a href="https://doi.org/10.1007/978-3-319-52452-8">https://doi.org/10.1007/978-3-319-52452-8</a>
 </div>

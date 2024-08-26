@@ -56,8 +56,8 @@
     "text": "1.7 地震和爆炸\nEQ5：某地区地震的纵波和横波(两阶段) EXP6：某地区爆炸的纵波和横波(两阶段)\n\npar(mfrow = 2:1)\ntsplot(EQ5,  col = 4, main = \"地震\")\ntsplot(EXP6, col = 4, main = \"爆炸\")\n\n\n\n\n\n\n\n图 9: 地震和爆炸两阶段，1秒40个采样点"
   },
   {
-    "objectID": "posts/time_series/index.html#白噪声white-noise",
-    "href": "posts/time_series/index.html#白噪声white-noise",
+    "objectID": "posts/time_series/index.html#sec-whitenoise",
+    "href": "posts/time_series/index.html#sec-whitenoise",
     "title": "时间序列分析：第一章",
     "section": "2.1 白噪声(White Noise)",
     "text": "2.1 白噪声(White Noise)\n白噪声：符合\\(w_t\\sim wn(0,\\sigma_w^2)\\)的不相关随机变量\n独立同分布(independent and identically distributed，iid)的噪声：\\(w_t\\sim iid(0,\\sigma_w^2)\\)\n高斯白噪声(Gaussian white noise)：\\(w_t\\sim iidN(0,\\sigma_w^2)\\)\n\nset.seed(1)\nw = rnorm(500, 0, 1)                                   # 500 N(0,1) variates\nv = stats::filter(w, sides = 2, filter = rep(1/3, 3))  # moving average\npar(mfrow = c(2, 1))\ntsplot(w, col = 4, main = \"white noise\")\ntsplot(v, col = 4, ylim = c(-3, 3), main = \"moving average\")\n\n\n\n\n\n\n\n图 10: 高斯白噪声序列(上)和高斯白噪声序列的三点移动平均值(下)"
@@ -70,8 +70,8 @@
     "text": "2.2 移动平均值(Moving Averages)和过滤(Filtering)\n用移动平均值\\(v_t\\)替换，从而对\\(w_t\\)进行平滑处理。图 10下方图片就是三点移动平均值，其中\\(v_t=\\frac{1}{3}(w_{t-1}+w_t+w_{t+1})\\)。从实际效果来讲，实现了较慢的振荡被突出，较快的振荡被掩盖。这种序列一般称为滤波序列(filtered series)。\nfilter()函数通俗来讲是用来消除噪声的(滤波)，生成图 10的代码中，参数filter = rep(1/3, 3)其实就是filter = c(1/3, 1/3, 1/3)，分别表示\\(w_{t+1}\\)、\\(w_t\\)和\\(w_{t-1}\\)的系数。\n\nfilter(x,                # ts数据\n       filter,           # 一个逆时间顺序的滤波器系数向量\n       method = c(\"convolution\", \"recursive\"), # 卷积和递归，卷积是移动平均，递归是自回归，默认卷积\n       sides = 2,        # 只用于卷积，1表示单边滤波(只考虑前面的值)，2表示双边滤波(两边都考虑)\n       circular = F,     # 只用于卷积，是否末尾和开头相连\n       init)             # 只用于递归，初始值，默认0"
   },
   {
-    "objectID": "posts/time_series/index.html#自回归autoregressions",
-    "href": "posts/time_series/index.html#自回归autoregressions",
+    "objectID": "posts/time_series/index.html#sec-autoregressions",
+    "href": "posts/time_series/index.html#sec-autoregressions",
     "title": "时间序列分析：第一章",
     "section": "2.3 自回归(Autoregressions)",
     "text": "2.3 自回归(Autoregressions)\n可以换种方式替换\\(w_t\\)，即\\(x_t=x_{t-1}-0.9x_{t-2}+w_t\\)。\n\nset.seed(1)\nw = rnorm(550,0,1)  # 50 extra to avoid startup problems\nx = stats::filter(w, filter = c(1, -.9), method = \"recursive\")[-(1:50)]\ntsplot(x, col = 4, main = \"自回归\")\n\n\n\n\n\n\n\n图 11: 自回归序列\n\n\n\n\n\n生成图 11的代码中，init参数默认为0，即\\(x_1=w_1\\)、\\(x_2=x_1+w_2=w_1+w_2\\)，之后\\(x_3=x_2-0.9x_1+w_3\\)。\\(x_1\\)和\\(x_2\\)显然是不符合要求的，常用方法是去除这一部分，生成图 11的代码中多生成了50个数据，之后去除了。"
@@ -95,28 +95,42 @@
     "href": "posts/time_series/index.html#平均函数",
     "title": "时间序列分析：第一章",
     "section": "3.1 平均函数",
-    "text": "3.1 平均函数\n\\[\n\\mu_{xt}=\\operatorname{E}(x_t)=\\int_{-\\infty}^{\\infty}xf_t(x)\\operatorname{d}x\n\\]\n\n3.1.1 移动平均序列的平均函数\n平均函数和白噪声相同，以图 10里的情况为例。\n白噪声序列\\(w_t\\)有\\(\\mu_{wt}=\\operatorname{E}(w_t)=0\\)，进行平滑后有\\(\\mu_{vt}=\\operatorname{E}(v_t)=\\frac{1}{3}[\\operatorname{E}(w_{t-1})+\\operatorname{E}(w_t)+\\operatorname{E}(w_{t-1})]=0\\)，平均函数不变。\n\n\n3.1.2 带漂移项的随机游走的平均函数\n平均函数为一条直线，以式 1为例。\n已知\\(\\operatorname{E}(w_t)=0\\)，\\(\\delta\\)为常数，有：\n\\[\n\\mu_{x_t}=\\operatorname{E}(x_t)=\\delta t+\\sum_{j=1}^{t}\\operatorname{E}(w_j)=\\delta t\n\\]\n这是一条斜率为\\(\\delta\\)的直线，图 12中的虚线就是其平均函数。\n\n\n3.1.3 信号加噪声的平均函数\n平均函数为余弦波，以式 2为例。\n\\[\n\\mu_{xt}=\\operatorname{E}(x_t)=\\operatorname{E}[2cos(2\\pi\\frac{t+15}{50})+w_t]=2cos(2\\pi\\frac{t+15}{50})+\\operatorname{E}(w_t)=2cos(2\\pi\\frac{t+15}{50})\n\\]"
+    "text": "3.1 平均函数\n\\[\n\\mu_{xt}=\\operatorname{E}(x_t)=\\int_{-\\infty}^{\\infty}xf_t(x)\\operatorname{d}x\n\\tag{3}\\]\n\n3.1.1 移动平均序列的平均函数\n平均函数和白噪声相同，以图 10里的情况为例。\n白噪声序列\\(w_t\\)有\\(\\mu_{wt}=\\operatorname{E}(w_t)=0\\)，进行平滑后有\\(\\mu_{vt}=\\operatorname{E}(v_t)=\\frac{1}{3}[\\operatorname{E}(w_{t-1})+\\operatorname{E}(w_t)+\\operatorname{E}(w_{t-1})]=0\\)，平均函数不变。\n\n\n3.1.2 带漂移项的随机游走的平均函数\n平均函数为一条直线，以式 1为例。\n已知\\(\\operatorname{E}(w_t)=0\\)，\\(\\delta\\)为常数，有：\n\\[\n\\mu_{x_t}=\\operatorname{E}(x_t)=\\delta t+\\sum_{j=1}^{t}\\operatorname{E}(w_j)=\\delta t\n\\]\n这是一条斜率为\\(\\delta\\)的直线，图 12中的虚线就是其平均函数。\n\n\n3.1.3 信号加噪声的平均函数\n平均函数为余弦波，以式 2为例。\n\\[\n\\mu_{xt}=\\operatorname{E}(x_t)=\\operatorname{E}[2cos(2\\pi\\frac{t+15}{50})+w_t]=2cos(2\\pi\\frac{t+15}{50})+\\operatorname{E}(w_t)=2cos(2\\pi\\frac{t+15}{50})\n\\]"
   },
   {
     "objectID": "posts/time_series/index.html#自协方差函数autocovariance-function",
     "href": "posts/time_series/index.html#自协方差函数autocovariance-function",
     "title": "时间序列分析：第一章",
     "section": "3.2 自协方差函数(Autocovariance Function)",
-    "text": "3.2 自协方差函数(Autocovariance Function)\n对于任意\\(s\\)和\\(t\\)，自协方差函数被定义为二阶矩函数：\n\\[\n\\gamma_x(s,t)=\\operatorname{cov}(x_s,x_t)=\\operatorname{E}[(x_s-\\mu_s)(x_t-\\mu_t)]\n\\]\n自协方差衡量在不同时间观察到的同一时间序列的两点间的线性依赖性。平滑的时间序列，即使\\(t\\)和\\(s\\)相隔很远，自协方差函数也会比较大；而波动大的时间序列，自协方差函数几乎为0。\n从经典统计数据角度来看，如果\\(\\gamma_x(s,t)=0\\)，\\(x_s\\)和\\(x_t\\)非线性相关(可能有其他依赖结构)。但如果\\(x_s\\)和\\(x_t\\)是二元正态分布，\\(\\gamma_x(s,t)=0\\)说明相互独立。对于\\(s=t\\)，自协方差就是方差，即：\n\\[\n\\gamma_x(t,t)=\\operatorname{E}[(x_t-\\mu_t)^2]=\\operatorname{var}(x_t)\n\\]\n\n3.2.1 白噪声的自协方差\n白噪声序列\\(w_t\\)有\\(\\operatorname{E}(w_t)=0\\)，且\n\\[\n\\gamma_w(s,t)=\\operatorname{cov}(w_s,w_t)=\\begin{cases}\n\\sigma_w^2 & s=t\\\\\n0 & s\\neq t\n\\end{cases}\n\\]\n\n\n3.2.2 线性组合的协方差\n我们经常要计算滤波序列之间的自协方差，可以用到下面的性质：\n如果有随机变量\n\\[\nU=\\sum_{j=1}^ma_jX_j\\ 和\\ V=\\sum_{k=1}^rb_kY_k\n\\]\n分别是随机变量\\(\\{X_j\\}\\)和\\(\\{Y_k\\}\\)的线性组合，则它们的协方差为：\n\\[\n\\operatorname{cov}(U,V)=\\sum_{j=1}^m\\sum_{k=1}^ra_jb_k\\operatorname{cov}(X_j,Y_k)\n\\]\n且\\(\\operatorname{var}(U)=\\operatorname{cov}(U,U)\\)。\n\n\n3.2.3 移动平均值的自协方差\n以小节 2.2中的例子为例。变换后的滤波序列有：\n\\[\n\\gamma_v(s,t)=\\operatorname{cov}(v_s,v_t)=\\operatorname{cov}\\{\\frac{1}{3}(w_{s-1}+w_s+w_{s+1}),\\frac{1}{3}(w_{t-1}+w_t+w_{t+1})\\}\n\\]\n当\\(s=t\\)时：\n\\[\n\\begin{aligned}\n\\gamma_v(t,t)&=\\frac{1}{9}\\operatorname{cov}\\{(w_{t-1}+w_t+w_{t+1}),(w_{t-1}+w_t+w_{t+1})\\}\\\\\n&=\\frac{1}{9}[\\operatorname{cov}(w_{t-1},w_{t-1})+\\operatorname{cov}(w_{t},w_{t})+\\operatorname{cov}(w_{t+1},w_{t+1})]\\\\\n&=\\frac{3}{9}\\sigma_w^2\n\\end{aligned}\n\\]\n当\\(s=t+1\\)时：\n\\[\n\\begin{aligned}\n\\gamma_v(t+1,t)&=\\frac{1}{9}\\operatorname{cov}\\{(w_t+w_{t+1}+w_{t+2}),(w_{t-1}+w_t+w_{t+1})\\}\\\\\n&=\\frac{1}{9}[\\operatorname{cov}(w_t,w_t)+\\operatorname{cov}(w_{t+1},w_{t+1})+\\operatorname{cov}(w_{t+2},w_{t-1})]\\\\\n&=\\frac{1}{9}[\\operatorname{cov}(w_t,w_t)+\\operatorname{cov}(w_{t+1},w_{t+1})+0]\\\\\n&=\\frac{2}{9}\\sigma_w^2\n\\end{aligned}\n\\]\n通过类似计算，我们得到\\(\\gamma_v(t-1,t)=\\gamma_v(t+1,t)=\\frac{2}{9}\\sigma_w^2\\)，\\(\\gamma_v(t-2,t)=\\gamma_v(t+2,t)=\\frac{1}{9}\\sigma_w^2\\)，当\\(|t-s|&gt;2\\)时为0。即：\n\\[\n\\gamma_v(s,t)=\\begin{cases}\n\\frac{3}{9}\\sigma_w^2&s=t\\\\\n\\frac{2}{9}\\sigma_w^2&|s-t|=1\\\\\n\\frac{1}{9}\\sigma_w^2&|s-t|=2\\\\\n0&|s-t|&gt;2\n\\end{cases}\n\\]\n平滑后序列的协方差函数随两时间点间的间隔增加而减小，其协方差只取决于时间间隔或滞后，不取决于时间点在时间序列中的绝对位置。\n\n\n3.2.4 随机游走的自协方差\n随机游走模型\\(x_t=\\sum_{j=1}^tw_j\\)，有\n\\[\n\\gamma_x(s,t)=\\operatorname{cov}(x_s,x_t)=\\operatorname{cov}(\\sum_{j=1}^sw_j,\\sum_{k=1}^tw_k)=\\operatorname{min}\\{s,t\\}\\sigma_w^2\n\\]\n随机游走的自协方差函数取决于特定的时间值\\(s\\)和\\(t\\)，不取决于时间间隔或滞后。且\\(\\operatorname{var}(x_t)=\\gamma_x(t,t)=t\\sigma_w^2\\)。"
+    "text": "3.2 自协方差函数(Autocovariance Function)\n对于任意\\(s\\)和\\(t\\)，自协方差函数被定义为二阶矩函数：\n\\[\n\\gamma_x(s,t)=\\operatorname{cov}(x_s,x_t)=\\operatorname{E}[(x_s-\\mu_s)(x_t-\\mu_t)]\n\\tag{4}\\]\n自协方差衡量在不同时间观察到的同一时间序列的两点间的线性依赖性。平滑的时间序列，即使\\(t\\)和\\(s\\)相隔很远，自协方差函数也会比较大；而波动大的时间序列，自协方差函数几乎为0。\n从经典统计数据角度来看，如果\\(\\gamma_x(s,t)=0\\)，\\(x_s\\)和\\(x_t\\)非线性相关(可能有其他依赖结构)。但如果\\(x_s\\)和\\(x_t\\)是二元正态分布，\\(\\gamma_x(s,t)=0\\)说明相互独立。对于\\(s=t\\)，自协方差就是方差，即：\n\\[\n\\gamma_x(t,t)=\\operatorname{E}[(x_t-\\mu_t)^2]=\\operatorname{var}(x_t)\n\\]\n\n3.2.1 白噪声的自协方差\n白噪声序列\\(w_t\\)有\\(\\operatorname{E}(w_t)=0\\)，且\n\\[\n\\gamma_w(s,t)=\\operatorname{cov}(w_s,w_t)=\\begin{cases}\n\\sigma_w^2 & s=t\\\\\n0 & s\\neq t\n\\end{cases}\n\\]\n\n\n3.2.2 线性组合的协方差\n我们经常要计算滤波序列之间的自协方差，可以用到下面的性质：\n如果有随机变量\n\\[\nU=\\sum_{j=1}^ma_jX_j\\ 和\\ V=\\sum_{k=1}^rb_kY_k\n\\]\n分别是随机变量\\(\\{X_j\\}\\)和\\(\\{Y_k\\}\\)的线性组合，则它们的协方差为：\n\\[\n\\operatorname{cov}(U,V)=\\sum_{j=1}^m\\sum_{k=1}^ra_jb_k\\operatorname{cov}(X_j,Y_k)\n\\]\n且\\(\\operatorname{var}(U)=\\operatorname{cov}(U,U)\\)。\n\n\n3.2.3 移动平均值的自协方差\n以小节 2.2中的例子为例。变换后的滤波序列有：\n\\[\n\\gamma_v(s,t)=\\operatorname{cov}(v_s,v_t)=\\operatorname{cov}\\{\\frac{1}{3}(w_{s-1}+w_s+w_{s+1}),\\frac{1}{3}(w_{t-1}+w_t+w_{t+1})\\}\n\\]\n当\\(s=t\\)时：\n\\[\n\\begin{aligned}\n\\gamma_v(t,t)&=\\frac{1}{9}\\operatorname{cov}\\{(w_{t-1}+w_t+w_{t+1}),(w_{t-1}+w_t+w_{t+1})\\}\\\\\n&=\\frac{1}{9}[\\operatorname{cov}(w_{t-1},w_{t-1})+\\operatorname{cov}(w_{t},w_{t})+\\operatorname{cov}(w_{t+1},w_{t+1})]\\\\\n&=\\frac{3}{9}\\sigma_w^2\n\\end{aligned}\n\\]\n当\\(s=t+1\\)时：\n\\[\n\\begin{aligned}\n\\gamma_v(t+1,t)&=\\frac{1}{9}\\operatorname{cov}\\{(w_t+w_{t+1}+w_{t+2}),(w_{t-1}+w_t+w_{t+1})\\}\\\\\n&=\\frac{1}{9}[\\operatorname{cov}(w_t,w_t)+\\operatorname{cov}(w_{t+1},w_{t+1})+\\operatorname{cov}(w_{t+2},w_{t-1})]\\\\\n&=\\frac{1}{9}[\\operatorname{cov}(w_t,w_t)+\\operatorname{cov}(w_{t+1},w_{t+1})+0]\\\\\n&=\\frac{2}{9}\\sigma_w^2\n\\end{aligned}\n\\]\n通过类似计算，我们得到\\(\\gamma_v(t-1,t)=\\gamma_v(t+1,t)=\\frac{2}{9}\\sigma_w^2\\)，\\(\\gamma_v(t-2,t)=\\gamma_v(t+2,t)=\\frac{1}{9}\\sigma_w^2\\)，当\\(|t-s|&gt;2\\)时为0。即：\n\\[\n\\gamma_v(s,t)=\\begin{cases}\n\\frac{3}{9}\\sigma_w^2&s=t\\\\\n\\frac{2}{9}\\sigma_w^2&|s-t|=1\\\\\n\\frac{1}{9}\\sigma_w^2&|s-t|=2\\\\\n0&|s-t|&gt;2\n\\end{cases}\n\\]\n平滑后序列的协方差函数随两时间点间的间隔增加而减小，其协方差只取决于时间间隔或滞后，不取决于时间点在时间序列中的绝对位置。\n\n\n3.2.4 随机游走的自协方差\n随机游走模型\\(x_t=\\sum_{j=1}^tw_j\\)，有\n\\[\n\\gamma_x(s,t)=\\operatorname{cov}(x_s,x_t)=\\operatorname{cov}(\\sum_{j=1}^sw_j,\\sum_{k=1}^tw_k)=\\operatorname{min}\\{s,t\\}\\sigma_w^2\n\\]\n随机游走的自协方差函数取决于特定的时间值\\(s\\)和\\(t\\)，不取决于时间间隔或滞后。且\\(\\operatorname{var}(x_t)=\\gamma_x(t,t)=t\\sigma_w^2\\)。"
   },
   {
     "objectID": "posts/time_series/index.html#自相关函数autocorrelation-functionacf",
     "href": "posts/time_series/index.html#自相关函数autocorrelation-functionacf",
     "title": "时间序列分析：第一章",
-    "section": "3.3 自相关函数(autocorrelation function，ACF)",
-    "text": "3.3 自相关函数(autocorrelation function，ACF)\n\\[\n\\rho(s,t)=\\frac{\\gamma(s,t)}{\\sqrt{\\gamma(s,s)\\gamma(t,t)}}\n\\]\nACF用来衡量序列中不同时间点之间的依赖性，常用来检测周期性、趋势和模式。\n\n3.3.1 交叉协方差函数(cross-covariance function)\n\\[\n\\gamma_{xy}(s,t)=\\operatorname{cov}(x_s,y_t)=\\operatorname{E}[(x_s-\\mu_{xs})(y_t-\\mu_{yt})]\n\\]\n交叉协方差函数用于衡量两个时间序列在不同滞后下的协方差。\n\n\n3.3.2 交叉相关函数(cross-correlation function，CCF)\n\\[\n\\rho_{xy}(s,t)=\\frac{\\gamma_{xy}(s,t)}{\\sqrt{\\gamma_x(s,s)\\gamma_y(t,t)}}\n\\]\nCCF用于衡量两个时间序列之间在不同滞后下的线性关系。它类似于自相关函数，但用于评估两个不同时间序列之间的相关性，而不仅仅是同一个序列的内部相关性。"
+    "section": "3.3 自相关函数(Autocorrelation Function，ACF)",
+    "text": "3.3 自相关函数(Autocorrelation Function，ACF)\n\\[\n\\rho(s,t)=\\frac{\\gamma(s,t)}{\\sqrt{\\gamma(s,s)\\gamma(t,t)}}\n\\]\nACF用来衡量序列中不同时间点之间的依赖性，常用来检测周期性、趋势和模式。\n\n3.3.1 交叉协方差函数(Cross-covariance Function)\n\\[\n\\gamma_{xy}(s,t)=\\operatorname{cov}(x_s,y_t)=\\operatorname{E}[(x_s-\\mu_{xs})(y_t-\\mu_{yt})]\n\\]\n交叉协方差函数用于衡量两个时间序列在不同滞后下的协方差。\n\n\n3.3.2 交叉相关函数(cross-correlation function，CCF)\n\\[\n\\rho_{xy}(s,t)=\\frac{\\gamma_{xy}(s,t)}{\\sqrt{\\gamma_x(s,s)\\gamma_y(t,t)}}\n\\]\nCCF用于衡量两个时间序列之间在不同滞后下的线性关系。它类似于自相关函数，但用于评估两个不同时间序列之间的相关性，而不仅仅是同一个序列的内部相关性。"
   },
   {
     "objectID": "posts/time_series/index.html#严格平稳strictly-stationary",
     "href": "posts/time_series/index.html#严格平稳strictly-stationary",
     "title": "时间序列分析：第一章",
-    "section": "4.1 严格平稳(strictly stationary)",
-    "text": "4.1 严格平稳(strictly stationary)\n如果时间序列每个值的集合\\(\\{x_{t_1},\\ x_{t_2},\\ \\cdots,\\ x_{t_k}\\}\\)的概率等于时间移动后值的集合\\(\\{x_{t_1+h},\\ x_{t_2+h},\\ \\cdots,\\ x_{t_k+h}\\}\\)的概率，即\n\\[\n\\Pr\\{x_{t_1}\\le c_1,\\cdots,x_{t_k}\\le c_k\\}=\\Pr\\{x_{t_1+h}\\le c_1,\\cdots,x_{t_k+h}\\le c_k\\}\n\\tag{3}\\]\n其中所有\\(k=1,\\ 2,\\ \\cdots\\)，所有时间点\\(t_1,\\ t_2,\\ \\cdots,\\ t_k\\)，所有数值\\(c_1,\\ c_2,\\ \\cdots,\\ c_k\\)和所有时间移动\\(h=0,\\ \\pm1,\\ \\pm2,\\ \\cdots\\)。\n当\\(k=1\\)时，式 3变为对任意\\(s\\)和\\(t\\)\n\\[\n\\Pr\\{x_s\\le c\\}=\\Pr\\{x_t\\le c\\}\n\\tag{4}\\]\n可见严格平稳的时间序列对于所有\\(s\\)和\\(t\\)，\\(\\mu_s=\\mu_t\\)，因此\\(\\mu_t\\)必定为常数。\n当\\(k=2\\)时，式 3又变为对任意\\(s\\)和\\(t\\)以及位移\\(h\\)\n\\[\n\\Pr\\{x_s\\le c_1,x_t\\le c_2\\}=\\Pr\\{x_{s+h}\\le c_1,x_{t+h}\\le c_2\\}\n\\tag{5}\\]\n根据式 4和式 5可推知，对任意\\(s\\)和\\(t\\)以及位移\\(h\\)\n\\[\n\\gamma(s,t)=\\gamma(s+h,t+h)\n\\]\n严格平稳的时间序列自协方差函数取决于\\(s\\)和\\(t\\)之间的时间差异，而不是具体时间点。"
+    "section": "4.1 严格平稳(Strictly Stationary)",
+    "text": "4.1 严格平稳(Strictly Stationary)\n如果时间序列每个值的集合\\(\\{x_{t_1},\\ x_{t_2},\\ \\cdots,\\ x_{t_k}\\}\\)的概率等于时间移动后值的集合\\(\\{x_{t_1+h},\\ x_{t_2+h},\\ \\cdots,\\ x_{t_k+h}\\}\\)的概率，即\n\\[\n\\Pr\\{x_{t_1}\\le c_1,\\cdots,x_{t_k}\\le c_k\\}=\\Pr\\{x_{t_1+h}\\le c_1,\\cdots,x_{t_k+h}\\le c_k\\}\n\\tag{5}\\]\n其中所有\\(k=1,\\ 2,\\ \\cdots\\)，所有时间点\\(t_1,\\ t_2,\\ \\cdots,\\ t_k\\)，所有数值\\(c_1,\\ c_2,\\ \\cdots,\\ c_k\\)和所有时间移动\\(h=0,\\ \\pm1,\\ \\pm2,\\ \\cdots\\)。\n当\\(k=1\\)时，式 5变为对任意\\(s\\)和\\(t\\)\n\\[\n\\Pr\\{x_s\\le c\\}=\\Pr\\{x_t\\le c\\}\n\\tag{6}\\]\n可见严格平稳的时间序列对于所有\\(s\\)和\\(t\\)，\\(\\mu_s=\\mu_t\\)，因此\\(\\mu_t\\)必定为常数。\n当\\(k=2\\)时，式 5又变为对任意\\(s\\)和\\(t\\)以及位移\\(h\\)\n\\[\n\\Pr\\{x_s\\le c_1,x_t\\le c_2\\}=\\Pr\\{x_{s+h}\\le c_1,x_{t+h}\\le c_2\\}\n\\tag{7}\\]\n根据式 6和式 7可推知，对任意\\(s\\)和\\(t\\)以及位移\\(h\\)\n\\[\n\\gamma(s,t)=\\gamma(s+h,t+h)\n\\]\n严格平稳的时间序列自协方差函数取决于\\(s\\)和\\(t\\)之间的时间差异，而不是具体时间点。"
+  },
+  {
+    "objectID": "posts/time_series/index.html#弱平稳weakly-stationary",
+    "href": "posts/time_series/index.html#弱平稳weakly-stationary",
+    "title": "时间序列分析：第一章",
+    "section": "4.2 弱平稳(Weakly Stationary)",
+    "text": "4.2 弱平稳(Weakly Stationary)\n弱平稳时间序列\\(x_t\\)是一个方差有限的随机过程，满足以下条件：\n\n式 3中定义的均值函数\\(\\mu_t\\)是常数，不依赖于时间\\(t\\)；\n式 4中定义的自协方差函数\\(\\gamma(s,t)\\)仅取决于\\(s\\)和\\(t\\)的差值\\(|s-t|\\)而不是具体的\\(s\\)或者\\(t\\)的取值。\n\n\n\n\n\n\n\n提示\n\n\n\n条件1和2可推导出方差恒定，同时方差恒定和自协方差函数仅取决于时差可以推导出均值恒定，但均值恒定和方差恒定不能推导出自协方差函数仅取决于时差。\n严格平稳要求序列的所有阶矩(如均值、方差、偏度、峰度等)都不随时间变化(如抛硬币，理想情况下随时随刻抛正反面分布情况不变)，弱平稳的要求则宽松一些，只要求前两阶矩(均值、方差)恒定。\n阶矩用来衡量数据的分布情况。\n一阶矩\\(\\operatorname{E}[X]\\)衡量均值(\\(\\mu\\))；二阶矩\\(\\operatorname{E}[(X-\\mu)^2]\\)衡量方差(\\(\\sigma^2\\))；三阶矩\\(\\operatorname{E}[(X-\\mu)^3]\\)衡量偏度(\\(\\gamma_1\\))；四阶矩\\(\\operatorname{E}[(X-\\mu)^4]\\)衡量峰度(\\(\\gamma_2\\))；五阶矩表达式为\\(\\operatorname{E}[(X-\\mu)^5]\\)，衡量更高的维度。\n\n\n我们很难从单个数据集中评估出严格平稳，更多的是使用弱平稳。\n\n\n\n\n\n\n注释\n\n\n\n为了方便，之后使用平稳表示弱平稳，严平稳表示严格平稳。\n\n\n方差有限的严平稳也是弱平稳。\n\n\n\n\n\n\n注释\n\n\n\n平稳时间序列的均值\\(\\operatorname{E}(x_t)=\\mu_t\\)与时间\\(t\\)无关，方便起见用\\(\\mu\\)表示\\(\\mu_t\\)。\n平稳时间序列\\(x_t\\)的自协方差函数\\(\\gamma(s,t)\\)仅取决于时差\\(|s-t|\\)，令\\(s=t+h\\)，\\(h\\)表示时移或滞后，则\n\\[\n\\gamma(t+h,t)=\\operatorname{cov}(x_{t+h},x_t)=\\operatorname{cov}(x_h,x_0)=\\gamma(h,0)\n\\]\n方便起见简写为\\(\\gamma(h)\\)。\n\n\n平稳时间序列的自协方差函数为：\n\\[\n\\gamma(h)=\\operatorname{cov}(x_{t+h},x_t)=\\operatorname{E}[(x_{t+h}-\\mu)(x_t-\\mu)]\n\\]\n平稳时间序列的自相关函数为：\n\\[\n\\rho(h)=\\frac{\\gamma(t+h,t)}{\\sqrt{\\gamma(t+h,t+h)\\gamma(t,t)}}=\\frac{\\gamma(h)}{\\gamma(0)}\n\\]"
+  },
+  {
+    "objectID": "posts/time_series/index.html#白噪声的平稳性",
+    "href": "posts/time_series/index.html#白噪声的平稳性",
+    "title": "时间序列分析：第一章",
+    "section": "4.3 白噪声的平稳性",
+    "text": "4.3 白噪声的平稳性\n小节 2.1和小节 2.3"
   },
   {
     "objectID": "index.html",
@@ -124,20 +138,6 @@
     "title": "周博霖",
     "section": "",
     "text": "时间序列分析：第一章\n\n\n\n\n\n\n学习笔记\n\n\n统计方法\n\n\n时间序列分析\n\n\n\n\n\n\n\n\n\nAug 10, 2024\n\n\n周博霖\n\n\n\n\n\n\n\n\n\n\n\n\n心理语言学\n\n\n\n\n\n\n学习笔记\n\n\n心理语言学\n\n\n\n\n\n\n\n\n\nAug 9, 2024\n\n\n周博霖\n\n\n\n\n\n\n无匹配项"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "个人简介",
-    "section": "",
-    "text": "无业游民"
-  },
-  {
-    "objectID": "about.html#教育经历",
-    "href": "about.html#教育经历",
-    "title": "个人简介",
-    "section": "教育经历",
-    "text": "教育经历\n2019.09-2023.06：天津师范大学 —— 工商管理(本科)/应用心理学(双学位)"
   },
   {
     "objectID": "posts/notes/index.html",
