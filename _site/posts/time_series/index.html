@@ -222,7 +222,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">修改于</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">August 26, 2024</p>
+        <p class="date-modified">August 31, 2024</p>
       </div>
     </div>
       
@@ -266,6 +266,11 @@ window.Quarto = {
   <li><a href="#严格平稳strictly-stationary" id="toc-严格平稳strictly-stationary" class="nav-link" data-scroll-target="#严格平稳strictly-stationary"><span class="header-section-number">4.1</span> 严格平稳(Strictly Stationary)</a></li>
   <li><a href="#弱平稳weakly-stationary" id="toc-弱平稳weakly-stationary" class="nav-link" data-scroll-target="#弱平稳weakly-stationary"><span class="header-section-number">4.2</span> 弱平稳(Weakly Stationary)</a></li>
   <li><a href="#白噪声的平稳性" id="toc-白噪声的平稳性" class="nav-link" data-scroll-target="#白噪声的平稳性"><span class="header-section-number">4.3</span> 白噪声的平稳性</a></li>
+  <li><a href="#移动平均序列的平稳性" id="toc-移动平均序列的平稳性" class="nav-link" data-scroll-target="#移动平均序列的平稳性"><span class="header-section-number">4.4</span> 移动平均序列的平稳性</a></li>
+  <li><a href="#随机游走是非平稳的" id="toc-随机游走是非平稳的" class="nav-link" data-scroll-target="#随机游走是非平稳的"><span class="header-section-number">4.5</span> 随机游走是非平稳的</a></li>
+  <li><a href="#趋势平稳性trend-stationarity" id="toc-趋势平稳性trend-stationarity" class="nav-link" data-scroll-target="#趋势平稳性trend-stationarity"><span class="header-section-number">4.6</span> 趋势平稳性(Trend Stationarity)</a></li>
+  <li><a href="#联合平稳jointly-stationary" id="toc-联合平稳jointly-stationary" class="nav-link" data-scroll-target="#联合平稳jointly-stationary"><span class="header-section-number">4.7</span> 联合平稳(Jointly Stationary)</a></li>
+  <li><a href="#交叉相关函数ccf" id="toc-交叉相关函数ccf" class="nav-link" data-scroll-target="#交叉相关函数ccf"><span class="header-section-number">4.8</span> 交叉相关函数(CCF)</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -703,17 +708,17 @@ A\cos(2\pi\omega t+\phi)
 <p><span id="eq-meanf"><span class="math display">\[
 \mu_{xt}=\operatorname{E}(x_t)=\int_{-\infty}^{\infty}xf_t(x)\operatorname{d}x
 \tag{3}\]</span></span></p>
-<section id="移动平均序列的平均函数" class="level3" data-number="3.1.1">
-<h3 data-number="3.1.1" class="anchored" data-anchor-id="移动平均序列的平均函数"><span class="header-section-number">3.1.1</span> 移动平均序列的平均函数</h3>
+<section id="sec-movemean" class="level3" data-number="3.1.1">
+<h3 data-number="3.1.1" class="anchored" data-anchor-id="sec-movemean"><span class="header-section-number">3.1.1</span> 移动平均序列的平均函数</h3>
 <p>平均函数和白噪声相同，以<a href="#fig-white_noise" class="quarto-xref">图&nbsp;10</a>里的情况为例。</p>
 <p>白噪声序列<span class="math inline">\(w_t\)</span>有<span class="math inline">\(\mu_{wt}=\operatorname{E}(w_t)=0\)</span>，进行平滑后有<span class="math inline">\(\mu_{vt}=\operatorname{E}(v_t)=\frac{1}{3}[\operatorname{E}(w_{t-1})+\operatorname{E}(w_t)+\operatorname{E}(w_{t-1})]=0\)</span>，平均函数不变。</p>
 </section>
-<section id="带漂移项的随机游走的平均函数" class="level3" data-number="3.1.2">
-<h3 data-number="3.1.2" class="anchored" data-anchor-id="带漂移项的随机游走的平均函数"><span class="header-section-number">3.1.2</span> 带漂移项的随机游走的平均函数</h3>
+<section id="sec-randommean" class="level3" data-number="3.1.2">
+<h3 data-number="3.1.2" class="anchored" data-anchor-id="sec-randommean"><span class="header-section-number">3.1.2</span> 带漂移项的随机游走的平均函数</h3>
 <p>平均函数为一条直线，以<a href="#eq-rw" class="quarto-xref">式&nbsp;1</a>为例。</p>
 <p>已知<span class="math inline">\(\operatorname{E}(w_t)=0\)</span>，<span class="math inline">\(\delta\)</span>为常数，有：</p>
 <p><span class="math display">\[
-\mu_{x_t}=\operatorname{E}(x_t)=\delta t+\sum_{j=1}^{t}\operatorname{E}(w_j)=\delta t
+\mu_{xt}=\operatorname{E}(x_t)=\delta t+\sum_{j=1}^{t}\operatorname{E}(w_j)=\delta t
 \]</span></p>
 <p>这是一条斜率为<span class="math inline">\(\delta\)</span>的直线，<a href="#fig-rw" class="quarto-xref">图&nbsp;12</a>中的虚线就是其平均函数。</p>
 </section>
@@ -759,8 +764,8 @@ U=\sum_{j=1}^ma_jX_j\ 和\ V=\sum_{k=1}^rb_kY_k
 \]</span></p>
 <p>且<span class="math inline">\(\operatorname{var}(U)=\operatorname{cov}(U,U)\)</span>。</p>
 </section>
-<section id="移动平均值的自协方差" class="level3" data-number="3.2.3">
-<h3 data-number="3.2.3" class="anchored" data-anchor-id="移动平均值的自协方差"><span class="header-section-number">3.2.3</span> 移动平均值的自协方差</h3>
+<section id="sec-movecov" class="level3" data-number="3.2.3">
+<h3 data-number="3.2.3" class="anchored" data-anchor-id="sec-movecov"><span class="header-section-number">3.2.3</span> 移动平均值的自协方差</h3>
 <p>以<a href="#sec-moveave" class="quarto-xref">小节&nbsp;2.2</a>中的例子为例。变换后的滤波序列有：</p>
 <p><span class="math display">\[
 \gamma_v(s,t)=\operatorname{cov}(v_s,v_t)=\operatorname{cov}\{\frac{1}{3}(w_{s-1}+w_s+w_{s+1}),\frac{1}{3}(w_{t-1}+w_t+w_{t+1})\}
@@ -793,8 +798,8 @@ U=\sum_{j=1}^ma_jX_j\ 和\ V=\sum_{k=1}^rb_kY_k
 \]</span></p>
 <p>平滑后序列的协方差函数随两时间点间的间隔增加而减小，其协方差只取决于时间间隔或滞后，不取决于时间点在时间序列中的绝对位置。</p>
 </section>
-<section id="随机游走的自协方差" class="level3" data-number="3.2.4">
-<h3 data-number="3.2.4" class="anchored" data-anchor-id="随机游走的自协方差"><span class="header-section-number">3.2.4</span> 随机游走的自协方差</h3>
+<section id="sec-randomcov" class="level3" data-number="3.2.4">
+<h3 data-number="3.2.4" class="anchored" data-anchor-id="sec-randomcov"><span class="header-section-number">3.2.4</span> 随机游走的自协方差</h3>
 <p>随机游走模型<span class="math inline">\(x_t=\sum_{j=1}^tw_j\)</span>，有</p>
 <p><span class="math display">\[
 \gamma_x(s,t)=\operatorname{cov}(x_s,x_t)=\operatorname{cov}(\sum_{j=1}^sw_j,\sum_{k=1}^tw_k)=\operatorname{min}\{s,t\}\sigma_w^2
@@ -908,14 +913,108 @@ U=\sum_{j=1}^ma_jX_j\ 和\ V=\sum_{k=1}^rb_kY_k
 <p><span class="math display">\[
 \gamma(h)=\operatorname{cov}(x_{t+h},x_t)=\operatorname{E}[(x_{t+h}-\mu)(x_t-\mu)]
 \]</span></p>
-<p>平稳时间序列的自相关函数为：</p>
-<p><span class="math display">\[
+<p>平稳时间序列的自相关函数(ACF)为：</p>
+<p><span id="eq-weaklyacf"><span class="math display">\[
 \rho(h)=\frac{\gamma(t+h,t)}{\sqrt{\gamma(t+h,t+h)\gamma(t,t)}}=\frac{\gamma(h)}{\gamma(0)}
-\]</span></p>
+\tag{8}\]</span></span></p>
 </section>
 <section id="白噪声的平稳性" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="白噪声的平稳性"><span class="header-section-number">4.3</span> 白噪声的平稳性</h2>
-<p><a href="#sec-whitenoise" class="quarto-xref">小节&nbsp;2.1</a>和<a href="#sec-autoregressions" class="quarto-xref">小节&nbsp;2.3</a></p>
+<p><a href="#sec-whitenoise" class="quarto-xref">小节&nbsp;2.1</a>和<a href="#sec-autoregressions" class="quarto-xref">小节&nbsp;2.3</a>所展示的白噪声序列均值为<span class="math inline">\(\mu_{wt}=0\)</span>，自协方差函数为：</p>
+<p><span class="math display">\[
+\gamma_w(h)=\operatorname{cov}(w_{t+h},w_t)=\begin{cases}
+\sigma_w^2&amp;h=0\\
+0&amp;h\neq0\\
+\end{cases}
+\]</span></p>
+<p>白噪声为弱平稳时间序列，如果白噪声符合正态分布或高斯分布，则还是严格平稳的。因此自相关函数为<span class="math inline">\(\rho_w(0)=1\)</span>，且当<span class="math inline">\(h\neq0\)</span>时，<span class="math inline">\(\rho(h)=0\)</span>。</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+提示
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>书中似乎错误引用<a href="#eq-stationary" class="quarto-xref">式&nbsp;5</a>，应该是根据<a href="#eq-weaklyacf" class="quarto-xref">式&nbsp;8</a>计算，自相关函数为： <span class="math display">\[
+\rho_w(h)=\begin{cases}
+\frac{\gamma_w(0)}{\gamma_w(0)}=\frac{\sigma_w^2}{\sigma_w^2}=1&amp;h=0\\
+\frac{\gamma_w(h)}{\gamma_w(0)}=\frac{0}{\sigma_w^2}=0&amp;h\neq0
+\end{cases}
+\]</span></p>
+</div>
+</div>
+</section>
+<section id="移动平均序列的平稳性" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="移动平均序列的平稳性"><span class="header-section-number">4.4</span> 移动平均序列的平稳性</h2>
+<p><a href="#sec-moveave" class="quarto-xref">小节&nbsp;2.2</a>中的三点移动平均过程是平稳的。根据<a href="#sec-movemean" class="quarto-xref">小节&nbsp;3.1.1</a>和<a href="#sec-movecov" class="quarto-xref">小节&nbsp;3.2.3</a>中的内容可知其均值为<span class="math inline">\(\mu_{vt}=0\)</span>，自协方差函数为：</p>
+<p><span class="math display">\[
+\gamma_v(h)=\begin{cases}
+\frac{3}{9}\sigma_w^2&amp;h=0\\
+\frac{2}{9}\sigma_w^2&amp;h\pm1\\
+\frac{3}{9}\sigma_w^2&amp;h\pm2\\
+\frac{3}{9}\sigma_w^2&amp;|h|&gt;2\\
+\end{cases}
+\]</span></p>
+<p>与时间<span class="math inline">\(t\)</span>无关。自相关函数为：</p>
+<p><span class="math display">\[
+\rho_v(h)=\begin{cases}
+1&amp;h=0\\
+\frac{2}{3}&amp;h\pm1\\
+\frac{1}{3}&amp;h\pm2\\
+0&amp;|h|&gt;2\\
+\end{cases}
+\]</span></p>
+<p>其关于滞后值0对称。</p>
+</section>
+<section id="随机游走是非平稳的" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="随机游走是非平稳的"><span class="header-section-number">4.5</span> 随机游走是非平稳的</h2>
+<p>由<a href="#sec-randommean" class="quarto-xref">小节&nbsp;3.1.2</a>和<a href="#sec-randomcov" class="quarto-xref">小节&nbsp;3.2.4</a>可知，随机游走的平均函数为<span class="math inline">\(\mu_{xt}=\delta t\)</span>，自协方差函数为<span class="math inline">\(\gamma_x(s,t)=\operatorname{min}\{s,t\}\sigma_w^2\)</span>，都和时间有关，故随机游走不是平稳的。</p>
+</section>
+<section id="趋势平稳性trend-stationarity" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="趋势平稳性trend-stationarity"><span class="header-section-number">4.6</span> 趋势平稳性(Trend Stationarity)</h2>
+<p>趋势平稳性指模型围绕线性趋势的平稳行为，即均值函数不独立于时间，但自协方差函数独立于时间。</p>
+<p>如<span class="math inline">\(x_t=\alpha+\beta t+y_t\)</span>，其中<span class="math inline">\(y_t\)</span>是平稳的，则均值函数为<span class="math inline">\(\mu_{x,t}=\operatorname{E}(x_t)=\alpha+\beta t+\mu_y\)</span>，不独立于时间；自协方差函数为<span class="math inline">\(\gamma_x(h)=\operatorname{cov}(x_{t+h},x_t)=\operatorname{E}[(x_{t+h}-\mu_{x,t+h})(x_t-\mu_{x,t})]=\operatorname{E}[(y_{t+h}-\mu_y)(y_t-\mu_y)]=\gamma_y(h)\)</span>，独立于时间。</p>
+<p>例子如<a href="#fig-chicken" class="quarto-xref">图&nbsp;14</a>所示。</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-chicken" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-chicken-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-chicken-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chicken-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;14: 鸡肉价格
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>这种数据有以下几个特殊属性：</p>
+<ol type="1">
+<li><span class="math inline">\(\gamma(h)\)</span>非负；</li>
+<li><span class="math inline">\(\gamma(0)=\operatorname{E}[(x_t-\mu)^2]\)</span>；</li>
+<li>自协方差函数关于原点对称，<span class="math inline">\(\gamma(h)=\gamma(-h)\)</span>。</li>
+</ol>
+</section>
+<section id="联合平稳jointly-stationary" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="联合平稳jointly-stationary"><span class="header-section-number">4.7</span> 联合平稳(Jointly Stationary)</h2>
+<p>两个时间序列<span class="math inline">\(x_t\)</span>和<span class="math inline">\(y_t\)</span>均是平稳的，且它们的交叉协方差函数为：</p>
+<p><span class="math display">\[
+\gamma_{xy}(h)=\operatorname{cov}(x_{t+h},y_t)=\operatorname{E}[(x_{t+h}-\mu_x)(y_t-\mu_y)]
+\]</span></p>
+<p>我们称<span class="math inline">\(x_t\)</span>和<span class="math inline">\(y_t\)</span>是联合平稳的，且交叉协方差函数仅和滞后值<span class="math inline">\(h\)</span>有关。</p>
+</section>
+<section id="交叉相关函数ccf" class="level2" data-number="4.8">
+<h2 data-number="4.8" class="anchored" data-anchor-id="交叉相关函数ccf"><span class="header-section-number">4.8</span> 交叉相关函数(CCF)</h2>
+<p>联合平稳时间序列<span class="math inline">\(x_t\)</span>和<span class="math inline">\(y_t\)</span>的交叉相关函数为：</p>
+<p><span class="math display">\[
+\rho_{xy}(h)=\frac{\gamma_{xy}(h)}{\sqrt{\gamma_x(0)\gamma_y(0)}}
+\]</span></p>
+<p>其交叉相关函数通常关于0不对称，即<span class="math inline">\(\rho_{xy}(h)\neq \rho_{xy}(-h)\)</span>，即<span class="math inline">\(\operatorname{cov}(x_2,y_1)\)</span>和<span class="math inline">\(\operatorname{cov}(x_1,y_2)\)</span>不必相同。</p>
+<p>但<span class="math inline">\(\rho_{xy}(h)=\rho_{yx}(-h)\)</span></p>
 
 
 
