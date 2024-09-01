@@ -603,7 +603,7 @@ trend(chicken, lwd=2)    # includes a 95% CI
 (2) $\gamma(0)=\operatorname{E}[(x_t-\mu)^2]$；
 (3) 自协方差函数关于原点对称，$\gamma(h)=\gamma(-h)$。
 
-## 联合平稳(Jointly Stationary)
+# 联合平稳(Jointly Stationary)
 
 两个时间序列$x_t$和$y_t$均是平稳的，且它们的交叉协方差函数为：
 
@@ -613,18 +613,147 @@ $$
 
 我们称$x_t$和$y_t$是联合平稳的，且交叉协方差函数仅和滞后值$h$有关。
 
-## 交叉相关函数(CCF)
+## 交叉相关函数(Cross-Correlation Function，CCF)
 
 联合平稳时间序列$x_t$和$y_t$的交叉相关函数为：
 
 $$
 \rho_{xy}(h)=\frac{\gamma_{xy}(h)}{\sqrt{\gamma_x(0)\gamma_y(0)}}
-$$
+$${#eq-ccf}
 
 其交叉相关函数通常关于0不对称，即$\rho_{xy}(h)\neq \rho_{xy}(-h)$，即$\operatorname{cov}(x_2,y_1)$和$\operatorname{cov}(x_1,y_2)$不必相同。
 
 但$\rho_{xy}(h)=\rho_{yx}(-h)$
 
+:::{.callout-tip}
+这里给出推导过程。
 
+$\rho_{xy}(h)\neq \rho_{xy}(-h)$是因为：
 
+$$
+\rho_{xy}(h)=\frac{\gamma_{xy}(h)}{\sqrt{\gamma_x(0)\gamma_y(0)}}
+$$
 
+和
+
+$$
+\rho_{xy}(-h)=\frac{\gamma_{xy}(-h)}{\sqrt{\gamma_x(0)\gamma_y(0)}}
+$$
+
+中，$\gamma_{xy}(h)\neq \gamma_{xy}(-h)$，即：
+
+$$
+\operatorname{cov}(x_{t+h},y_t)\neq\operatorname{cov}(x_t,y_{t+h})
+$$
+
+$\rho_{xy}(h)=\rho_{yx}(-h)$是因为：
+
+$$
+\rho_{yx}(-h)=\frac{\gamma_{yx}(-h)}{\sqrt{\gamma_y(0)\gamma_x(0)}}
+$$
+
+根据协方差的性质：
+
+$$
+\operatorname{cov}(x_t,y_{t+h})=\operatorname{E}[(x_t-\mu_x)(y_{t+h}-\mu_y)]=\operatorname{E}[(y_{t+h}-\mu_y)(x_t-\mu_x)]=\operatorname{cov}(y_{t+h},x_t)
+$$
+
+即：
+
+$$
+\operatorname{cov}(A,B)=\operatorname{cov}(B,A)
+$$
+
+可得：
+
+$$
+\gamma_{yx}(-h)=\operatorname{cov}(y_{t-h},x_t)=\operatorname{cov}(x_t,y_{t-h})=\gamma_{xy}(h)
+$$
+:::
+
+## 联合平稳性(Joint Stationarity)
+
+两个序列$x_t$和$y_t$，分别是白噪声过程两个连续值的和与差，即$x_t=w_t+w_{t-1}$和$y_t=w_t-w_{t-1}$，其中$w_t$是均值为0，方差为$\sigma_w^2$的独立随机变量。易证$\gamma_x(0)=\gamma_y(0)=2\sigma_w^2$，以及$\gamma_x(1)=\gamma_y(-1)=\sigma_w^2$、$\gamma_y(1)=\gamma_x(-1)=-\sigma_w^2$。
+
+同时有：
+
+$$
+\gamma_{xy}(1)=\operatorname{cov}(x_{t+1},y_t)=\operatorname{cov}(w_{t+1}+w_t,w_t-w_{t-1})=\sigma_w^2
+$$
+
+类似的：$\gamma_{xy}(0)=0$、$\gamma_{xy}(-1)=-\sigma_w^2$。根据[@eq-ccf]，可得：
+
+$$
+\rho_{xy}(h)=\begin{cases}
+0&h=0\\
+1/2&h=1\\
+-1/2&h=-1\\
+0&|h|\ge2
+\end{cases}
+$$
+
+自协方差和交叉协方差函数仅取决于滞后值$h$，因此序列是联合平稳的。
+
+:::{.callout-tip}
+再次给出推导过程帮助记忆和理解。
+
+**注意**：$\gamma_{xy}(h)$等于$\operatorname{cov}(x_{t+h},y_t)$，而不是等于$\operatorname{cov}(x_t,y_{t+h})$，在自协方差里面混淆了不影响结果，但在交叉协方差里面是有影响的。
+
+1. **方差**
+
+因为是独立随机变量，所以$\operatorname{cov}(w_t,w_{t-1})=0$，所以：
+
+$$
+\gamma_x(0)=\operatorname{var}(x_t)=\operatorname{var}(w_t+w_{t-1})=\operatorname{var}(w_t)+\operatorname{var}(w_{t-1})+2\operatorname{cov}(w_t,w_{t-1})=2\sigma_w^2
+$$
+
+同理：
+
+$$
+\gamma_y(0)=\operatorname{var}(y_t)=\operatorname{var}(w_t-w_{t-1})=\operatorname{var}(w_t)+\operatorname{var}(w_{t-1})-2\operatorname{cov}(w_t,w_{t-1})=2\sigma_w^2
+$$
+
+2. **滞后自协方差**
+
+$$
+\begin{aligned}
+\gamma_x(1)=\operatorname{cov}(x_{t+1},x_t)
+&=\operatorname{cov}(w_{t+1}+w_t,w_t+w_{t-1})\\
+&=\operatorname{cov}(w_{t+1},w_t)+\operatorname{cov}(w_{t+1},w_{t-1})+\operatorname{cov}(w_t,w_t)+\operatorname{cov}(w_t,w_{t-1})\\
+&=0+0+\sigma_w^2+0\\
+&=\sigma_w^2
+\end{aligned}
+$$
+
+类似的：
+
+$$
+\begin{aligned}
+\gamma_y(1)=\operatorname{cov}(y_{t+1},y_t)
+&=\operatorname{cov}(w_{t+1}-w_t,w_t-w_{t-1})\\
+&=\operatorname{cov}(w_{t+1},w_t)-\operatorname{cov}(w_{t+1},w_{t-1})-\operatorname{cov}(w_t,w_t)+\operatorname{cov}(w_t,w_{t-1})\\
+&=0-0-\sigma_w^2+0\\
+&=-\sigma_w^2
+\end{aligned}
+$$
+
+3. **自协方差**
+
+$$
+\gamma_x(h)=\begin{cases}
+2\sigma_w^2&h=0\\
+\sigma_w^2&|h|=1\\
+0&|h|\ge2\\
+\end{cases}
+$$
+
+$$
+\gamma_y(h)=\begin{cases}
+2\sigma_w^2&h=0\\
+-\sigma_w^2&|h|=1\\
+0&|h|\ge2\\
+\end{cases}
+$$
+
+交叉相关函数是简单的公式代入，不做解释了。
+:::

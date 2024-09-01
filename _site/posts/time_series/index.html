@@ -269,8 +269,11 @@ window.Quarto = {
   <li><a href="#移动平均序列的平稳性" id="toc-移动平均序列的平稳性" class="nav-link" data-scroll-target="#移动平均序列的平稳性"><span class="header-section-number">4.4</span> 移动平均序列的平稳性</a></li>
   <li><a href="#随机游走是非平稳的" id="toc-随机游走是非平稳的" class="nav-link" data-scroll-target="#随机游走是非平稳的"><span class="header-section-number">4.5</span> 随机游走是非平稳的</a></li>
   <li><a href="#趋势平稳性trend-stationarity" id="toc-趋势平稳性trend-stationarity" class="nav-link" data-scroll-target="#趋势平稳性trend-stationarity"><span class="header-section-number">4.6</span> 趋势平稳性(Trend Stationarity)</a></li>
-  <li><a href="#联合平稳jointly-stationary" id="toc-联合平稳jointly-stationary" class="nav-link" data-scroll-target="#联合平稳jointly-stationary"><span class="header-section-number">4.7</span> 联合平稳(Jointly Stationary)</a></li>
-  <li><a href="#交叉相关函数ccf" id="toc-交叉相关函数ccf" class="nav-link" data-scroll-target="#交叉相关函数ccf"><span class="header-section-number">4.8</span> 交叉相关函数(CCF)</a></li>
+  </ul></li>
+  <li><a href="#联合平稳jointly-stationary" id="toc-联合平稳jointly-stationary" class="nav-link" data-scroll-target="#联合平稳jointly-stationary"><span class="header-section-number">5</span> 联合平稳(Jointly Stationary)</a>
+  <ul class="collapse">
+  <li><a href="#交叉相关函数cross-correlation-functionccf-1" id="toc-交叉相关函数cross-correlation-functionccf-1" class="nav-link" data-scroll-target="#交叉相关函数cross-correlation-functionccf-1"><span class="header-section-number">5.1</span> 交叉相关函数(Cross-Correlation Function，CCF)</a></li>
+  <li><a href="#联合平稳性joint-stationarity" id="toc-联合平稳性joint-stationarity" class="nav-link" data-scroll-target="#联合平稳性joint-stationarity"><span class="header-section-number">5.2</span> 联合平稳性(Joint Stationarity)</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -999,22 +1002,146 @@ U=\sum_{j=1}^ma_jX_j\ 和\ V=\sum_{k=1}^rb_kY_k
 <li>自协方差函数关于原点对称，<span class="math inline">\(\gamma(h)=\gamma(-h)\)</span>。</li>
 </ol>
 </section>
-<section id="联合平稳jointly-stationary" class="level2" data-number="4.7">
-<h2 data-number="4.7" class="anchored" data-anchor-id="联合平稳jointly-stationary"><span class="header-section-number">4.7</span> 联合平稳(Jointly Stationary)</h2>
+</section>
+<section id="联合平稳jointly-stationary" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> 联合平稳(Jointly Stationary)</h1>
 <p>两个时间序列<span class="math inline">\(x_t\)</span>和<span class="math inline">\(y_t\)</span>均是平稳的，且它们的交叉协方差函数为：</p>
 <p><span class="math display">\[
 \gamma_{xy}(h)=\operatorname{cov}(x_{t+h},y_t)=\operatorname{E}[(x_{t+h}-\mu_x)(y_t-\mu_y)]
 \]</span></p>
 <p>我们称<span class="math inline">\(x_t\)</span>和<span class="math inline">\(y_t\)</span>是联合平稳的，且交叉协方差函数仅和滞后值<span class="math inline">\(h\)</span>有关。</p>
-</section>
-<section id="交叉相关函数ccf" class="level2" data-number="4.8">
-<h2 data-number="4.8" class="anchored" data-anchor-id="交叉相关函数ccf"><span class="header-section-number">4.8</span> 交叉相关函数(CCF)</h2>
+<section id="交叉相关函数cross-correlation-functionccf-1" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="交叉相关函数cross-correlation-functionccf-1"><span class="header-section-number">5.1</span> 交叉相关函数(Cross-Correlation Function，CCF)</h2>
 <p>联合平稳时间序列<span class="math inline">\(x_t\)</span>和<span class="math inline">\(y_t\)</span>的交叉相关函数为：</p>
+<p><span id="eq-ccf"><span class="math display">\[
+\rho_{xy}(h)=\frac{\gamma_{xy}(h)}{\sqrt{\gamma_x(0)\gamma_y(0)}}
+\tag{9}\]</span></span></p>
+<p>其交叉相关函数通常关于0不对称，即<span class="math inline">\(\rho_{xy}(h)\neq \rho_{xy}(-h)\)</span>，即<span class="math inline">\(\operatorname{cov}(x_2,y_1)\)</span>和<span class="math inline">\(\operatorname{cov}(x_1,y_2)\)</span>不必相同。</p>
+<p>但<span class="math inline">\(\rho_{xy}(h)=\rho_{yx}(-h)\)</span></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+提示
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>这里给出推导过程。</p>
+<p><span class="math inline">\(\rho_{xy}(h)\neq \rho_{xy}(-h)\)</span>是因为：</p>
 <p><span class="math display">\[
 \rho_{xy}(h)=\frac{\gamma_{xy}(h)}{\sqrt{\gamma_x(0)\gamma_y(0)}}
 \]</span></p>
-<p>其交叉相关函数通常关于0不对称，即<span class="math inline">\(\rho_{xy}(h)\neq \rho_{xy}(-h)\)</span>，即<span class="math inline">\(\operatorname{cov}(x_2,y_1)\)</span>和<span class="math inline">\(\operatorname{cov}(x_1,y_2)\)</span>不必相同。</p>
-<p>但<span class="math inline">\(\rho_{xy}(h)=\rho_{yx}(-h)\)</span></p>
+<p>和</p>
+<p><span class="math display">\[
+\rho_{xy}(-h)=\frac{\gamma_{xy}(-h)}{\sqrt{\gamma_x(0)\gamma_y(0)}}
+\]</span></p>
+<p>中，<span class="math inline">\(\gamma_{xy}(h)\neq \gamma_{xy}(-h)\)</span>，即：</p>
+<p><span class="math display">\[
+\operatorname{cov}(x_{t+h},y_t)\neq\operatorname{cov}(x_t,y_{t+h})
+\]</span></p>
+<p><span class="math inline">\(\rho_{xy}(h)=\rho_{yx}(-h)\)</span>是因为：</p>
+<p><span class="math display">\[
+\rho_{yx}(-h)=\frac{\gamma_{yx}(-h)}{\sqrt{\gamma_y(0)\gamma_x(0)}}
+\]</span></p>
+<p>根据协方差的性质：</p>
+<p><span class="math display">\[
+\operatorname{cov}(x_t,y_{t+h})=\operatorname{E}[(x_t-\mu_x)(y_{t+h}-\mu_y)]=\operatorname{E}[(y_{t+h}-\mu_y)(x_t-\mu_x)]=\operatorname{cov}(y_{t+h},x_t)
+\]</span></p>
+<p>即：</p>
+<p><span class="math display">\[
+\operatorname{cov}(A,B)=\operatorname{cov}(B,A)
+\]</span></p>
+<p>可得：</p>
+<p><span class="math display">\[
+\gamma_{yx}(-h)=\operatorname{cov}(y_{t-h},x_t)=\operatorname{cov}(x_t,y_{t-h})=\gamma_{xy}(h)
+\]</span></p>
+</div>
+</div>
+</section>
+<section id="联合平稳性joint-stationarity" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="联合平稳性joint-stationarity"><span class="header-section-number">5.2</span> 联合平稳性(Joint Stationarity)</h2>
+<p>两个序列<span class="math inline">\(x_t\)</span>和<span class="math inline">\(y_t\)</span>，分别是白噪声过程两个连续值的和与差，即<span class="math inline">\(x_t=w_t+w_{t-1}\)</span>和<span class="math inline">\(y_t=w_t-w_{t-1}\)</span>，其中<span class="math inline">\(w_t\)</span>是均值为0，方差为<span class="math inline">\(\sigma_w^2\)</span>的独立随机变量。易证<span class="math inline">\(\gamma_x(0)=\gamma_y(0)=2\sigma_w^2\)</span>，以及<span class="math inline">\(\gamma_x(1)=\gamma_y(-1)=\sigma_w^2\)</span>、<span class="math inline">\(\gamma_y(1)=\gamma_x(-1)=-\sigma_w^2\)</span>。</p>
+<p>同时有：</p>
+<p><span class="math display">\[
+\gamma_{xy}(1)=\operatorname{cov}(x_{t+1},y_t)=\operatorname{cov}(w_{t+1}+w_t,w_t-w_{t-1})=\sigma_w^2
+\]</span></p>
+<p>类似的：<span class="math inline">\(\gamma_{xy}(0)=0\)</span>、<span class="math inline">\(\gamma_{xy}(-1)=-\sigma_w^2\)</span>。根据<a href="#eq-ccf" class="quarto-xref">式&nbsp;9</a>，可得：</p>
+<p><span class="math display">\[
+\rho_{xy}(h)=\begin{cases}
+0&amp;h=0\\
+1/2&amp;h=1\\
+-1/2&amp;h=-1\\
+0&amp;|h|\ge2
+\end{cases}
+\]</span></p>
+<p>自协方差和交叉协方差函数仅取决于滞后值<span class="math inline">\(h\)</span>，因此序列是联合平稳的。</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+提示
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>再次给出推导过程帮助记忆和理解。</p>
+<p><strong>注意</strong>：<span class="math inline">\(\gamma_{xy}(h)\)</span>等于<span class="math inline">\(\operatorname{cov}(x_{t+h},y_t)\)</span>，而不是等于<span class="math inline">\(\operatorname{cov}(x_t,y_{t+h})\)</span>，在自协方差里面混淆了不影响结果，但在交叉协方差里面是有影响的。</p>
+<ol type="1">
+<li><strong>方差</strong></li>
+</ol>
+<p>因为是独立随机变量，所以<span class="math inline">\(\operatorname{cov}(w_t,w_{t-1})=0\)</span>，所以：</p>
+<p><span class="math display">\[
+\gamma_x(0)=\operatorname{var}(x_t)=\operatorname{var}(w_t+w_{t-1})=\operatorname{var}(w_t)+\operatorname{var}(w_{t-1})+2\operatorname{cov}(w_t,w_{t-1})=2\sigma_w^2
+\]</span></p>
+<p>同理：</p>
+<p><span class="math display">\[
+\gamma_y(0)=\operatorname{var}(y_t)=\operatorname{var}(w_t-w_{t-1})=\operatorname{var}(w_t)+\operatorname{var}(w_{t-1})-2\operatorname{cov}(w_t,w_{t-1})=2\sigma_w^2
+\]</span></p>
+<ol start="2" type="1">
+<li><strong>滞后自协方差</strong></li>
+</ol>
+<p><span class="math display">\[
+\begin{aligned}
+\gamma_x(1)=\operatorname{cov}(x_{t+1},x_t)
+&amp;=\operatorname{cov}(w_{t+1}+w_t,w_t+w_{t-1})\\
+&amp;=\operatorname{cov}(w_{t+1},w_t)+\operatorname{cov}(w_{t+1},w_{t-1})+\operatorname{cov}(w_t,w_t)+\operatorname{cov}(w_t,w_{t-1})\\
+&amp;=0+0+\sigma_w^2+0\\
+&amp;=\sigma_w^2
+\end{aligned}
+\]</span></p>
+<p>类似的：</p>
+<p><span class="math display">\[
+\begin{aligned}
+\gamma_y(1)=\operatorname{cov}(y_{t+1},y_t)
+&amp;=\operatorname{cov}(w_{t+1}-w_t,w_t-w_{t-1})\\
+&amp;=\operatorname{cov}(w_{t+1},w_t)-\operatorname{cov}(w_{t+1},w_{t-1})-\operatorname{cov}(w_t,w_t)+\operatorname{cov}(w_t,w_{t-1})\\
+&amp;=0-0-\sigma_w^2+0\\
+&amp;=-\sigma_w^2
+\end{aligned}
+\]</span></p>
+<ol start="3" type="1">
+<li><strong>自协方差</strong></li>
+</ol>
+<p><span class="math display">\[
+\gamma_x(h)=\begin{cases}
+2\sigma_w^2&amp;h=0\\
+\sigma_w^2&amp;|h|=1\\
+0&amp;|h|\ge2\\
+\end{cases}
+\]</span></p>
+<p><span class="math display">\[
+\gamma_y(h)=\begin{cases}
+2\sigma_w^2&amp;h=0\\
+-\sigma_w^2&amp;|h|=1\\
+0&amp;|h|\ge2\\
+\end{cases}
+\]</span></p>
+<p>交叉相关函数是简单的公式代入，不做解释了。</p>
+</div>
+</div>
 
 
 
