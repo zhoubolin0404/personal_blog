@@ -1,6 +1,6 @@
 ---
 title: "个人简介"
-image: profile.jpg
+image: avatar.png
 about:
   template: broadside
   links:
