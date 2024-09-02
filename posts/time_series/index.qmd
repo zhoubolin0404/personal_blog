@@ -9,7 +9,7 @@ csl: apa.csl
 number-sections: true
 toc: true
 toc-depth: 2
-date-modified: "2024/8/31"
+date-modified: "2024/9/2"
 ---
 
 ```{r chapter-status, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
@@ -529,7 +529,7 @@ $$
 \rho(h)=\frac{\gamma(t+h,t)}{\sqrt{\gamma(t+h,t+h)\gamma(t,t)}}=\frac{\gamma(h)}{\gamma(0)}
 $${#eq-weaklyacf}
 
-## 白噪声的平稳性
+### 白噪声的平稳性
 
 [@sec-whitenoise]和[@sec-autoregressions]所展示的白噪声序列均值为$\mu_{wt}=0$，自协方差函数为：
 
@@ -552,7 +552,7 @@ $$
 $$
 :::
 
-## 移动平均序列的平稳性
+### 移动平均序列的平稳性
 
 [@sec-moveave]中的三点移动平均过程是平稳的。根据[@sec-movemean]和[@sec-movecov]中的内容可知其均值为$\mu_{vt}=0$，自协方差函数为：
 
@@ -578,11 +578,11 @@ $$
 
 其关于滞后值0对称。
 
-## 随机游走是非平稳的
+### 随机游走是非平稳的
 
 由[@sec-randommean]和[@sec-randomcov]可知，随机游走的平均函数为$\mu_{xt}=\delta t$，自协方差函数为$\gamma_x(s,t)=\operatorname{min}\{s,t\}\sigma_w^2$，都和时间有关，故随机游走不是平稳的。
 
-## 趋势平稳性(Trend Stationarity)
+### 趋势平稳性(Trend Stationarity)
 
 趋势平稳性指模型围绕线性趋势的平稳行为，即均值函数不独立于时间，但自协方差函数独立于时间。
 
@@ -603,7 +603,7 @@ trend(chicken, lwd=2)    # includes a 95% CI
 (2) $\gamma(0)=\operatorname{E}[(x_t-\mu)^2]$；
 (3) 自协方差函数关于原点对称，$\gamma(h)=\gamma(-h)$。
 
-# 联合平稳(Jointly Stationary)
+## 联合平稳(Jointly Stationary)
 
 两个时间序列$x_t$和$y_t$均是平稳的，且它们的交叉协方差函数为：
 
@@ -613,7 +613,7 @@ $$
 
 我们称$x_t$和$y_t$是联合平稳的，且交叉协方差函数仅和滞后值$h$有关。
 
-## 交叉相关函数(Cross-Correlation Function，CCF)
+### 交叉相关函数(Cross-Correlation Function，CCF)
 
 联合平稳时间序列$x_t$和$y_t$的交叉相关函数为：
 
@@ -671,7 +671,7 @@ $$
 $$
 :::
 
-## 联合平稳性(Joint Stationarity)
+### 联合平稳性(Joint Stationarity)
 
 两个序列$x_t$和$y_t$，分别是白噪声过程两个连续值的和与差，即$x_t=w_t+w_{t-1}$和$y_t=w_t-w_{t-1}$，其中$w_t$是均值为0，方差为$\sigma_w^2$的独立随机变量。易证$\gamma_x(0)=\gamma_y(0)=2\sigma_w^2$，以及$\gamma_x(1)=\gamma_y(-1)=\sigma_w^2$、$\gamma_y(1)=\gamma_x(-1)=-\sigma_w^2$。
 
@@ -679,7 +679,7 @@ $$
 
 $$
 \gamma_{xy}(1)=\operatorname{cov}(x_{t+1},y_t)=\operatorname{cov}(w_{t+1}+w_t,w_t-w_{t-1})=\sigma_w^2
-$$
+$${#eq-jointcov}
 
 类似的：$\gamma_{xy}(0)=0$、$\gamma_{xy}(-1)=-\sigma_w^2$。根据[@eq-ccf]，可得：
 
@@ -695,7 +695,7 @@ $$
 自协方差和交叉协方差函数仅取决于滞后值$h$，因此序列是联合平稳的。
 
 :::{.callout-tip}
-再次给出推导过程帮助记忆和理解。
+给出补充的推导过程帮助记忆和理解。
 
 **注意**：$\gamma_{xy}(h)$等于$\operatorname{cov}(x_{t+h},y_t)$，而不是等于$\operatorname{cov}(x_t,y_{t+h})$，在自协方差里面混淆了不影响结果，但在交叉协方差里面是有影响的。
 
@@ -755,5 +755,109 @@ $$
 \end{cases}
 $$
 
-交叉相关函数是简单的公式代入，不做解释了。
+交叉相关函数是在[@eq-jointcov]的基础上，简单的公式代入，不做补充推导。
+:::
+
+### 使用交叉相关进行预测
+
+有模型：
+
+$$
+y_t=Ax_{t-\ell}+w_t
+$$
+
+**前导**(lead)：当$\ell>0$时，序列$x_t$是序列$y_t$的前导；
+
+**滞后**(lag)：当$\ell<0$时，序列$x_t$是序列$y_t$的滞后。
+
+在用$x_t$预测$y_t$时，判断清楚前导和滞后关系很重要。
+
+假设噪声$w_t$和$x_t$不相关，则交叉协方差函数如下：
+
+$$
+\begin{aligned}
+\gamma_{yx}(h)
+&=\operatorname{cov}(y_{t+h},x_t)=\operatorname{cov}(Ax_{t+h-\ell}+w_{t+h},x_t)\\
+&=\operatorname{cov}(Ax_{t+h-\ell},x_t)=A\gamma_x(h-\ell)
+\end{aligned}
+$$
+
+根据柯西不等式(Cauchy-Schwarz)，当$h=\ell$时，即$\gamma_x(0)$时，$\gamma_{yx}(h)$取最大绝对值。如果$h>0$时取最大绝对值，说明$x_t$是$y_t$的先导；如果$h<0$时取最大绝对值，说明$x_t$滞后于$y_t$。
+
+:::{.callout-tip}
+因为是相关，不涉及因果，所以先导和滞后都是相对的。
+
+考虑到标准差一般为固定值，协方差最大的时候，就是$x_t$和$y_t$相关性最强的时候。
+:::
+
+```{r}
+#| label: fig-CCovF
+#| fig-cap: 交叉协方差函数
+set.seed(2)
+x = rnorm(100)
+y = stats::lag(x, -5) + rnorm(100) # h = 5
+astsa::ccf2(y, x, ylab = 'CCovF', type = 'covariance')
+text( 9, 1.1, 'x leads')
+text(-8, 1.1, 'y leads')
+```
+
+## 线性(随机)过程(Linear Process)
+
+$x_t$是白噪声$w_t$的线性组合，具体如下：
+
+$$
+x_t=\mu+\sum_{j=-\infty}^{\infty}\psi_jw_{t-j},\ \sum_{j=-\infty}^{\infty}|\psi_j|<\infty
+$${#eq-linerprocess}
+
+当$h\ge0$时，其自协方差函数为：
+
+$$
+\gamma_x(h)=\sigma_w^2\sum_{j=-\infty}^{\infty}\psi_{j+h}\psi_j
+$$
+
+:::{.callout-tip}
+1. **模型解释**
+
+[@eq-linerprocess]表示一种广义的线性随机过程。
+
+$$
+x_t=\mu+\sum_{j=-\infty}^{\infty}\psi_jw_{t-j},\ \sum_{j=-\infty}^{\infty}|\psi_j|<\infty
+$$
+
+其中：
+
+- $x_t$：当前时间点$t$的观测值；
+
+- $\mu$：序列的均值；
+
+- $\psi_j$：权重系数，描述了过去($j>0$)、现在($j=0$)和未来($j < 0$)的随机扰动对当前观测值的影响；
+
+- $w_t$：随机扰动项。
+
+2. **自协方差函数推导**
+
+$$
+\gamma_x(h)=\operatorname{cov}(x_{t+h},x_t)
+$$
+
+将给定的$x_t$代入：
+
+$$
+\begin{aligned}
+\gamma_x(h)
+&=\operatorname{cov}(\mu+\sum_{j=-\infty}^{\infty}\psi_jw_{t+h-j},\mu+\sum_{k=-\infty}^{\infty}\psi_kw_{t-k})\\
+&=\operatorname{cov}(\sum_{j=-\infty}^{\infty}\psi_jw_{t+h-j},\sum_{k=-\infty}^{\infty}\psi_kw_{t-k})\\
+&=\sum_{j=-\infty}^{\infty}\sum_{k=-\infty}^{\infty}\psi_j\psi_k\operatorname{cov}(w_{t+h-j},w_{t-k})
+\end{aligned}
+$$
+
+当$k=j-h$时，$\operatorname{cov}(w_{t+h-j},w_{t-k})=\sigma_w^2$；
+
+当$k\neq j-h$时，$\operatorname{cov}(w_{t+h-j},w_{t-k})=0$。
+
+因此，非零项只发生在$k=j-h$处，表达式可简化为：
+
+$$
+\gamma_x(h)=\sigma_w^2\sum_{j=-\infty}^{\infty}\psi_j\psi_{j-h}
+$$
 :::

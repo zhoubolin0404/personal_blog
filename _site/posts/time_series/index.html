@@ -222,7 +222,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">修改于</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">August 31, 2024</p>
+        <p class="date-modified">September 2, 2024</p>
       </div>
     </div>
       
@@ -265,15 +265,8 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#严格平稳strictly-stationary" id="toc-严格平稳strictly-stationary" class="nav-link" data-scroll-target="#严格平稳strictly-stationary"><span class="header-section-number">4.1</span> 严格平稳(Strictly Stationary)</a></li>
   <li><a href="#弱平稳weakly-stationary" id="toc-弱平稳weakly-stationary" class="nav-link" data-scroll-target="#弱平稳weakly-stationary"><span class="header-section-number">4.2</span> 弱平稳(Weakly Stationary)</a></li>
-  <li><a href="#白噪声的平稳性" id="toc-白噪声的平稳性" class="nav-link" data-scroll-target="#白噪声的平稳性"><span class="header-section-number">4.3</span> 白噪声的平稳性</a></li>
-  <li><a href="#移动平均序列的平稳性" id="toc-移动平均序列的平稳性" class="nav-link" data-scroll-target="#移动平均序列的平稳性"><span class="header-section-number">4.4</span> 移动平均序列的平稳性</a></li>
-  <li><a href="#随机游走是非平稳的" id="toc-随机游走是非平稳的" class="nav-link" data-scroll-target="#随机游走是非平稳的"><span class="header-section-number">4.5</span> 随机游走是非平稳的</a></li>
-  <li><a href="#趋势平稳性trend-stationarity" id="toc-趋势平稳性trend-stationarity" class="nav-link" data-scroll-target="#趋势平稳性trend-stationarity"><span class="header-section-number">4.6</span> 趋势平稳性(Trend Stationarity)</a></li>
-  </ul></li>
-  <li><a href="#联合平稳jointly-stationary" id="toc-联合平稳jointly-stationary" class="nav-link" data-scroll-target="#联合平稳jointly-stationary"><span class="header-section-number">5</span> 联合平稳(Jointly Stationary)</a>
-  <ul class="collapse">
-  <li><a href="#交叉相关函数cross-correlation-functionccf-1" id="toc-交叉相关函数cross-correlation-functionccf-1" class="nav-link" data-scroll-target="#交叉相关函数cross-correlation-functionccf-1"><span class="header-section-number">5.1</span> 交叉相关函数(Cross-Correlation Function，CCF)</a></li>
-  <li><a href="#联合平稳性joint-stationarity" id="toc-联合平稳性joint-stationarity" class="nav-link" data-scroll-target="#联合平稳性joint-stationarity"><span class="header-section-number">5.2</span> 联合平稳性(Joint Stationarity)</a></li>
+  <li><a href="#联合平稳jointly-stationary" id="toc-联合平稳jointly-stationary" class="nav-link" data-scroll-target="#联合平稳jointly-stationary"><span class="header-section-number">4.3</span> 联合平稳(Jointly Stationary)</a></li>
+  <li><a href="#线性随机过程linear-process" id="toc-线性随机过程linear-process" class="nav-link" data-scroll-target="#线性随机过程linear-process"><span class="header-section-number">4.4</span> 线性(随机)过程(Linear Process)</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -920,9 +913,8 @@ U=\sum_{j=1}^ma_jX_j\ 和\ V=\sum_{k=1}^rb_kY_k
 <p><span id="eq-weaklyacf"><span class="math display">\[
 \rho(h)=\frac{\gamma(t+h,t)}{\sqrt{\gamma(t+h,t+h)\gamma(t,t)}}=\frac{\gamma(h)}{\gamma(0)}
 \tag{8}\]</span></span></p>
-</section>
-<section id="白噪声的平稳性" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="白噪声的平稳性"><span class="header-section-number">4.3</span> 白噪声的平稳性</h2>
+<section id="白噪声的平稳性" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="白噪声的平稳性"><span class="header-section-number">4.2.1</span> 白噪声的平稳性</h3>
 <p><a href="#sec-whitenoise" class="quarto-xref">小节&nbsp;2.1</a>和<a href="#sec-autoregressions" class="quarto-xref">小节&nbsp;2.3</a>所展示的白噪声序列均值为<span class="math inline">\(\mu_{wt}=0\)</span>，自协方差函数为：</p>
 <p><span class="math display">\[
 \gamma_w(h)=\operatorname{cov}(w_{t+h},w_t)=\begin{cases}
@@ -950,8 +942,8 @@ U=\sum_{j=1}^ma_jX_j\ 和\ V=\sum_{k=1}^rb_kY_k
 </div>
 </div>
 </section>
-<section id="移动平均序列的平稳性" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="移动平均序列的平稳性"><span class="header-section-number">4.4</span> 移动平均序列的平稳性</h2>
+<section id="移动平均序列的平稳性" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="移动平均序列的平稳性"><span class="header-section-number">4.2.2</span> 移动平均序列的平稳性</h3>
 <p><a href="#sec-moveave" class="quarto-xref">小节&nbsp;2.2</a>中的三点移动平均过程是平稳的。根据<a href="#sec-movemean" class="quarto-xref">小节&nbsp;3.1.1</a>和<a href="#sec-movecov" class="quarto-xref">小节&nbsp;3.2.3</a>中的内容可知其均值为<span class="math inline">\(\mu_{vt}=0\)</span>，自协方差函数为：</p>
 <p><span class="math display">\[
 \gamma_v(h)=\begin{cases}
@@ -972,12 +964,12 @@ U=\sum_{j=1}^ma_jX_j\ 和\ V=\sum_{k=1}^rb_kY_k
 \]</span></p>
 <p>其关于滞后值0对称。</p>
 </section>
-<section id="随机游走是非平稳的" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="随机游走是非平稳的"><span class="header-section-number">4.5</span> 随机游走是非平稳的</h2>
+<section id="随机游走是非平稳的" class="level3" data-number="4.2.3">
+<h3 data-number="4.2.3" class="anchored" data-anchor-id="随机游走是非平稳的"><span class="header-section-number">4.2.3</span> 随机游走是非平稳的</h3>
 <p>由<a href="#sec-randommean" class="quarto-xref">小节&nbsp;3.1.2</a>和<a href="#sec-randomcov" class="quarto-xref">小节&nbsp;3.2.4</a>可知，随机游走的平均函数为<span class="math inline">\(\mu_{xt}=\delta t\)</span>，自协方差函数为<span class="math inline">\(\gamma_x(s,t)=\operatorname{min}\{s,t\}\sigma_w^2\)</span>，都和时间有关，故随机游走不是平稳的。</p>
 </section>
-<section id="趋势平稳性trend-stationarity" class="level2" data-number="4.6">
-<h2 data-number="4.6" class="anchored" data-anchor-id="趋势平稳性trend-stationarity"><span class="header-section-number">4.6</span> 趋势平稳性(Trend Stationarity)</h2>
+<section id="趋势平稳性trend-stationarity" class="level3" data-number="4.2.4">
+<h3 data-number="4.2.4" class="anchored" data-anchor-id="趋势平稳性trend-stationarity"><span class="header-section-number">4.2.4</span> 趋势平稳性(Trend Stationarity)</h3>
 <p>趋势平稳性指模型围绕线性趋势的平稳行为，即均值函数不独立于时间，但自协方差函数独立于时间。</p>
 <p>如<span class="math inline">\(x_t=\alpha+\beta t+y_t\)</span>，其中<span class="math inline">\(y_t\)</span>是平稳的，则均值函数为<span class="math inline">\(\mu_{x,t}=\operatorname{E}(x_t)=\alpha+\beta t+\mu_y\)</span>，不独立于时间；自协方差函数为<span class="math inline">\(\gamma_x(h)=\operatorname{cov}(x_{t+h},x_t)=\operatorname{E}[(x_{t+h}-\mu_{x,t+h})(x_t-\mu_{x,t})]=\operatorname{E}[(y_{t+h}-\mu_y)(y_t-\mu_y)]=\gamma_y(h)\)</span>，独立于时间。</p>
 <p>例子如<a href="#fig-chicken" class="quarto-xref">图&nbsp;14</a>所示。</p>
@@ -1003,15 +995,15 @@ U=\sum_{j=1}^ma_jX_j\ 和\ V=\sum_{k=1}^rb_kY_k
 </ol>
 </section>
 </section>
-<section id="联合平稳jointly-stationary" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> 联合平稳(Jointly Stationary)</h1>
+<section id="联合平稳jointly-stationary" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="联合平稳jointly-stationary"><span class="header-section-number">4.3</span> 联合平稳(Jointly Stationary)</h2>
 <p>两个时间序列<span class="math inline">\(x_t\)</span>和<span class="math inline">\(y_t\)</span>均是平稳的，且它们的交叉协方差函数为：</p>
 <p><span class="math display">\[
 \gamma_{xy}(h)=\operatorname{cov}(x_{t+h},y_t)=\operatorname{E}[(x_{t+h}-\mu_x)(y_t-\mu_y)]
 \]</span></p>
 <p>我们称<span class="math inline">\(x_t\)</span>和<span class="math inline">\(y_t\)</span>是联合平稳的，且交叉协方差函数仅和滞后值<span class="math inline">\(h\)</span>有关。</p>
-<section id="交叉相关函数cross-correlation-functionccf-1" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="交叉相关函数cross-correlation-functionccf-1"><span class="header-section-number">5.1</span> 交叉相关函数(Cross-Correlation Function，CCF)</h2>
+<section id="交叉相关函数cross-correlation-functionccf-1" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="交叉相关函数cross-correlation-functionccf-1"><span class="header-section-number">4.3.1</span> 交叉相关函数(Cross-Correlation Function，CCF)</h3>
 <p>联合平稳时间序列<span class="math inline">\(x_t\)</span>和<span class="math inline">\(y_t\)</span>的交叉相关函数为：</p>
 <p><span id="eq-ccf"><span class="math display">\[
 \rho_{xy}(h)=\frac{\gamma_{xy}(h)}{\sqrt{\gamma_x(0)\gamma_y(0)}}
@@ -1060,13 +1052,13 @@ U=\sum_{j=1}^ma_jX_j\ 和\ V=\sum_{k=1}^rb_kY_k
 </div>
 </div>
 </section>
-<section id="联合平稳性joint-stationarity" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="联合平稳性joint-stationarity"><span class="header-section-number">5.2</span> 联合平稳性(Joint Stationarity)</h2>
+<section id="联合平稳性joint-stationarity" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="联合平稳性joint-stationarity"><span class="header-section-number">4.3.2</span> 联合平稳性(Joint Stationarity)</h3>
 <p>两个序列<span class="math inline">\(x_t\)</span>和<span class="math inline">\(y_t\)</span>，分别是白噪声过程两个连续值的和与差，即<span class="math inline">\(x_t=w_t+w_{t-1}\)</span>和<span class="math inline">\(y_t=w_t-w_{t-1}\)</span>，其中<span class="math inline">\(w_t\)</span>是均值为0，方差为<span class="math inline">\(\sigma_w^2\)</span>的独立随机变量。易证<span class="math inline">\(\gamma_x(0)=\gamma_y(0)=2\sigma_w^2\)</span>，以及<span class="math inline">\(\gamma_x(1)=\gamma_y(-1)=\sigma_w^2\)</span>、<span class="math inline">\(\gamma_y(1)=\gamma_x(-1)=-\sigma_w^2\)</span>。</p>
 <p>同时有：</p>
-<p><span class="math display">\[
+<p><span id="eq-jointcov"><span class="math display">\[
 \gamma_{xy}(1)=\operatorname{cov}(x_{t+1},y_t)=\operatorname{cov}(w_{t+1}+w_t,w_t-w_{t-1})=\sigma_w^2
-\]</span></p>
+\tag{10}\]</span></span></p>
 <p>类似的：<span class="math inline">\(\gamma_{xy}(0)=0\)</span>、<span class="math inline">\(\gamma_{xy}(-1)=-\sigma_w^2\)</span>。根据<a href="#eq-ccf" class="quarto-xref">式&nbsp;9</a>，可得：</p>
 <p><span class="math display">\[
 \rho_{xy}(h)=\begin{cases}
@@ -1087,7 +1079,7 @@ U=\sum_{j=1}^ma_jX_j\ 和\ V=\sum_{k=1}^rb_kY_k
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>再次给出推导过程帮助记忆和理解。</p>
+<p>给出补充的推导过程帮助记忆和理解。</p>
 <p><strong>注意</strong>：<span class="math inline">\(\gamma_{xy}(h)\)</span>等于<span class="math inline">\(\operatorname{cov}(x_{t+h},y_t)\)</span>，而不是等于<span class="math inline">\(\operatorname{cov}(x_t,y_{t+h})\)</span>，在自协方差里面混淆了不影响结果，但在交叉协方差里面是有影响的。</p>
 <ol type="1">
 <li><strong>方差</strong></li>
@@ -1139,7 +1131,119 @@ U=\sum_{j=1}^ma_jX_j\ 和\ V=\sum_{k=1}^rb_kY_k
 0&amp;|h|\ge2\\
 \end{cases}
 \]</span></p>
-<p>交叉相关函数是简单的公式代入，不做解释了。</p>
+<p>交叉相关函数是在<a href="#eq-jointcov" class="quarto-xref">式&nbsp;10</a>的基础上，简单的公式代入，不做补充推导。</p>
+</div>
+</div>
+</section>
+<section id="使用交叉相关进行预测" class="level3" data-number="4.3.3">
+<h3 data-number="4.3.3" class="anchored" data-anchor-id="使用交叉相关进行预测"><span class="header-section-number">4.3.3</span> 使用交叉相关进行预测</h3>
+<p>有模型：</p>
+<p><span class="math display">\[
+y_t=Ax_{t-\ell}+w_t
+\]</span></p>
+<p><strong>前导</strong>(lead)：当<span class="math inline">\(\ell&gt;0\)</span>时，序列<span class="math inline">\(x_t\)</span>是序列<span class="math inline">\(y_t\)</span>的前导；</p>
+<p><strong>滞后</strong>(lag)：当<span class="math inline">\(\ell&lt;0\)</span>时，序列<span class="math inline">\(x_t\)</span>是序列<span class="math inline">\(y_t\)</span>的滞后。</p>
+<p>在用<span class="math inline">\(x_t\)</span>预测<span class="math inline">\(y_t\)</span>时，判断清楚前导和滞后关系很重要。</p>
+<p>假设噪声<span class="math inline">\(w_t\)</span>和<span class="math inline">\(x_t\)</span>不相关，则交叉协方差函数如下：</p>
+<p><span class="math display">\[
+\begin{aligned}
+\gamma_{yx}(h)
+&amp;=\operatorname{cov}(y_{t+h},x_t)=\operatorname{cov}(Ax_{t+h-\ell}+w_{t+h},x_t)\\
+&amp;=\operatorname{cov}(Ax_{t+h-\ell},x_t)=A\gamma_x(h-\ell)
+\end{aligned}
+\]</span></p>
+<p>根据柯西不等式(Cauchy-Schwarz)，当<span class="math inline">\(h=\ell\)</span>时，即<span class="math inline">\(\gamma_x(0)\)</span>时，<span class="math inline">\(\gamma_{yx}(h)\)</span>取最大绝对值。如果<span class="math inline">\(h&gt;0\)</span>时取最大绝对值，说明<span class="math inline">\(x_t\)</span>是<span class="math inline">\(y_t\)</span>的先导；如果<span class="math inline">\(h&lt;0\)</span>时取最大绝对值，说明<span class="math inline">\(x_t\)</span>滞后于<span class="math inline">\(y_t\)</span>。</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+提示
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>因为是相关，不涉及因果，所以先导和滞后都是相对的。</p>
+<p>考虑到标准差一般为固定值，协方差最大的时候，就是<span class="math inline">\(x_t\)</span>和<span class="math inline">\(y_t\)</span>相关性最强的时候。</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> stats<span class="sc">::</span><span class="fu">lag</span>(x, <span class="sc">-</span><span class="dv">5</span>) <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">100</span>) <span class="co"># h = 5</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>astsa<span class="sc">::</span><span class="fu">ccf2</span>(y, x, <span class="at">ylab =</span> <span class="st">'CCovF'</span>, <span class="at">type =</span> <span class="st">'covariance'</span>)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>( <span class="dv">9</span>, <span class="fl">1.1</span>, <span class="st">'x leads'</span>)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="sc">-</span><span class="dv">8</span>, <span class="fl">1.1</span>, <span class="st">'y leads'</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-CCovF" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-CCovF-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-CCovF-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-CCovF-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;15: 交叉协方差函数
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="线性随机过程linear-process" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="线性随机过程linear-process"><span class="header-section-number">4.4</span> 线性(随机)过程(Linear Process)</h2>
+<p><span class="math inline">\(x_t\)</span>是白噪声<span class="math inline">\(w_t\)</span>的线性组合，具体如下：</p>
+<p><span id="eq-linerprocess"><span class="math display">\[
+x_t=\mu+\sum_{j=-\infty}^{\infty}\psi_jw_{t-j},\ \sum_{j=-\infty}^{\infty}|\psi_j|&lt;\infty
+\tag{11}\]</span></span></p>
+<p>当<span class="math inline">\(h\ge0\)</span>时，其自协方差函数为：</p>
+<p><span class="math display">\[
+\gamma_x(h)=\sigma_w^2\sum_{j=-\infty}^{\infty}\psi_{j+h}\psi_j
+\]</span></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+提示
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><strong>模型解释</strong></li>
+</ol>
+<p><a href="#eq-linerprocess" class="quarto-xref">式&nbsp;11</a>表示一种广义的线性随机过程。</p>
+<p><span class="math display">\[
+x_t=\mu+\sum_{j=-\infty}^{\infty}\psi_jw_{t-j},\ \sum_{j=-\infty}^{\infty}|\psi_j|&lt;\infty
+\]</span></p>
+<p>其中：</p>
+<ul>
+<li><p><span class="math inline">\(x_t\)</span>：当前时间点<span class="math inline">\(t\)</span>的观测值；</p></li>
+<li><p><span class="math inline">\(\mu\)</span>：序列的均值；</p></li>
+<li><p><span class="math inline">\(\psi_j\)</span>：权重系数，描述了过去(<span class="math inline">\(j&gt;0\)</span>)、现在(<span class="math inline">\(j=0\)</span>)和未来(<span class="math inline">\(j &lt; 0\)</span>)的随机扰动对当前观测值的影响；</p></li>
+<li><p><span class="math inline">\(w_t\)</span>：随机扰动项。</p></li>
+</ul>
+<ol start="2" type="1">
+<li><strong>自协方差函数推导</strong></li>
+</ol>
+<p><span class="math display">\[
+\gamma_x(h)=\operatorname{cov}(x_{t+h},x_t)
+\]</span></p>
+<p>将给定的<span class="math inline">\(x_t\)</span>代入：</p>
+<p><span class="math display">\[
+\begin{aligned}
+\gamma_x(h)
+&amp;=\operatorname{cov}(\mu+\sum_{j=-\infty}^{\infty}\psi_jw_{t+h-j},\mu+\sum_{k=-\infty}^{\infty}\psi_kw_{t-k})\\
+&amp;=\operatorname{cov}(\sum_{j=-\infty}^{\infty}\psi_jw_{t+h-j},\sum_{k=-\infty}^{\infty}\psi_kw_{t-k})\\
+&amp;=\sum_{j=-\infty}^{\infty}\sum_{k=-\infty}^{\infty}\psi_j\psi_k\operatorname{cov}(w_{t+h-j},w_{t-k})
+\end{aligned}
+\]</span></p>
+<p>当<span class="math inline">\(k=j-h\)</span>时，<span class="math inline">\(\operatorname{cov}(w_{t+h-j},w_{t-k})=\sigma_w^2\)</span>；</p>
+<p>当<span class="math inline">\(k\neq j-h\)</span>时，<span class="math inline">\(\operatorname{cov}(w_{t+h-j},w_{t-k})=0\)</span>。</p>
+<p>因此，非零项只发生在<span class="math inline">\(k=j-h\)</span>处，表达式可简化为：</p>
+<p><span class="math display">\[
+\gamma_x(h)=\sigma_w^2\sum_{j=-\infty}^{\infty}\psi_j\psi_{j-h}
+\]</span></p>
 </div>
 </div>
 
