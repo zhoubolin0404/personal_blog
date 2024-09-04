@@ -813,7 +813,7 @@ $${#eq-linerprocess}
 
 $$
 \gamma_x(h)=\sigma_w^2\sum_{j=-\infty}^{\infty}\psi_{j+h}\psi_j
-$$
+$${#eq-linerprocesscov}
 
 :::{.callout-tip}
 1. **模型解释**
@@ -860,4 +860,62 @@ $$
 $$
 \gamma_x(h)=\sigma_w^2\sum_{j=-\infty}^{\infty}\psi_j\psi_{j-h}
 $$
+
+这和[@eq-linerprocesscov]是一致的。
 :::
+
+:::{.callout-tip}
+正态时间序列(高斯时间序列)之后也会涉及，目前来看在理解上没那么重要，如有需求会在后续补上。
+:::
+
+# 相关系数的估计
+
+上面论述的内容只适用于假设的模型，但大部分研究都是通过样本数据来分析整体的，因此我们要在平稳性假设的基础上进行分析。
+
+如果时间序列是平稳的，均值函数是一个常数，可以用样本均值来估计：
+
+$$
+\bar x=\frac{1}{n}\sum_{t=1}^nx_t
+$$
+
+方差为：
+
+$$
+\begin{aligned}
+\operatorname{var}(\bar{x})
+&=\operatorname{var}(\frac{1}{n}\sum_{t=1}^nx_t)=\frac{1}{n^2}\operatorname{cov}(\sum_{t=1}^{n}x_t,\sum_{s=1}^{n}x_s)\\
+&\begin{aligned}=
+&\frac{1}{n^2}(n\gamma_x(0)+(n-1)\gamma_x(1)+(n-2)\gamma_x(2)+\cdots+\gamma_x(n-1)\\
+&+(n-1)\gamma_x(-1)+(n-2)\gamma_x(-2)+\cdots+\gamma_x(1-n))
+\end{aligned}\\
+&=\frac{1}{n}\sum_{h=-n}^{n}(1-\frac{|h|}{n})\gamma_x(h)
+\end{aligned}
+$${#eq-estvar}
+
+:::{.callout-tip}
+对[@eq-estvar]补充部分推导过程。
+
+$$
+\frac{1}{n^2}\operatorname{cov}(\sum_{t=1}^{n}x_t,\sum_{s=1}^{n}x_s)=\frac{1}{n^2}\sum_{t=1}^{n}\sum_{s=1}^{n}\operatorname{cov}(x_t,x_s)=\frac{1}{n^2}\sum_{t=1}^{n}\sum_{s=1}^{n}\gamma_x(t-s)
+$$
+
+有$n$对$t-s=0$；$n-1$对$t-s=1$和$t-s=-1$；$n-2$对$t-s=2$和$t-s=-2$；……
+
+展开后，因为$\gamma_x(n)=\gamma_x(-n)$，令$h=t-s$，合并得到：
+
+$$
+\frac{1}{n}\sum_{h=-n}^{n}(1-\frac{|h|}{n})\gamma_x(h)
+$$
+:::
+
+## 样本自协方差函数(Sample Autocovariance Function)
+
+$$
+\hat\gamma(h)=n^{-1}\sum_{t=1}^{n-h}(x_{t+h}-\bar x)(x_t-\bar x)
+$$
+
+其中$h=0,1,\cdots,n-1$，且$\hat\gamma(-h)=\hat\gamma(h)$
+
+
+
+

@@ -268,6 +268,10 @@ window.Quarto = {
   <li><a href="#联合平稳jointly-stationary" id="toc-联合平稳jointly-stationary" class="nav-link" data-scroll-target="#联合平稳jointly-stationary"><span class="header-section-number">4.3</span> 联合平稳(Jointly Stationary)</a></li>
   <li><a href="#线性随机过程linear-process" id="toc-线性随机过程linear-process" class="nav-link" data-scroll-target="#线性随机过程linear-process"><span class="header-section-number">4.4</span> 线性(随机)过程(Linear Process)</a></li>
   </ul></li>
+  <li><a href="#相关系数的估计" id="toc-相关系数的估计" class="nav-link" data-scroll-target="#相关系数的估计"><span class="header-section-number">5</span> 相关系数的估计</a>
+  <ul class="collapse">
+  <li><a href="#样本自协方差函数sample-autocovariance-function" id="toc-样本自协方差函数sample-autocovariance-function" class="nav-link" data-scroll-target="#样本自协方差函数sample-autocovariance-function"><span class="header-section-number">5.1</span> 样本自协方差函数(Sample Autocovariance Function)</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -1196,9 +1200,9 @@ y_t=Ax_{t-\ell}+w_t
 x_t=\mu+\sum_{j=-\infty}^{\infty}\psi_jw_{t-j},\ \sum_{j=-\infty}^{\infty}|\psi_j|&lt;\infty
 \tag{11}\]</span></span></p>
 <p>当<span class="math inline">\(h\ge0\)</span>时，其自协方差函数为：</p>
-<p><span class="math display">\[
+<p><span id="eq-linerprocesscov"><span class="math display">\[
 \gamma_x(h)=\sigma_w^2\sum_{j=-\infty}^{\infty}\psi_{j+h}\psi_j
-\]</span></p>
+\tag{12}\]</span></span></p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1244,8 +1248,70 @@ x_t=\mu+\sum_{j=-\infty}^{\infty}\psi_jw_{t-j},\ \sum_{j=-\infty}^{\infty}|\psi_
 <p><span class="math display">\[
 \gamma_x(h)=\sigma_w^2\sum_{j=-\infty}^{\infty}\psi_j\psi_{j-h}
 \]</span></p>
+<p>这和<a href="#eq-linerprocesscov" class="quarto-xref">式&nbsp;12</a>是一致的。</p>
 </div>
 </div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+提示
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>正态时间序列(高斯时间序列)之后也会涉及，目前来看在理解上没那么重要，如有需求会在后续补上。</p>
+</div>
+</div>
+</section>
+</section>
+<section id="相关系数的估计" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> 相关系数的估计</h1>
+<p>上面论述的内容只适用于假设的模型，但大部分研究都是通过样本数据来分析整体的，因此我们要在平稳性假设的基础上进行分析。</p>
+<p>如果时间序列是平稳的，均值函数是一个常数，可以用样本均值来估计：</p>
+<p><span class="math display">\[
+\bar x=\frac{1}{n}\sum_{t=1}^nx_t
+\]</span></p>
+<p>方差为：</p>
+<p><span id="eq-estvar"><span class="math display">\[
+\begin{aligned}
+\operatorname{var}(\bar{x})
+&amp;=\operatorname{var}(\frac{1}{n}\sum_{t=1}^nx_t)=\frac{1}{n^2}\operatorname{cov}(\sum_{t=1}^{n}x_t,\sum_{s=1}^{n}x_s)\\
+&amp;\begin{aligned}=
+&amp;\frac{1}{n^2}(n\gamma_x(0)+(n-1)\gamma_x(1)+(n-2)\gamma_x(2)+\cdots+\gamma_x(n-1)\\
+&amp;+(n-1)\gamma_x(-1)+(n-2)\gamma_x(-2)+\cdots+\gamma_x(1-n))
+\end{aligned}\\
+&amp;=\frac{1}{n}\sum_{h=-n}^{n}(1-\frac{|h|}{n})\gamma_x(h)
+\end{aligned}
+\tag{13}\]</span></span></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+提示
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>对<a href="#eq-estvar" class="quarto-xref">式&nbsp;13</a>补充部分推导过程。</p>
+<p><span class="math display">\[
+\frac{1}{n^2}\operatorname{cov}(\sum_{t=1}^{n}x_t,\sum_{s=1}^{n}x_s)=\frac{1}{n^2}\sum_{t=1}^{n}\sum_{s=1}^{n}\operatorname{cov}(x_t,x_s)=\frac{1}{n^2}\sum_{t=1}^{n}\sum_{s=1}^{n}\gamma_x(t-s)
+\]</span></p>
+<p>有<span class="math inline">\(n\)</span>对<span class="math inline">\(t-s=0\)</span>；<span class="math inline">\(n-1\)</span>对<span class="math inline">\(t-s=1\)</span>和<span class="math inline">\(t-s=-1\)</span>；<span class="math inline">\(n-2\)</span>对<span class="math inline">\(t-s=2\)</span>和<span class="math inline">\(t-s=-2\)</span>；……</p>
+<p>展开后，因为<span class="math inline">\(\gamma_x(n)=\gamma_x(-n)\)</span>，令<span class="math inline">\(h=t-s\)</span>，合并得到：</p>
+<p><span class="math display">\[
+\frac{1}{n}\sum_{h=-n}^{n}(1-\frac{|h|}{n})\gamma_x(h)
+\]</span></p>
+</div>
+</div>
+<section id="样本自协方差函数sample-autocovariance-function" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="样本自协方差函数sample-autocovariance-function"><span class="header-section-number">5.1</span> 样本自协方差函数(Sample Autocovariance Function)</h2>
+<p><span class="math display">\[
+\hat\gamma(h)=n^{-1}\sum_{t=1}^{n-h}(x_{t+h}-\bar x)(x_t-\bar x)
+\]</span></p>
+<p>其中<span class="math inline">\(h=0,1,\cdots,n-1\)</span>，且<span class="math inline">\(\hat\gamma(-h)=\hat\gamma(h)\)</span></p>
 
 
 
