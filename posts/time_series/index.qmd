@@ -9,11 +9,10 @@ csl: apa.csl
 number-sections: true
 toc: true
 toc-depth: 2
-date-modified: "2024/9/2"
+date-modified: "2024/9/6"
 ---
 
 ```{r chapter-status, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
-library(tidyverse)
 library(webexercises)
 library(astsa)
 library(xts)
@@ -78,7 +77,7 @@ gtemp_land
 tsplot(gtemp_land, col = 4, type = "o", xlab = "时间", ylab = "全球温度偏差/℃")
 ```
 
-## 语音数据
+## 语音数据{#sec-speech}
 
 `speech`：为“aaa…hhh”这一短语录制的0.1秒(1000采样点)语音样本。
 
@@ -113,7 +112,7 @@ djiar = diff(log(djia$Close))[-1]
 plot(djiar, col = 4, main = "DJIA Returns") 
 ```
 
-## 厄尔尼诺和鱼群
+## 厄尔尼诺和鱼群{#sec-soi}
 
 `soi`：1950-1987年间453个月的南方涛动指数(SOI)
 
@@ -914,8 +913,239 @@ $$
 \hat\gamma(h)=n^{-1}\sum_{t=1}^{n-h}(x_{t+h}-\bar x)(x_t-\bar x)
 $$
 
-其中$h=0,1,\cdots,n-1$，且$\hat\gamma(-h)=\hat\gamma(h)$
+其中$h=0,1,\cdots,n-1$，且$\hat\gamma(-h)=\hat\gamma(h)$。
 
+## 样本自相关函数(Sample Autocorrelation Function)
 
+$$
+\hat\rho(h)=\frac{\hat\gamma(h)}{\hat\gamma(0)}
+$$
 
+使用[@sec-soi]中的SOI序列数据，展示不同滞后下得到的不同估计相关系数，以及其散点图。图片左上角为估计相关系数。
 
+```{r}
+#| label: fig-soi_acf
+#| fig-cap: SOI序列与其滞后1个月(左)和滞后6个月(右)的相关散点图
+r = round(acf1(soi, 6, plot = FALSE), 2) # sample acf values
+par(mfrow = c(1, 2))
+tsplot(stats::lag(soi, -1), soi, col = 4, type = 'p', xlab = 'lag(soi,-1)')
+ legend("topleft", legend = r[1], bg = "white", adj = .45, cex = 0.85)
+tsplot(stats::lag(soi, -6), soi, col = 4, type = 'p', xlab = 'lag(soi,-6)')
+ legend("topleft", legend = r[6], bg = "white", adj = .25, cex = 0.8)
+```
+
+如果在大样本下，样本ACF近似服从正态分布，该正态分布均值为0，标准差为$\frac{1}{\sqrt{n}}$。
+
+在此基础上，我们还是可以根据$\hat\rho(h)$是否在95%置信区间外来检验显著性。
+
+通过模拟数据，我们来验证一下是不是大样本数据估计出来的ACF更接近理论值。
+
+用抛硬币的方法构建一组数据$x_t$，硬币正面令$x_t=1$，反面令$x_t=-1$。然后构建$y_t=5+x_t-0.7x_{t-1}$。
+
+```{r}
+set.seed(666)
+x1 = sample(c(-1,1), 11, replace=TRUE)  # simulated sequence of coin tosses
+x2 = sample(c(-1,1), 1001, replace=TRUE)
+y1 = 5 + stats::filter(x1, sides=1, filter=c(1,-.7))[-1]
+y2 = 5 + stats::filter(x2, sides=1, filter=c(1,-.7))[-1]
+c(mean(y1), mean(y2))  # the sample means
+acf(y1, lag.max=4, plot=FALSE) 
+acf(y2, lag.max=4, plot=FALSE)
+```
+
+计算一下理论值。
+
+$x_t$均值为0，方差为1，则$y_t$有：
+
+$$
+\rho_x(1)=\frac{-0.7}{1+0.7^2}\approx-0.47
+$$
+
+可见样本更大的更接近理论值。
+
+:::{.callout-tip}
+理论值的推导。
+
+$$
+\begin{aligned}
+\gamma_y(h)&=\operatorname{cov}(y_{t+h},y_t)=\operatorname{cov}(5+x_{t+h}-0.7x_{t+h-1},5+x_t-0.7x_{t-1})\\
+&=\operatorname{cov}(x_{t+h}-0.7x_{t+h-1},x_t-0.7x_{t-1})\\
+&=\operatorname{cov}(x_{t+h},x_t)-0.7\operatorname{cov}(x_{t+h},x_{t-1})-0.7\operatorname{cov}(x_{t+h-1},x_t)+0.49\operatorname{cov}(x_{t+h-1},x_{t-1})
+\end{aligned}
+$$
+
+$x_t$是均值为0，方差为1的独立同分布，所以当$h=0$时，$\operatorname{cov}(x_t,x_t)=\operatorname{var}(x_t)=1$；当$h\neq0$时，$\operatorname{cov}(x_t,x_{t+h})=0$
+
+所以：
+
+$$
+\gamma_y(h)=\begin{cases}
+1-0-0+0.49=1.49&h=0\\
+0-0-0.7+0=0.7&h=1\\
+0-0-0+0=0&h\ge2
+\end{cases}
+$$
+
+所以：
+
+$$
+\rho_y(1)=\frac{\gamma_y(1)}{\gamma_y(0)}=\frac{-0.7}{1+0.7^2}\approx-0.47
+$$
+:::
+
+再展示[@sec-speech]的ACF图。
+
+```{r,results='hide'}
+#| label: fig-speech_acf
+#| fig-cap: 语音数据的ACF
+acf1(speech, 250)
+```
+
+可见每隔100多点的间隔，峰值重复出现，说明这可能是一系列重复的短信号。
+
+## 样本交叉协方差函数
+
+$$
+\hat\gamma_{xy}(h)=n^{-1}\sum_{t=1}^{n-h}(x_{t+h}-\bar x)(y_t-\bar y)
+$$
+
+## 样本交叉相关函数
+
+$$
+\hat\rho_{xy}(h)=\frac{\hat\gamma_{xy}(h)}{\sqrt{\hat\gamma_x(0)\hat\gamma_y(0)}}
+$$
+
+如果至少有一个过程是独立的白噪声，则$\hat\rho_{xy}(h)$的大样本分布是正态的，均值为0，标准差$\sigma_{\hat\rho_(xy)}=\frac{1}{\sqrt{n}}$
+
+还是用[@sec-soi]中的数据举例。
+
+```{r,results='hide'}
+#| label: fig-soirec_acf
+#| fig-cap: SOI序列(上图)和新鱼数量序列(中图)的ACF,以及它们的CCF(下图)
+par(mfrow=c(3,1))
+acf1(soi, main="SOI")
+acf1(rec, main="新鱼数量")
+ccf2(soi, rec, main="SOI vs 新鱼数量")
+```
+
+[@fig-soirec_acf]上图和中图表明12个月的间隔表现出正相关，6个月的间隔表现出负相关。下图则表现出两组数据的一些偏移，在$h=-6$处取得峰值，说明时间$t-6$测量的SOI和时间$t$的新鱼数量相关。可以说SOI领先新鱼数量6个月，且SOI的增加可能导致新鱼数量减少。虚线表示$\pm2/\sqrt{453}$，但现在没有意义，因为两个序列都不是白噪声。
+
+## 预白化(Prewhitening)和交叉相关分析
+
+白化是指将一个时间序列转换为白噪声序列的过程，也就是去除其相关性，生成一个没有自相关性的序列，便于之后进行统计分析。
+
+```{r,results='hide'}
+#| label: fig-prewhitening
+#| fig-cap: 白化处理展示
+set.seed(1492)
+num = 120
+t = 1:num
+X = ts(2 * cos(2 * pi * t / 12) + rnorm(num), freq = 12)
+Y = ts(2 * cos(2 * pi * (t + 5) / 12) + rnorm(num), freq = 12)
+Yw = resid(lm(Y ~ cos(2 * pi * t / 12) + sin(2 * pi * t / 12), na.action = NULL))
+par(mfrow = c(3, 2))
+tsplot(X)
+tsplot(Y)
+acf1(X, 48, ylab = 'ACF(X)')
+acf1(Y, 48, ylab = 'ACF(Y)')
+ccf2(X, Y, 24)
+ccf2(X, Yw, 24, ylim = c(-.6, .6))
+```
+
+## 向量值(Vector-Valued)和多维序列(Multidimensional Series)
+
+当考虑多个变量的时间序列之间的关系时，经常用向量的方法表示，即$x_t=(x_{t1},x_{t2},\cdots,x_{tp})'$，这表示$p$个一元时间序列，是个$p\times1$的列向量。
+
+平稳情况下均值为：
+
+$$
+\mu=\operatorname{E}(x_t)=(\mu_{t1},\mu_{t2},\cdots,\mu_{tp})'
+$$
+
+$p\times p$协方差矩阵为：
+
+$$
+\mathbf{\Gamma}(h)=\operatorname{E}[(x_{x+h}-\mu)(x_t-\mu)']=\begin{bmatrix}
+\gamma_{11}(h)&\gamma_{12}(h)&\cdots&\gamma_{1p}(h)\\
+\gamma_{21}(h)&\gamma_{22}(h)&\cdots&\gamma_{2p}(h)\\
+\vdots&\vdots&\ddots&\vdots\\
+\gamma_{p1}(h)&\gamma_{p2}(h)&\cdots&\gamma_{pp}(h)\\
+\end{bmatrix}
+$$
+
+因为$\gamma_{ij}(h)=\gamma_{ji}(-h)$，所有$\mathbf{\Gamma}(h)=\mathbf{\Gamma}'(-h)$。
+
+样本自协方差矩阵为：
+
+$$
+\hat{\mathbf{\Gamma}}(h)=n^{-1}\sum_{t=1}^{n-h}(x_{t+h}-\bar x)(x_t-\bar x)'
+$$
+
+有时候$x_t$本身就是个多维数据(如坐标)。
+
+[@fig-earthtam2d]展示的就是一块$64\times36$分割的土地上温度。$x_s=x_{s1,s2}$表示$s_1$行$s_2$列的温度。
+
+```{r}
+#| label: fig-earthtam2d
+#| fig-cap: 坐标上的温度序列
+par(mar = rep(1, 4))
+persp(
+    1:64,          # x轴范围
+    1:36,          # y轴范围
+    soiltemp,      # 数据集
+    phi = 30,      # X-Y平面角度
+    theta = 30,    # X-Z平面角度
+    scale = FALSE, # 数据标准化，Z轴的自动缩放
+    expand = 4,    # 图的扩展比例
+    ticktype = "detailed",  # 刻度线类型
+    xlab = "rows",
+    ylab = "cols",
+    zlab = "temperature"
+)
+```
+
+图中可以看出，从第$40$行开始，温度沿着行坐标开始有平稳波动。对36列进行平均，绘制行均值[@fig-earthtamrow]。
+
+```{r}
+#| label: fig-earthtamrow
+#| fig-cap: 行均值
+tsplot(rowMeans(soiltemp), xlab = "row", ylab = "Average Temperature")
+```
+
+可发现前面40行的噪声被平滑掉了，整体是一个稳定的温度信号。
+
+可将一个平稳多维随机过程$x_s$的自协方差函数定义为多维滞后向量$h=(h_1,h_2,\cdots,h_r)'$的一个函数,即：
+
+$$
+\gamma(h)=\operatorname{E}[(x_{s+h}-\mu)(x_s-\mu)]
+$$
+
+迁移到坐标上就是：
+
+$$
+\gamma(h_1,h_2)=\operatorname{E}[(x_{s_1+h_1,s_2+h_2}-\mu)(x_{s_1,s_2}-\mu)]
+$$
+
+表示行方向滞后$h_1$，列方向滞后$h_2$的自协方差函数。
+
+多维样本自协方差函数为：
+
+$$
+\hat\gamma(h)=(S_1S_2\cdots S_r)^{-1}\sum_{s_1}\sum_{s_2}\cdots\sum_{s_r}(x_{s+h}-\bar x)(x_s-\bar x)
+$$
+
+其中：
+
+$$
+\bar x=(S_1S_2\cdots S_r)^{-1}\sum_{s_1}\sum_{s_2}\cdots\sum_{s_r}x_{s_1,s_2,\cdots,s_r}
+$$
+
+样本自相关函数为：
+
+$$
+\hat\rho(h)=\frac{\hat\gamma(h)}{\hat\gamma(0)}
+$$
+
+:::{.callout-tip}
+后面示例在之后也会出现，暂时放下。
+:::

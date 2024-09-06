@@ -222,7 +222,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">修改于</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">September 2, 2024</p>
+        <p class="date-modified">September 6, 2024</p>
       </div>
     </div>
       
@@ -241,9 +241,9 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#强生公司季度每股收益" id="toc-强生公司季度每股收益" class="nav-link" data-scroll-target="#强生公司季度每股收益"><span class="header-section-number">1.1</span> 强生公司季度每股收益</a></li>
   <li><a href="#全球变暖" id="toc-全球变暖" class="nav-link" data-scroll-target="#全球变暖"><span class="header-section-number">1.2</span> 全球变暖</a></li>
-  <li><a href="#语音数据" id="toc-语音数据" class="nav-link" data-scroll-target="#语音数据"><span class="header-section-number">1.3</span> 语音数据</a></li>
+  <li><a href="#sec-speech" id="toc-sec-speech" class="nav-link" data-scroll-target="#sec-speech"><span class="header-section-number">1.3</span> 语音数据</a></li>
   <li><a href="#道琼斯工业平均指数" id="toc-道琼斯工业平均指数" class="nav-link" data-scroll-target="#道琼斯工业平均指数"><span class="header-section-number">1.4</span> 道琼斯工业平均指数</a></li>
-  <li><a href="#厄尔尼诺和鱼群" id="toc-厄尔尼诺和鱼群" class="nav-link" data-scroll-target="#厄尔尼诺和鱼群"><span class="header-section-number">1.5</span> 厄尔尼诺和鱼群</a></li>
+  <li><a href="#sec-soi" id="toc-sec-soi" class="nav-link" data-scroll-target="#sec-soi"><span class="header-section-number">1.5</span> 厄尔尼诺和鱼群</a></li>
   <li><a href="#fmri成像" id="toc-fmri成像" class="nav-link" data-scroll-target="#fmri成像"><span class="header-section-number">1.6</span> fMRI成像</a></li>
   <li><a href="#地震和爆炸" id="toc-地震和爆炸" class="nav-link" data-scroll-target="#地震和爆炸"><span class="header-section-number">1.7</span> 地震和爆炸</a></li>
   </ul></li>
@@ -271,6 +271,11 @@ window.Quarto = {
   <li><a href="#相关系数的估计" id="toc-相关系数的估计" class="nav-link" data-scroll-target="#相关系数的估计"><span class="header-section-number">5</span> 相关系数的估计</a>
   <ul class="collapse">
   <li><a href="#样本自协方差函数sample-autocovariance-function" id="toc-样本自协方差函数sample-autocovariance-function" class="nav-link" data-scroll-target="#样本自协方差函数sample-autocovariance-function"><span class="header-section-number">5.1</span> 样本自协方差函数(Sample Autocovariance Function)</a></li>
+  <li><a href="#样本自相关函数sample-autocorrelation-function" id="toc-样本自相关函数sample-autocorrelation-function" class="nav-link" data-scroll-target="#样本自相关函数sample-autocorrelation-function"><span class="header-section-number">5.2</span> 样本自相关函数(Sample Autocorrelation Function)</a></li>
+  <li><a href="#样本交叉协方差函数" id="toc-样本交叉协方差函数" class="nav-link" data-scroll-target="#样本交叉协方差函数"><span class="header-section-number">5.3</span> 样本交叉协方差函数</a></li>
+  <li><a href="#样本交叉相关函数" id="toc-样本交叉相关函数" class="nav-link" data-scroll-target="#样本交叉相关函数"><span class="header-section-number">5.4</span> 样本交叉相关函数</a></li>
+  <li><a href="#预白化prewhitening和交叉相关分析" id="toc-预白化prewhitening和交叉相关分析" class="nav-link" data-scroll-target="#预白化prewhitening和交叉相关分析"><span class="header-section-number">5.5</span> 预白化(Prewhitening)和交叉相关分析</a></li>
+  <li><a href="#向量值vector-valued和多维序列multidimensional-series" id="toc-向量值vector-valued和多维序列multidimensional-series" class="nav-link" data-scroll-target="#向量值vector-valued和多维序列multidimensional-series"><span class="header-section-number">5.6</span> 向量值(Vector-Valued)和多维序列(Multidimensional Series)</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -405,8 +410,8 @@ Frequency = 1
 </div>
 </div>
 </section>
-<section id="语音数据" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="语音数据"><span class="header-section-number">1.3</span> 语音数据</h2>
+<section id="sec-speech" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="sec-speech"><span class="header-section-number">1.3</span> 语音数据</h2>
 <p><code>speech</code>：为“aaa…hhh”这一短语录制的0.1秒(1000采样点)语音样本。</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(speech)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -460,8 +465,8 @@ $class
 </div>
 </div>
 </section>
-<section id="厄尔尼诺和鱼群" class="level2" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="厄尔尼诺和鱼群"><span class="header-section-number">1.5</span> 厄尔尼诺和鱼群</h2>
+<section id="sec-soi" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="sec-soi"><span class="header-section-number">1.5</span> 厄尔尼诺和鱼群</h2>
 <p><code>soi</code>：1950-1987年间453个月的南方涛动指数(SOI)</p>
 <p><code>rec</code>：1950-1987年间453个月的新鱼数量指数(Recruitment)</p>
 <div class="cell">
@@ -1311,7 +1316,288 @@ x_t=\mu+\sum_{j=-\infty}^{\infty}\psi_jw_{t-j},\ \sum_{j=-\infty}^{\infty}|\psi_
 <p><span class="math display">\[
 \hat\gamma(h)=n^{-1}\sum_{t=1}^{n-h}(x_{t+h}-\bar x)(x_t-\bar x)
 \]</span></p>
-<p>其中<span class="math inline">\(h=0,1,\cdots,n-1\)</span>，且<span class="math inline">\(\hat\gamma(-h)=\hat\gamma(h)\)</span></p>
+<p>其中<span class="math inline">\(h=0,1,\cdots,n-1\)</span>，且<span class="math inline">\(\hat\gamma(-h)=\hat\gamma(h)\)</span>。</p>
+</section>
+<section id="样本自相关函数sample-autocorrelation-function" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="样本自相关函数sample-autocorrelation-function"><span class="header-section-number">5.2</span> 样本自相关函数(Sample Autocorrelation Function)</h2>
+<p><span class="math display">\[
+\hat\rho(h)=\frac{\hat\gamma(h)}{\hat\gamma(0)}
+\]</span></p>
+<p>使用<a href="#sec-soi" class="quarto-xref">小节&nbsp;1.5</a>中的SOI序列数据，展示不同滞后下得到的不同估计相关系数，以及其散点图。图片左上角为估计相关系数。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>r <span class="ot">=</span> <span class="fu">round</span>(<span class="fu">acf1</span>(soi, <span class="dv">6</span>, <span class="at">plot =</span> <span class="cn">FALSE</span>), <span class="dv">2</span>) <span class="co"># sample acf values</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(stats<span class="sc">::</span><span class="fu">lag</span>(soi, <span class="sc">-</span><span class="dv">1</span>), soi, <span class="at">col =</span> <span class="dv">4</span>, <span class="at">type =</span> <span class="st">'p'</span>, <span class="at">xlab =</span> <span class="st">'lag(soi,-1)'</span>)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="at">legend =</span> r[<span class="dv">1</span>], <span class="at">bg =</span> <span class="st">"white"</span>, <span class="at">adj =</span> .<span class="dv">45</span>, <span class="at">cex =</span> <span class="fl">0.85</span>)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(stats<span class="sc">::</span><span class="fu">lag</span>(soi, <span class="sc">-</span><span class="dv">6</span>), soi, <span class="at">col =</span> <span class="dv">4</span>, <span class="at">type =</span> <span class="st">'p'</span>, <span class="at">xlab =</span> <span class="st">'lag(soi,-6)'</span>)</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a> <span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="at">legend =</span> r[<span class="dv">6</span>], <span class="at">bg =</span> <span class="st">"white"</span>, <span class="at">adj =</span> .<span class="dv">25</span>, <span class="at">cex =</span> <span class="fl">0.8</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-soi_acf" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-soi_acf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-soi_acf-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-soi_acf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;16: SOI序列与其滞后1个月(左)和滞后6个月(右)的相关散点图
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>如果在大样本下，样本ACF近似服从正态分布，该正态分布均值为0，标准差为<span class="math inline">\(\frac{1}{\sqrt{n}}\)</span>。</p>
+<p>在此基础上，我们还是可以根据<span class="math inline">\(\hat\rho(h)\)</span>是否在95%置信区间外来检验显著性。</p>
+<p>通过模拟数据，我们来验证一下是不是大样本数据估计出来的ACF更接近理论值。</p>
+<p>用抛硬币的方法构建一组数据<span class="math inline">\(x_t\)</span>，硬币正面令<span class="math inline">\(x_t=1\)</span>，反面令<span class="math inline">\(x_t=-1\)</span>。然后构建<span class="math inline">\(y_t=5+x_t-0.7x_{t-1}\)</span>。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">666</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">=</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>), <span class="dv">11</span>, <span class="at">replace=</span><span class="cn">TRUE</span>)  <span class="co"># simulated sequence of coin tosses</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">=</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>), <span class="dv">1001</span>, <span class="at">replace=</span><span class="cn">TRUE</span>)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>y1 <span class="ot">=</span> <span class="dv">5</span> <span class="sc">+</span> stats<span class="sc">::</span><span class="fu">filter</span>(x1, <span class="at">sides=</span><span class="dv">1</span>, <span class="at">filter=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="sc">-</span>.<span class="dv">7</span>))[<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>y2 <span class="ot">=</span> <span class="dv">5</span> <span class="sc">+</span> stats<span class="sc">::</span><span class="fu">filter</span>(x2, <span class="at">sides=</span><span class="dv">1</span>, <span class="at">filter=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="sc">-</span>.<span class="dv">7</span>))[<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">mean</span>(y1), <span class="fu">mean</span>(y2))  <span class="co"># the sample means</span></span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4.8600 5.0018</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(y1, <span class="at">lag.max=</span><span class="dv">4</span>, <span class="at">plot=</span><span class="cn">FALSE</span>) </span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Autocorrelations of series 'y1', by lag
+
+     0      1      2      3      4 
+ 1.000 -0.226 -0.630  0.221  0.419 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(y2, <span class="at">lag.max=</span><span class="dv">4</span>, <span class="at">plot=</span><span class="cn">FALSE</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Autocorrelations of series 'y2', by lag
+
+     0      1      2      3      4 
+ 1.000 -0.474 -0.003  0.001 -0.008 </code></pre>
+</div>
+</div>
+<p>计算一下理论值。</p>
+<p><span class="math inline">\(x_t\)</span>均值为0，方差为1，则<span class="math inline">\(y_t\)</span>有：</p>
+<p><span class="math display">\[
+\rho_x(1)=\frac{-0.7}{1+0.7^2}\approx-0.47
+\]</span></p>
+<p>可见样本更大的更接近理论值。</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+提示
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>理论值的推导。</p>
+<p><span class="math display">\[
+\begin{aligned}
+\gamma_y(h)&amp;=\operatorname{cov}(y_{t+h},y_t)=\operatorname{cov}(5+x_{t+h}-0.7x_{t+h-1},5+x_t-0.7x_{t-1})\\
+&amp;=\operatorname{cov}(x_{t+h}-0.7x_{t+h-1},x_t-0.7x_{t-1})\\
+&amp;=\operatorname{cov}(x_{t+h},x_t)-0.7\operatorname{cov}(x_{t+h},x_{t-1})-0.7\operatorname{cov}(x_{t+h-1},x_t)+0.49\operatorname{cov}(x_{t+h-1},x_{t-1})
+\end{aligned}
+\]</span></p>
+<p><span class="math inline">\(x_t\)</span>是均值为0，方差为1的独立同分布，所以当<span class="math inline">\(h=0\)</span>时，<span class="math inline">\(\operatorname{cov}(x_t,x_t)=\operatorname{var}(x_t)=1\)</span>；当<span class="math inline">\(h\neq0\)</span>时，<span class="math inline">\(\operatorname{cov}(x_t,x_{t+h})=0\)</span></p>
+<p>所以：</p>
+<p><span class="math display">\[
+\gamma_y(h)=\begin{cases}
+1-0-0+0.49=1.49&amp;h=0\\
+0-0-0.7+0=0.7&amp;h=1\\
+0-0-0+0=0&amp;h\ge2
+\end{cases}
+\]</span></p>
+<p>所以：</p>
+<p><span class="math display">\[
+\rho_y(1)=\frac{\gamma_y(1)}{\gamma_y(0)}=\frac{-0.7}{1+0.7^2}\approx-0.47
+\]</span></p>
+</div>
+</div>
+<p>再展示<a href="#sec-speech" class="quarto-xref">小节&nbsp;1.3</a>的ACF图。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">acf1</span>(speech, <span class="dv">250</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-speech_acf" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-speech_acf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-speech_acf-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-speech_acf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;17: 语音数据的ACF
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>可见每隔100多点的间隔，峰值重复出现，说明这可能是一系列重复的短信号。</p>
+</section>
+<section id="样本交叉协方差函数" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="样本交叉协方差函数"><span class="header-section-number">5.3</span> 样本交叉协方差函数</h2>
+<p><span class="math display">\[
+\hat\gamma_{xy}(h)=n^{-1}\sum_{t=1}^{n-h}(x_{t+h}-\bar x)(y_t-\bar y)
+\]</span></p>
+</section>
+<section id="样本交叉相关函数" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="样本交叉相关函数"><span class="header-section-number">5.4</span> 样本交叉相关函数</h2>
+<p><span class="math display">\[
+\hat\rho_{xy}(h)=\frac{\hat\gamma_{xy}(h)}{\sqrt{\hat\gamma_x(0)\hat\gamma_y(0)}}
+\]</span></p>
+<p>如果至少有一个过程是独立的白噪声，则<span class="math inline">\(\hat\rho_{xy}(h)\)</span>的大样本分布是正态的，均值为0，标准差<span class="math inline">\(\sigma_{\hat\rho_(xy)}=\frac{1}{\sqrt{n}}\)</span></p>
+<p>还是用<a href="#sec-soi" class="quarto-xref">小节&nbsp;1.5</a>中的数据举例。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>))</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">acf1</span>(soi, <span class="at">main=</span><span class="st">"SOI"</span>)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">acf1</span>(rec, <span class="at">main=</span><span class="st">"新鱼数量"</span>)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ccf2</span>(soi, rec, <span class="at">main=</span><span class="st">"SOI vs 新鱼数量"</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-soirec_acf" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-soirec_acf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-soirec_acf-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-soirec_acf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;18: SOI序列(上图)和新鱼数量序列(中图)的ACF,以及它们的CCF(下图)
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><a href="#fig-soirec_acf" class="quarto-xref">图&nbsp;18</a>上图和中图表明12个月的间隔表现出正相关，6个月的间隔表现出负相关。下图则表现出两组数据的一些偏移，在<span class="math inline">\(h=-6\)</span>处取得峰值，说明时间<span class="math inline">\(t-6\)</span>测量的SOI和时间<span class="math inline">\(t\)</span>的新鱼数量相关。可以说SOI领先新鱼数量6个月，且SOI的增加可能导致新鱼数量减少。虚线表示<span class="math inline">\(\pm2/\sqrt{453}\)</span>，但现在没有意义，因为两个序列都不是白噪声。</p>
+</section>
+<section id="预白化prewhitening和交叉相关分析" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="预白化prewhitening和交叉相关分析"><span class="header-section-number">5.5</span> 预白化(Prewhitening)和交叉相关分析</h2>
+<p>白化是指将一个时间序列转换为白噪声序列的过程，也就是去除其相关性，生成一个没有自相关性的序列，便于之后进行统计分析。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1492</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>num <span class="ot">=</span> <span class="dv">120</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>t <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span>num</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>X <span class="ot">=</span> <span class="fu">ts</span>(<span class="dv">2</span> <span class="sc">*</span> <span class="fu">cos</span>(<span class="dv">2</span> <span class="sc">*</span> pi <span class="sc">*</span> t <span class="sc">/</span> <span class="dv">12</span>) <span class="sc">+</span> <span class="fu">rnorm</span>(num), <span class="at">freq =</span> <span class="dv">12</span>)</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">=</span> <span class="fu">ts</span>(<span class="dv">2</span> <span class="sc">*</span> <span class="fu">cos</span>(<span class="dv">2</span> <span class="sc">*</span> pi <span class="sc">*</span> (t <span class="sc">+</span> <span class="dv">5</span>) <span class="sc">/</span> <span class="dv">12</span>) <span class="sc">+</span> <span class="fu">rnorm</span>(num), <span class="at">freq =</span> <span class="dv">12</span>)</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>Yw <span class="ot">=</span> <span class="fu">resid</span>(<span class="fu">lm</span>(Y <span class="sc">~</span> <span class="fu">cos</span>(<span class="dv">2</span> <span class="sc">*</span> pi <span class="sc">*</span> t <span class="sc">/</span> <span class="dv">12</span>) <span class="sc">+</span> <span class="fu">sin</span>(<span class="dv">2</span> <span class="sc">*</span> pi <span class="sc">*</span> t <span class="sc">/</span> <span class="dv">12</span>), <span class="at">na.action =</span> <span class="cn">NULL</span>))</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>))</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(X)</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(Y)</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="fu">acf1</span>(X, <span class="dv">48</span>, <span class="at">ylab =</span> <span class="st">'ACF(X)'</span>)</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="fu">acf1</span>(Y, <span class="dv">48</span>, <span class="at">ylab =</span> <span class="st">'ACF(Y)'</span>)</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ccf2</span>(X, Y, <span class="dv">24</span>)</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ccf2</span>(X, Yw, <span class="dv">24</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span>.<span class="dv">6</span>, .<span class="dv">6</span>))</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-prewhitening" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-prewhitening-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-prewhitening-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-prewhitening-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;19: 白化处理展示
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="向量值vector-valued和多维序列multidimensional-series" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="向量值vector-valued和多维序列multidimensional-series"><span class="header-section-number">5.6</span> 向量值(Vector-Valued)和多维序列(Multidimensional Series)</h2>
+<p>当考虑多个变量的时间序列之间的关系时，经常用向量的方法表示，即<span class="math inline">\(x_t=(x_{t1},x_{t2},\cdots,x_{tp})'\)</span>，这表示<span class="math inline">\(p\)</span>个一元时间序列，是个<span class="math inline">\(p\times1\)</span>的列向量。</p>
+<p>平稳情况下均值为：</p>
+<p><span class="math display">\[
+\mu=\operatorname{E}(x_t)=(\mu_{t1},\mu_{t2},\cdots,\mu_{tp})'
+\]</span></p>
+<p><span class="math inline">\(p\times p\)</span>协方差矩阵为：</p>
+<p><span class="math display">\[
+\mathbf{\Gamma}(h)=\operatorname{E}[(x_{x+h}-\mu)(x_t-\mu)']=\begin{bmatrix}
+\gamma_{11}(h)&amp;\gamma_{12}(h)&amp;\cdots&amp;\gamma_{1p}(h)\\
+\gamma_{21}(h)&amp;\gamma_{22}(h)&amp;\cdots&amp;\gamma_{2p}(h)\\
+\vdots&amp;\vdots&amp;\ddots&amp;\vdots\\
+\gamma_{p1}(h)&amp;\gamma_{p2}(h)&amp;\cdots&amp;\gamma_{pp}(h)\\
+\end{bmatrix}
+\]</span></p>
+<p>因为<span class="math inline">\(\gamma_{ij}(h)=\gamma_{ji}(-h)\)</span>，所有<span class="math inline">\(\mathbf{\Gamma}(h)=\mathbf{\Gamma}'(-h)\)</span>。</p>
+<p>样本自协方差矩阵为：</p>
+<p><span class="math display">\[
+\hat{\mathbf{\Gamma}}(h)=n^{-1}\sum_{t=1}^{n-h}(x_{t+h}-\bar x)(x_t-\bar x)'
+\]</span></p>
+<p>有时候<span class="math inline">\(x_t\)</span>本身就是个多维数据(如坐标)。</p>
+<p><a href="#fig-earthtam2d" class="quarto-xref">图&nbsp;20</a>展示的就是一块<span class="math inline">\(64\times36\)</span>分割的土地上温度。<span class="math inline">\(x_s=x_{s1,s2}\)</span>表示<span class="math inline">\(s_1\)</span>行<span class="math inline">\(s_2\)</span>列的温度。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">4</span>))</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">persp</span>(</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span><span class="sc">:</span><span class="dv">64</span>,          <span class="co"># x轴范围</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span><span class="sc">:</span><span class="dv">36</span>,          <span class="co"># y轴范围</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    soiltemp,      <span class="co"># 数据集</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">phi =</span> <span class="dv">30</span>,      <span class="co"># X-Y平面角度</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">theta =</span> <span class="dv">30</span>,    <span class="co"># X-Z平面角度</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">scale =</span> <span class="cn">FALSE</span>, <span class="co"># 数据标准化，Z轴的自动缩放</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">expand =</span> <span class="dv">4</span>,    <span class="co"># 图的扩展比例</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">ticktype =</span> <span class="st">"detailed"</span>,  <span class="co"># 刻度线类型</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">"rows"</span>,</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">"cols"</span>,</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">zlab =</span> <span class="st">"temperature"</span></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-earthtam2d" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-earthtam2d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-earthtam2d-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-earthtam2d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;20: 坐标上的温度序列
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>图中可以看出，从第<span class="math inline">\(40\)</span>行开始，温度沿着行坐标开始有平稳波动。对36列进行平均，绘制行均值<a href="#fig-earthtamrow" class="quarto-xref">图&nbsp;21</a>。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(<span class="fu">rowMeans</span>(soiltemp), <span class="at">xlab =</span> <span class="st">"row"</span>, <span class="at">ylab =</span> <span class="st">"Average Temperature"</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-earthtamrow" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-earthtamrow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-earthtamrow-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-earthtamrow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;21: 行均值
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>可发现前面40行的噪声被平滑掉了，整体是一个稳定的温度信号。</p>
+<p>可将一个平稳多维随机过程<span class="math inline">\(x_s\)</span>的自协方差函数定义为多维滞后向量<span class="math inline">\(h=(h_1,h_2,\cdots,h_r)'\)</span>的一个函数,即：</p>
+<p><span class="math display">\[
+\gamma(h)=\operatorname{E}[(x_{s+h}-\mu)(x_s-\mu)]
+\]</span></p>
+<p>迁移到坐标上就是：</p>
+<p><span class="math display">\[
+\gamma(h_1,h_2)=\operatorname{E}[(x_{s_1+h_1,s_2+h_2}-\mu)(x_{s_1,s_2}-\mu)]
+\]</span></p>
+<p>表示行方向滞后<span class="math inline">\(h_1\)</span>，列方向滞后<span class="math inline">\(h_2\)</span>的自协方差函数。</p>
+<p>多维样本自协方差函数为：</p>
+<p><span class="math display">\[
+\hat\gamma(h)=(S_1S_2\cdots S_r)^{-1}\sum_{s_1}\sum_{s_2}\cdots\sum_{s_r}(x_{s+h}-\bar x)(x_s-\bar x)
+\]</span></p>
+<p>其中：</p>
+<p><span class="math display">\[
+\bar x=(S_1S_2\cdots S_r)^{-1}\sum_{s_1}\sum_{s_2}\cdots\sum_{s_r}x_{s_1,s_2,\cdots,s_r}
+\]</span></p>
+<p>样本自相关函数为：</p>
+<p><span class="math display">\[
+\hat\rho(h)=\frac{\hat\gamma(h)}{\hat\gamma(0)}
+\]</span></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+提示
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>后面示例在之后也会出现，暂时放下。</p>
+</div>
+</div>
 
 
 
