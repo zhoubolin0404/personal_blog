@@ -1,7 +1,7 @@
 ---
 title: "时间序列分析：第一章"
 author: "周博霖"
-date: "2024/8/10"
+date: "2024/9/6"
 categories: [学习笔记,统计方法,时间序列分析]
 image: "cover.png"
 bibliography: references.bib
@@ -9,7 +9,6 @@ csl: apa.csl
 number-sections: true
 toc: true
 toc-depth: 2
-date-modified: "2024/9/6"
 ---
 
 ```{r chapter-status, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
@@ -25,7 +24,7 @@ library(xts)
 该内容为学习笔记，会很碎片化，同时参考了作者在[github](https://github.com/nickpoison/tsa4/blob/master/textRcode.md)上给出的代码。
 
 :::{.callout-tip}
-该框表明这部分完全是个人理解，可能有误。
+提示框表明这部分完全是个人理解，可能有误。
 
 一切错误和想讨论的内容欢迎联系邮箱(zhoubolin0404@126.com)，感谢！
 :::
