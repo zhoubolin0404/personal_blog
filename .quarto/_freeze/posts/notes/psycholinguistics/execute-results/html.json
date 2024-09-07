@@ -1,0 +1,15 @@
+{
+  "hash": "e78cbd969655aa36effab3d759e3043f",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"心理语言学\"\nauthor: \"周博霖\"\ndate: \"2024-07-28\"\ncategories: [学习笔记,心理语言学]\nimage: \"cover.jpeg\"\n---\n\n\n这是笔记",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
