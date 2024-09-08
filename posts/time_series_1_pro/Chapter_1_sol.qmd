@@ -6,7 +6,6 @@ categories: [学习笔记,统计方法,时间序列分析]
 image: "cover.png"
 bibliography: references.bib
 csl: apa.csl
-number-sections: true
 toc: true
 toc-depth: 2
 ---
