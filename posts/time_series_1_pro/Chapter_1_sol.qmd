@@ -210,7 +210,7 @@ $$
 
 (a)
 
-平均函数：
+**平均函数**：
 
 $$
 \operatorname{E}(x_t)=\operatorname{E}(\beta_1+\beta_2t)=\beta_1+\beta_2t
@@ -224,13 +224,13 @@ $$
 y_t=x_t-x_{t-1}=\beta_2+w_t-w_{t-1}
 $$
 
-平均函数：
+**平均函数**：
 
 $$
 \operatorname{E}(y_t)=\operatorname{E}(\beta_2+w_t-w_{t-1})=\beta_2
 $$
 
-自协方差函数：
+**自协方差函数**：
 
 $$
 \begin{aligned}
@@ -253,7 +253,7 @@ $$
 
 (c)
 
-均值函数：
+**平均函数**：
 
 $$
 \begin{aligned}
@@ -263,8 +263,34 @@ $$
 \end{aligned}
 $$
 
-自协方差函数：
+**自协方差函数**：
+
+先对$v_t$进行分解。
 
 $$
-\gamma_v(h)=
+\begin{aligned}
+v_t&=\frac{1}{2q+1}\sum_{j=-q}^{q}(\beta_1+\beta_2t-\beta_2j+w_{t-j})\\
+&=\frac{1}{2q+1}[(2q+1)\beta_1+(2q+1)\beta_2t+\sum_{j=-q}^{q}w_{t-j}]\\
+&=\beta_1+\beta_2t+\frac{1}{2q+1}\sum_{j=-q}^{q}w_{t-j}
+\end{aligned}
 $$
+
+$$
+\begin{aligned}
+\gamma_v(h)&=\operatorname{cov}(v_{t+h},v_t)\\
+&=\operatorname{cov}(\beta_1+\beta_2(t+h)+\frac{1}{2q+1}\sum_{j=-q}^{q}w_{t+h-j},\beta_1+\beta_2t+\frac{1}{2q+1}\sum_{k=-q}^{q}w_{t-k})\\
+&=\operatorname{cov}(\frac{1}{2q+1}\sum_{j=-q}^{q}w_{t+h-j},\frac{1}{2q+1}\sum_{k=-q}^{q}w_{t-k})\\
+&=\frac{1}{(2q+1)^2}\sum_{j=-q}^{q}\sum_{k=-q}^{q}\operatorname{cov}(w_{t+h-j},w_{t-k})
+\end{aligned}
+$$
+
+需要在$\sum_{j=-q}^{q}$和$\sum_{k=-q}^{q}$中取更小的那个，所以：
+
+$$
+\gamma_v(h)=\begin{cases}
+\frac{1}{(2q+1)^2}(2q+1-|h|)\sigma_w^2&h=j-k\\
+0&h\neq j-k
+\end{cases}
+$$
+
+因为$j$和$k$的取值范围都是$[-q,q]$，所以$|h|\le 2q$。
