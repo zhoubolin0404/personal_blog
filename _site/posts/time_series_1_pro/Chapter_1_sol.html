@@ -123,6 +123,35 @@ div.csl-indent {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -202,14 +231,23 @@ div.csl-indent {
     <h2 id="toc-title">该页面内容</h2>
    
   <ul class="collapse">
-  <li><a href="#节" id="toc-节" class="nav-link active" data-scroll-target="#节"><span class="header-section-number">1</span> 1.1节</a>
+  <li><a href="#小节" id="toc-小节" class="nav-link active" data-scroll-target="#小节"><span class="header-section-number">1</span> 1.1小节</a>
   <ul class="collapse">
   <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">1.1</span> 1.1</a></li>
   <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"><span class="header-section-number">1.2</span> 1.2</a></li>
   </ul></li>
-  <li><a href="#节-1" id="toc-节-1" class="nav-link" data-scroll-target="#节-1"><span class="header-section-number">2</span> 1.2节</a>
+  <li><a href="#小节-1" id="toc-小节-1" class="nav-link" data-scroll-target="#小节-1"><span class="header-section-number">2</span> 1.2小节</a>
   <ul class="collapse">
   <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2"><span class="header-section-number">2.1</span> 1.3</a></li>
+  </ul></li>
+  <li><a href="#小节-2" id="toc-小节-2" class="nav-link" data-scroll-target="#小节-2"><span class="header-section-number">3</span> 1.3小节</a>
+  <ul class="collapse">
+  <li><a href="#section-3" id="toc-section-3" class="nav-link" data-scroll-target="#section-3"><span class="header-section-number">3.1</span> 1.4</a></li>
+  <li><a href="#section-4" id="toc-section-4" class="nav-link" data-scroll-target="#section-4"><span class="header-section-number">3.2</span> 1.5</a></li>
+  </ul></li>
+  <li><a href="#小节-3" id="toc-小节-3" class="nav-link" data-scroll-target="#小节-3"><span class="header-section-number">4</span> 1.4小节</a>
+  <ul class="collapse">
+  <li><a href="#section-5" id="toc-section-5" class="nav-link" data-scroll-target="#section-5"><span class="header-section-number">4.1</span> 1.6</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -240,33 +278,32 @@ div.csl-indent {
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(astsa)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(astsa)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cowplot)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="节" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> 1.1节</h1>
+<section id="小节" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> 1.1小节</h1>
 <section id="section" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="section"><span class="header-section-number">1.1</span> 1.1</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 将EQ5和EXP6转换为数据框并合并</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">time =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(EQ5),</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Earthquake =</span> EQ5,</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Explosion =</span> EXP6</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">"Earthquake"</span>, <span class="st">"Explosion"</span>),</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">names_to =</span> <span class="st">"type"</span>,</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">values_to =</span> <span class="st">"value"</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 绘图</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> value, <span class="at">color =</span> type)) <span class="sc">+</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Amplitude"</span>, <span class="at">x =</span> <span class="st">"Time"</span>, <span class="at">title =</span> <span class="st">"Earthquake vs Explosion Signals"</span>) <span class="sc">+</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"red"</span>)) <span class="sc">+</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"top"</span>) <span class="sc">+</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">color =</span> <span class="fu">guide_legend</span>(<span class="at">title =</span> <span class="cn">NULL</span>, <span class="at">override.aes =</span> <span class="fu">list</span>(<span class="at">linetype =</span> <span class="dv">1</span>)))</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">time =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(EQ5),</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Earthquake =</span> EQ5,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Explosion =</span> EXP6</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">"Earthquake"</span>, <span class="st">"Explosion"</span>),</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">names_to =</span> <span class="st">"type"</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">values_to =</span> <span class="st">"value"</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> value, <span class="at">color =</span> type)) <span class="sc">+</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Amplitude"</span>, <span class="at">x =</span> <span class="st">"Time"</span>, <span class="at">title =</span> <span class="st">"Earthquake vs Explosion Signals"</span>) <span class="sc">+</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"red"</span>)) <span class="sc">+</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"top"</span>) <span class="sc">+</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">color =</span> <span class="fu">guide_legend</span>(<span class="at">title =</span> <span class="cn">NULL</span>, <span class="at">override.aes =</span> <span class="fu">list</span>(<span class="at">linetype =</span> <span class="dv">1</span>)))</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -321,13 +358,11 @@ div.csl-indent {
 </div>
 </section>
 </section>
-<section id="节-1" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> 1.2节</h1>
+<section id="小节-1" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> 1.2小节</h1>
 <section id="section-2" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="section-2"><span class="header-section-number">2.1</span> 1.3</h2>
-<ol type="a">
-<li></li>
-</ol>
+<p>(a)-(c)</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">44</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>w <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">150</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
@@ -335,39 +370,42 @@ div.csl-indent {
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">=</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">cos</span>(<span class="dv">2</span> <span class="sc">*</span> pi <span class="sc">*</span> (<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>) <span class="sc">/</span> <span class="dv">4</span>)</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>x3 <span class="ot">=</span> x2 <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 计算移动平均线</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>v <span class="ot">=</span> stats<span class="sc">::</span><span class="fu">filter</span>(x, <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">4</span>) <span class="sc">/</span> <span class="dv">4</span>, <span class="at">sides =</span> <span class="dv">1</span>)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>v2 <span class="ot">=</span> stats<span class="sc">::</span><span class="fu">filter</span>(x2, <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">4</span>) <span class="sc">/</span> <span class="dv">4</span>, <span class="at">sides =</span> <span class="dv">1</span>)</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>v3 <span class="ot">=</span> stats<span class="sc">::</span><span class="fu">filter</span>(x3, <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">4</span>) <span class="sc">/</span> <span class="dv">4</span>, <span class="at">sides =</span> <span class="dv">1</span>)</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 创建数据框</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">time =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="dv">3</span>),</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">ar_value =</span> <span class="fu">c</span>(x, x2, x3),</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">ma_value =</span> <span class="fu">c</span>(v, v2, v3),</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="fu">rep</span>(<span class="fu">c</span>(</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">"autoregression"</span>, <span class="st">"sinusoid"</span>, <span class="st">"sinusoid + noise"</span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    ), <span class="at">each =</span> <span class="dv">100</span>)</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">"ar_value"</span>, <span class="st">"ma_value"</span>),</span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">names_to =</span> <span class="st">"series"</span>,</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">values_to =</span> <span class="st">"value"</span></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="co"># 使用 ggplot2 绘图</span></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(</span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> time,</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> value,</span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> series,</span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">linetype =</span> series</span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>)) <span class="sc">+</span></span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> type, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Value"</span>, <span class="at">x =</span> <span class="st">"Time"</span>, <span class="at">title =</span> <span class="st">"Time Series and Moving Averages"</span>) <span class="sc">+</span></span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"red"</span>)) <span class="sc">+</span></span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_linetype_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"solid"</span>, <span class="st">"dashed"</span>)) <span class="sc">+</span></span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>()</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>v <span class="ot">=</span> stats<span class="sc">::</span><span class="fu">filter</span>(x, <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">4</span>) <span class="sc">/</span> <span class="dv">4</span>, <span class="at">sides =</span> <span class="dv">1</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>v2 <span class="ot">=</span> stats<span class="sc">::</span><span class="fu">filter</span>(x2, <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">4</span>) <span class="sc">/</span> <span class="dv">4</span>, <span class="at">sides =</span> <span class="dv">1</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>v3 <span class="ot">=</span> stats<span class="sc">::</span><span class="fu">filter</span>(x3, <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">4</span>) <span class="sc">/</span> <span class="dv">4</span>, <span class="at">sides =</span> <span class="dv">1</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">time =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="dv">3</span>),</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">x_value =</span> <span class="fu">c</span>(x, x2, x3),</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">v_value =</span> <span class="fu">c</span>(v, v2, v3),</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="fu">rep</span>(<span class="fu">c</span>(</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">"autoregression"</span>, <span class="st">"sinusoid"</span>, <span class="st">"sinusoid + noise"</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    ), <span class="at">each =</span> <span class="dv">100</span>)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_longer</span>(</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">"x_value"</span>, <span class="st">"v_value"</span>),</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">names_to =</span> <span class="st">"series"</span>,</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">values_to =</span> <span class="st">"value"</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> time,</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> value,</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> series,</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">linetype =</span> series</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>)) <span class="sc">+</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> type, <span class="at">ncol =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Value"</span>, <span class="at">x =</span> <span class="st">"Time"</span>, <span class="at">title =</span> <span class="st">"Time Series and Moving Averages"</span>) <span class="sc">+</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_manual</span>(</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>        <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"x_value"</span> <span class="ot">=</span> <span class="st">"blue"</span>, <span class="st">"v_value"</span> <span class="ot">=</span> <span class="st">"red"</span>),</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>        <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"x_value"</span>, <span class="st">"v_value"</span>)</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_linetype_manual</span>(</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>        <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"x_value"</span> <span class="ot">=</span> <span class="st">"solid"</span>, <span class="st">"v_value"</span> <span class="ot">=</span> <span class="st">"dashed"</span>),</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>        <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"x_value"</span>, <span class="st">"v_value"</span>)</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>()</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -376,6 +414,132 @@ div.csl-indent {
 </div>
 </div>
 </div>
+<ol start="4" type="a">
+<li></li>
+</ol>
+<p>移动平均后都变得更为平缓。</p>
+</section>
+</section>
+<section id="小节-2" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> 1.3小节</h1>
+<section id="section-3" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="section-3"><span class="header-section-number">3.1</span> 1.4</h2>
+<p><span class="math display">\[
+\begin{aligned}
+\gamma(s,t)&amp;=\operatorname{cov}(x_t,x_t)=\operatorname{E}[(x_s-\mu_s)(x_t-\mu_t)]\\
+&amp;=\operatorname{E}(x_sx_t)-\mu_t\operatorname{E}(x_s)-\mu_s\operatorname{E}(x_t)+\mu_s\mu_t\\
+&amp;=\operatorname{E}(x_sx_t)-\mu_t\mu_s-\mu_s\mu_t+\mu_s\mu_t\\
+&amp;=\operatorname{E}(x_sx_t)-\mu_s\mu_t
+\end{aligned}
+\]</span></p>
+</section>
+<section id="section-4" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="section-4"><span class="header-section-number">3.2</span> 1.5</h2>
+<ol type="a">
+<li></li>
+</ol>
+<p><span class="math display">\[
+\mu_{x}=\operatorname{E}(s_t+w_t)=s_t
+\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># a</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">44</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>s_a <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">100</span>), <span class="dv">10</span> <span class="sc">*</span> <span class="fu">exp</span>(<span class="sc">-</span>(<span class="dv">101</span><span class="sc">:</span><span class="dv">200</span> <span class="sc">-</span> <span class="dv">100</span>) <span class="sc">/</span> <span class="dv">20</span>) <span class="sc">*</span> <span class="fu">cos</span>(<span class="dv">2</span> <span class="sc">*</span> pi <span class="sc">*</span> <span class="dv">101</span><span class="sc">:</span><span class="dv">200</span> <span class="sc">/</span> <span class="dv">4</span>))</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>data_a <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">time =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">200</span>, <span class="at">s_a =</span> s_a)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>p_15a <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data_a, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> s_a)) <span class="sc">+</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>()</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># b</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">44</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>s_b <span class="ot">=</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">100</span>), <span class="dv">10</span> <span class="sc">*</span> <span class="fu">exp</span>(<span class="sc">-</span>(<span class="dv">101</span><span class="sc">:</span><span class="dv">200</span> <span class="sc">-</span> <span class="dv">100</span>) <span class="sc">/</span> <span class="dv">200</span>) <span class="sc">*</span> <span class="fu">cos</span>(<span class="dv">2</span> <span class="sc">*</span> pi <span class="sc">*</span> <span class="dv">101</span><span class="sc">:</span><span class="dv">200</span> <span class="sc">/</span> <span class="dv">4</span>))</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>data_a <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">time =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">200</span>, <span class="at">s_b =</span> s_b)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>p_15b <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(data_a, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> s_b)) <span class="sc">+</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>()</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_grid</span>(p_15a, p_15b, <span class="at">ncol =</span> <span class="dv">1</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Chapter_1_sol_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol start="2" type="a">
+<li></li>
+</ol>
+<p><span class="math display">\[
+\begin{aligned}
+\gamma_x(s,t)&amp;=\operatorname{cov}(x_s,x_t)=\operatorname{E}[(x_s-\mu_s)(x_t-\mu_t)]\\
+&amp;=\operatorname{E}[(x_s-s_s)(x_t-s_t)]\\
+&amp;=\operatorname{E}(w_sw_t)
+\end{aligned}
+\]</span></p>
+<p>所以有：</p>
+<p><span class="math display">\[
+\gamma_x(s,t)=
+\begin{cases}
+\sigma^2_w=1&amp;s=t\\
+0&amp;s\neq t
+\end{cases}
+\]</span></p>
+</section>
+</section>
+<section id="小节-3" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> 1.4小节</h1>
+<section id="section-5" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="section-5"><span class="header-section-number">4.1</span> 1.6</h2>
+<ol type="a">
+<li></li>
+</ol>
+<p>平均函数：</p>
+<p><span class="math display">\[
+\operatorname{E}(x_t)=\operatorname{E}(\beta_1+\beta_2t)=\beta_1+\beta_2t
+\]</span></p>
+<p>不是常数，故不是平稳的。</p>
+<ol start="2" type="a">
+<li></li>
+</ol>
+<p><span class="math display">\[
+y_t=x_t-x_{t-1}=\beta_2+w_t-w_{t-1}
+\]</span></p>
+<p>平均函数：</p>
+<p><span class="math display">\[
+\operatorname{E}(y_t)=\operatorname{E}(\beta_2+w_t-w_{t-1})=\beta_2
+\]</span></p>
+<p>自协方差函数：</p>
+<p><span class="math display">\[
+\begin{aligned}
+\gamma_y(h)&amp;=\operatorname{cov}(y_{t+h},y_t)=\operatorname{cov}(\beta_2+w_{t+h}-w_{t+h-1},\beta_2+w_t-w_{t-1})\\
+&amp;=\operatorname{cov}(w_{t+h},w_t)-\operatorname{cov}(w_{t+h},w_{t-1})-\operatorname{cov}(w_{t+h-1},w_t)+\operatorname{cov}(w_{t+h-1},w_{t-1})
+\end{aligned}
+\]</span></p>
+<p>显然与<span class="math inline">\(t\)</span>无关，结果为：</p>
+<p><span class="math display">\[
+\gamma_y(h)=\begin{cases}
+2&amp;h=0\\
+-1&amp;h=\pm1\\
+0&amp;|h|\ge2
+\end{cases}
+\]</span></p>
+<p>所以<span class="math inline">\(y_t\)</span>是平稳的。</p>
+<ol start="3" type="a">
+<li></li>
+</ol>
+<p>均值函数：</p>
+<p><span class="math display">\[
+\begin{aligned}
+\operatorname{E}(v_t)&amp;=\frac{1}{2q+1}\sum_{j=-q}^{q}(\beta_1+\beta_2t-\beta_2j)\\
+&amp;=\frac{1}{2q+1}[(2q+1)(\beta_1+\beta_2t)-\beta_2\sum_{j=-q}^{q}j]\\
+&amp;=\beta_1+\beta_2t
+\end{aligned}
+\]</span></p>
+<p>自协方差函数：</p>
+<p><span class="math display">\[
+\gamma_v(h)=
+\]</span></p>
 
 
 
