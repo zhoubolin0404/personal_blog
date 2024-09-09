@@ -22,7 +22,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -150,6 +170,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#介绍" id="toc-介绍" class="nav-link active" data-scroll-target="#介绍"><span class="header-section-number">1</span> 介绍</a>
   <ul class="collapse">
   <li><a href="#介绍-1" id="toc-介绍-1" class="nav-link" data-scroll-target="#介绍-1"><span class="header-section-number">1.1</span> 介绍</a></li>
+  <li><a href="#方法概述" id="toc-方法概述" class="nav-link" data-scroll-target="#方法概述"><span class="header-section-number">1.2</span> 方法概述</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -165,13 +186,39 @@ ul.task-list li input[type="checkbox"] {
 <h1 data-number="1"><span class="header-section-number">1</span> 介绍</h1>
 <section id="介绍-1" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="介绍-1"><span class="header-section-number">1.1</span> 介绍</h2>
-<p>Seed-based <em>d</em> Mapping(以前称为<em>Signed Differential Mapping</em>) with Permutation of Subject Images(即SDM-PSI)是一种使用神经成像技术(如fMRI、VBM、DTI或PET)对脑活动或结构差异进行元分析研究的统计技术。它也可以指由SDM项目开发的一款用于进行这种元分析的特定软件。</p>
+<p>Seed-based <em>d</em> Mapping(以前称为<em>Signed Differential Mapping</em>) with Permutation of Subject Images(即SDM-PSI)是一种使用神经成像技术(如fMRI、VBM、DTI或PET)对脑活动或结构差异进行元分析研究的统计技术。它也可以指由SDM项目组开发的一款用于进行这种元分析的特定软件。</p>
+</section>
+<section id="方法概述" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="方法概述"><span class="header-section-number">1.2</span> 方法概述</h2>
+<p>SDM采用并结合了以往方法(如ALE或MKDA)的多种优良特性，并引入了一系列改进和新特性。为避免在同一个体素中同时出现正负结果(这是以前方法中常见的问题)，引入了一项新特性，即在同一张图中表示正差异和负差异，从而获得了signed differential map(“SDM”)。在2.11版本中引入的另一项重要改进是效应量的使用(effect-size SDM或“ES-SDM”)，这使得可以将报告的峰值坐标(peak coordinates)与统计参数图(statistical parametric maps)相结合，从而进行更全面和更精确的元分析。另一项改进是在4.11版本中引入的，使用各向异性内核(anisotropic kernels)在重建效应量图(effect size images)时考虑空间协方差的各向异性。</p>
+<p>在6.11版本中，实施了这一方法的新一代技术(结合Permutation of Subject Images的SDM，即SDM-PSI)。SDM-PSI的一些新特性包括：</p>
+<ul>
+<li><p>基于MetaNSUE算法的(几乎)无偏效应量估计<span class="citation" data-cites="Albajes_Solanes_Radua_2019">(<a href="#ref-Albajes_Solanes_Radua_2019" role="doc-biblioref">Albajes-Eizagirre et al., 2019</a>)</span>。</p></li>
+<li><p>使用常见的置换检验进行多重比较的Familywise校正，即permuting subject images(PSI)。需要注意的是，以前的方法使用的是空间收敛性检验(tests for spatial convergence)，这些检验依赖于空间假设，而这些假设可能不成立，并且在存在多重效应时统计功效较低<span class="citation" data-cites="Albajes_Radua_2018">(<a href="#ref-Albajes_Radua_2018" role="doc-biblioref">Albajes-Eizagirre &amp; Radua, 2018</a>)</span>。</p></li>
+<li><p>Freedman-Lane-based permutation，因其最佳的统计特性而选用<span class="citation" data-cites="Winkler_Ridgway_Webster_2014">(<a href="#ref-Winkler_Ridgway_Webster_2014" role="doc-biblioref">Winkler et al., 2014</a>)</span>。</p></li>
+<li><p>Threshold-free cluster enhancement(TFCE)，在模拟研究中，这种统计方法既不过于保守，也不过于宽松(而基于体素的统计过于严格，基于簇的统计则过于宽松)<span class="citation" data-cites="Smith_Nichols_2009">(<a href="#ref-Smith_Nichols_2009" role="doc-biblioref">Smith &amp; Nichols, 2009</a>)</span>。</p></li>
+</ul>
+<p>该方法分为五步。首先，根据SDM的纳入标准，选择簇峰的坐标(如：患者与健康对照者之间差异最大的体素)以及统计图(如果有的话)。其次，对于只有峰坐标的研究，估计可能的效应量图的上下限。第三，使用MetaNSUE来估计最可能的效应量及其标准误，并通过在这些估计值中加入噪声，在上下限范围内生成多个插补。第四，分别对每个插补的数据集进行元分析，然后使用Rubin’s rules将这些插补的元分析数据集合并。最后，重建主体图像，以便运行标准置换检验(standard permutation test)，在每一组置换的图像上重复该过程，并保存最终图像的最大统计值；这些最大值的分布用于对多重比较进行family-wise误差校正。</p>
+
 
 
 </section>
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">参考文献</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-Albajes_Radua_2018" class="csl-entry" role="listitem">
+Albajes-Eizagirre, A., &amp; Radua, J. (2018). What do results from coordinate-based meta-analyses tell us? <em>Neuroimage</em>, <em>176</em>, 550–553. <a href="https://doi.org/10.1016/j.neuroimage.2018.04.065">https://doi.org/10.1016/j.neuroimage.2018.04.065</a>
+</div>
+<div id="ref-Albajes_Solanes_Radua_2019" class="csl-entry" role="listitem">
+Albajes-Eizagirre, A., Solanes, A., &amp; Radua, J. (2019). Meta-analysis of non-statistically significant unreported effects. <em>Statistical Methods in Medical Research</em>, <em>28</em>(12), 3741–3754. <a href="https://doi.org/10.1177/0962280218811349">https://doi.org/10.1177/0962280218811349</a>
+</div>
+<div id="ref-Smith_Nichols_2009" class="csl-entry" role="listitem">
+Smith, S. M., &amp; Nichols, T. E. (2009). Threshold-free cluster enhancement: Addressing problems of smoothing, threshold dependence and localisation in cluster inference. <em>NeuroImage</em>, <em>44</em>(1), 83–98. <a href="https://doi.org/10.1016/j.neuroimage.2008.03.061">https://doi.org/10.1016/j.neuroimage.2008.03.061</a>
+</div>
+<div id="ref-Winkler_Ridgway_Webster_2014" class="csl-entry" role="listitem">
+Winkler, A. M., Ridgway, G. R., Webster, M. A., Smith, S. M., &amp; Nichols, T. E. (2014). Permutation inference for the general linear model. <em>NeuroImage</em>, <em>92</em>, 381–397. <a href="https://doi.org/10.1016/j.neuroimage.2014.01.060">https://doi.org/10.1016/j.neuroimage.2014.01.060</a>
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
