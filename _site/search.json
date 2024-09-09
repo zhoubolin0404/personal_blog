@@ -49,18 +49,32 @@
     "text": "1.6\n\n\n\n平均函数：\n\\[\n\\operatorname{E}(x_t)=\\operatorname{E}(\\beta_1+\\beta_2t)=\\beta_1+\\beta_2t\n\\]\n不是常数，故不是平稳的。\n\n\n\n\\[\ny_t=x_t-x_{t-1}=\\beta_2+w_t-w_{t-1}\n\\]\n平均函数：\n\\[\n\\operatorname{E}(y_t)=\\operatorname{E}(\\beta_2+w_t-w_{t-1})=\\beta_2\n\\]\n自协方差函数：\n\\[\n\\begin{aligned}\n\\gamma_y(h)&=\\operatorname{cov}(y_{t+h},y_t)=\\operatorname{cov}(\\beta_2+w_{t+h}-w_{t+h-1},\\beta_2+w_t-w_{t-1})\\\\\n&=\\operatorname{cov}(w_{t+h},w_t)-\\operatorname{cov}(w_{t+h},w_{t-1})-\\operatorname{cov}(w_{t+h-1},w_t)+\\operatorname{cov}(w_{t+h-1},w_{t-1})\n\\end{aligned}\n\\]\n显然与\\(t\\)无关，结果为：\n\\[\n\\gamma_y(h)=\\begin{cases}\n2&h=0\\\\\n-1&h=\\pm1\\\\\n0&|h|\\ge2\n\\end{cases}\n\\]\n所以\\(y_t\\)是平稳的。\n\n\n\n平均函数：\n\\[\n\\begin{aligned}\n\\operatorname{E}(v_t)&=\\frac{1}{2q+1}\\sum_{j=-q}^{q}(\\beta_1+\\beta_2t-\\beta_2j)\\\\\n&=\\frac{1}{2q+1}[(2q+1)(\\beta_1+\\beta_2t)-\\beta_2\\sum_{j=-q}^{q}j]\\\\\n&=\\beta_1+\\beta_2t\n\\end{aligned}\n\\]\n自协方差函数：\n先对\\(v_t\\)进行分解。\n\\[\n\\begin{aligned}\nv_t&=\\frac{1}{2q+1}\\sum_{j=-q}^{q}(\\beta_1+\\beta_2t-\\beta_2j+w_{t-j})\\\\\n&=\\frac{1}{2q+1}[(2q+1)\\beta_1+(2q+1)\\beta_2t+\\sum_{j=-q}^{q}w_{t-j}]\\\\\n&=\\beta_1+\\beta_2t+\\frac{1}{2q+1}\\sum_{j=-q}^{q}w_{t-j}\n\\end{aligned}\n\\]\n\\[\n\\begin{aligned}\n\\gamma_v(h)&=\\operatorname{cov}(v_{t+h},v_t)\\\\\n&=\\operatorname{cov}(\\beta_1+\\beta_2(t+h)+\\frac{1}{2q+1}\\sum_{j=-q}^{q}w_{t+h-j},\\beta_1+\\beta_2t+\\frac{1}{2q+1}\\sum_{k=-q}^{q}w_{t-k})\\\\\n&=\\operatorname{cov}(\\frac{1}{2q+1}\\sum_{j=-q}^{q}w_{t+h-j},\\frac{1}{2q+1}\\sum_{k=-q}^{q}w_{t-k})\\\\\n&=\\frac{1}{(2q+1)^2}\\sum_{j=-q}^{q}\\sum_{k=-q}^{q}\\operatorname{cov}(w_{t+h-j},w_{t-k})\n\\end{aligned}\n\\]\n需要在\\(\\sum_{j=-q}^{q}\\)和\\(\\sum_{k=-q}^{q}\\)中取更小的那个，所以：\n\\[\n\\gamma_v(h)=\\begin{cases}\n\\frac{1}{(2q+1)^2}(2q+1-|h|)\\sigma_w^2&h=j-k\\\\\n0&h\\neq j-k\n\\end{cases}\n\\]\n因为\\(j\\)和\\(k\\)的取值范围都是\\([-q,q]\\)，所以\\(|h|\\le 2q\\)。"
   },
   {
-    "objectID": "posts/notes/index.html",
-    "href": "posts/notes/index.html",
-    "title": "心理语言学",
+    "objectID": "posts/SDM-PSI/SDM-PSI.html",
+    "href": "posts/SDM-PSI/SDM-PSI.html",
+    "title": "SDM-PSI Reference Manual(中文翻译)",
     "section": "",
-    "text": "脑区和功能\n\n\n\n\n\n\n\n\n脑区\n言语功能\n图片\n\n\n\n\n布洛卡区(Broca’s Area)\n\n\n\n\n威尔尼克区(Wernicke’s Area)"
+    "text": "Seed-based d Mapping(以前称为Signed Differential Mapping) with Permutation of Subject Images(即SDM-PSI)是一种使用神经成像技术(如fMRI、VBM、DTI或PET)对脑活动或结构差异进行元分析研究的统计技术。它也可以指由SDM项目开发的一款用于进行这种元分析的特定软件。"
+  },
+  {
+    "objectID": "posts/SDM-PSI/SDM-PSI.html#介绍-1",
+    "href": "posts/SDM-PSI/SDM-PSI.html#介绍-1",
+    "title": "SDM-PSI Reference Manual(中文翻译)",
+    "section": "",
+    "text": "Seed-based d Mapping(以前称为Signed Differential Mapping) with Permutation of Subject Images(即SDM-PSI)是一种使用神经成像技术(如fMRI、VBM、DTI或PET)对脑活动或结构差异进行元分析研究的统计技术。它也可以指由SDM项目开发的一款用于进行这种元分析的特定软件。"
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "周博霖",
     "section": "",
-    "text": "时间序列分析：第一章习题答案\n\n\n\n\n\n\n学习笔记\n\n\n统计方法\n\n\n时间序列分析\n\n\n\n\n\n\n\n\n\nSep 7, 2024\n\n\n周博霖\n\n\n\n\n\n\n\n\n\n\n\n\n时间序列分析：第一章\n\n\n\n\n\n\n学习笔记\n\n\n统计方法\n\n\n时间序列分析\n\n\n\n\n\n\n\n\n\nSep 6, 2024\n\n\n周博霖\n\n\n\n\n\n\n\n\n\n\n\n\n心理语言学\n\n\n\n\n\n\n学习笔记\n\n\n心理语言学\n\n\n\n\n\n\n\n\n\nAug 9, 2024\n\n\n周博霖\n\n\n\n\n\n\n无匹配项"
+    "text": "SDM-PSI Reference Manual(中文翻译)\n\n\n\n\n\n\nmeta\n\n\nSDM-PSI\n\n\n\n\n\n\n\n\n\nSep 9, 2024\n\n\n周博霖\n\n\n\n\n\n\n\n\n\n\n\n\n时间序列分析：第一章习题答案\n\n\n\n\n\n\n学习笔记\n\n\n统计方法\n\n\n时间序列分析\n\n\n\n\n\n\n\n\n\nSep 7, 2024\n\n\n周博霖\n\n\n\n\n\n\n\n\n\n\n\n\n时间序列分析：第一章\n\n\n\n\n\n\n学习笔记\n\n\n统计方法\n\n\n时间序列分析\n\n\n\n\n\n\n\n\n\nSep 6, 2024\n\n\n周博霖\n\n\n\n\n\n\n\n\n\n\n\n\n心理语言学\n\n\n\n\n\n\n学习笔记\n\n\n心理语言学\n\n\n\n\n\n\n\n\n\nAug 9, 2024\n\n\n周博霖\n\n\n\n\n\n\n无匹配项"
+  },
+  {
+    "objectID": "posts/notes/index.html",
+    "href": "posts/notes/index.html",
+    "title": "心理语言学",
+    "section": "",
+    "text": "脑区和功能\n\n\n\n\n\n\n\n\n脑区\n言语功能\n图片\n\n\n\n\n布洛卡区(Broca’s Area)\n\n\n\n\n威尔尼克区(Wernicke’s Area)"
   },
   {
     "objectID": "posts/time_series/index.html",

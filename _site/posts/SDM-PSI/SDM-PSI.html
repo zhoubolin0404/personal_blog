@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="周博霖">
+<meta name="dcterms.date" content="2024-09-09">
 
-<title>Zhou Bolin’s blog - 周博霖</title>
+<title>Zhou Bolin’s blog - SDM-PSI Reference Manual(中文翻译)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,24 +25,22 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,67 +68,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "搜索"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
 
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
 <body class="nav-fixed">
@@ -138,7 +80,7 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Zhou Bolin’s blog</span>
     </a>
   </div>
@@ -149,7 +91,7 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">个人简介</span></a>
   </li>  
   <li class="nav-item compact">
@@ -167,229 +109,69 @@ window.Quarto = {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">周博霖</h1>
-                      </div>
+    <div class="quarto-title column-body">
+      <h1 class="title">SDM-PSI Reference Manual(中文翻译)</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">meta</div>
+                <div class="quarto-category">SDM-PSI</div>
+              </div>
+                  </div>
   </div>
     
   
-  <div class="quarto-title-meta column-page-left">
+  <div class="quarto-title-meta">
 
+      <div>
+      <div class="quarto-title-meta-heading">作者</div>
+      <div class="quarto-title-meta-contents">
+               <p>周博霖 </p>
+            </div>
+    </div>
       
+      <div>
+      <div class="quarto-title-meta-heading">发布于</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">September 9, 2024</p>
+      </div>
+    </div>
     
       
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">分类</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">全部 <span class="quarto-category-count">(4)</span></div><div class="category" data-category="SDM-PSI">SDM-PSI <span class="quarto-category-count">(1)</span></div><div class="category" data-category="meta">meta <span class="quarto-category-count">(1)</span></div><div class="category" data-category="学习笔记">学习笔记 <span class="quarto-category-count">(3)</span></div><div class="category" data-category="心理语言学">心理语言学 <span class="quarto-category-count">(1)</span></div><div class="category" data-category="时间序列分析">时间序列分析 <span class="quarto-category-count">(2)</span></div><div class="category" data-category="统计方法">统计方法 <span class="quarto-category-count">(2)</span></div></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">该页面内容</h2>
+   
+  <ul class="collapse">
+  <li><a href="#介绍" id="toc-介绍" class="nav-link active" data-scroll-target="#介绍"><span class="header-section-number">1</span> 介绍</a>
+  <ul class="collapse">
+  <li><a href="#介绍-1" id="toc-介绍-1" class="nav-link" data-scroll-target="#介绍-1"><span class="header-section-number">1.1</span> 介绍</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
 
+<section id="介绍" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> 介绍</h1>
+<section id="介绍-1" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="介绍-1"><span class="header-section-number">1.1</span> 介绍</h2>
+<p>Seed-based <em>d</em> Mapping(以前称为<em>Signed Differential Mapping</em>) with Permutation of Subject Images(即SDM-PSI)是一种使用神经成像技术(如fMRI、VBM、DTI或PET)对脑活动或结构差异进行元分析研究的统计技术。它也可以指由SDM项目开发的一款用于进行这种元分析的特定软件。</p>
 
 
+</section>
+</section>
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="meta,SDM-PSI" data-listing-date-sort="1725811200000" data-listing-file-modified-sort="1725862939033" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="11">
-<div class="thumbnail">
-<p><a href="./posts/SDM-PSI/SDM-PSI.html" class="no-external"></a></p><a href="./posts/SDM-PSI/SDM-PSI.html" class="no-external">
-<p><img src="./posts/SDM-PSI/cover.png" class="thumbnail-image"></p>
-</a><p><a href="./posts/SDM-PSI/SDM-PSI.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/SDM-PSI/SDM-PSI.html" class="no-external">SDM-PSI Reference Manual(中文翻译)</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/SDM-PSI/SDM-PSI.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('meta'); return false;">
-meta
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('SDM-PSI'); return false;">
-SDM-PSI
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/SDM-PSI/SDM-PSI.html" class="no-external">Seed-based <em>d</em> Mapping(以前称为<em>Signed Differential Mapping</em>) with Permutation of Subject…</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/SDM-PSI/SDM-PSI.html" class="no-external">
-<div class="listing-date">
-Sep 9, 2024
-</div>
-<div class="listing-author">
-周博霖
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="学习笔记,统计方法,时间序列分析" data-listing-date-sort="1725638400000" data-listing-file-modified-sort="1725812603665" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="655">
-<div class="thumbnail">
-<p><a href="./posts/time_series_1_pro/Chapter_1_sol.html" class="no-external"></a></p><a href="./posts/time_series_1_pro/Chapter_1_sol.html" class="no-external">
-<p><img src="./posts/time_series_1_pro/cover.png" class="thumbnail-image"></p>
-</a><p><a href="./posts/time_series_1_pro/Chapter_1_sol.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/time_series_1_pro/Chapter_1_sol.html" class="no-external">时间序列分析：第一章习题答案</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/time_series_1_pro/Chapter_1_sol.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('学习笔记'); return false;">
-学习笔记
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('统计方法'); return false;">
-统计方法
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('时间序列分析'); return false;">
-时间序列分析
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/time_series_1_pro/Chapter_1_sol.html" class="no-external">主要参考书籍为Shumway和Stoffer<span class="citation" data-cites="Shumway_2017">(2017)</span>的Time Series Analysis and Its Applications: With R Examples。</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/time_series_1_pro/Chapter_1_sol.html" class="no-external">
-<div class="listing-date">
-Sep 7, 2024
-</div>
-<div class="listing-author">
-周博霖
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="学习笔记,统计方法,时间序列分析" data-listing-date-sort="1725552000000" data-listing-file-modified-sort="1725675946602" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1218">
-<div class="thumbnail">
-<p><a href="./posts/time_series/index.html" class="no-external"></a></p><a href="./posts/time_series/index.html" class="no-external">
-<p><img src="./posts/time_series/cover.png" class="thumbnail-image"></p>
-</a><p><a href="./posts/time_series/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/time_series/index.html" class="no-external">时间序列分析：第一章</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/time_series/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('学习笔记'); return false;">
-学习笔记
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('统计方法'); return false;">
-统计方法
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('时间序列分析'); return false;">
-时间序列分析
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/time_series/index.html" class="no-external">主要参考书籍为Shumway和Stoffer<span class="citation" data-cites="Shumway_2017">(2017)</span>的Time Series Analysis and Its Applications: With R Examples。</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/time_series/index.html" class="no-external">
-<div class="listing-date">
-Sep 6, 2024
-</div>
-<div class="listing-author">
-周博霖
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="学习笔记,心理语言学" data-listing-date-sort="1723132800000" data-listing-file-modified-sort="1723265609354" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="243">
-<div class="thumbnail">
-<p><a href="./posts/notes/index.html" class="no-external"></a></p><a href="./posts/notes/index.html" class="no-external">
-<p><img src="./posts/notes/cover.jpeg" class="thumbnail-image"></p>
-</a><p><a href="./posts/notes/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/notes/index.html" class="no-external">心理语言学</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/notes/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('学习笔记'); return false;">
-学习笔记
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('心理语言学'); return false;">
-心理语言学
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/notes/index.html" class="no-external">
-
-<table class="caption-top table">
-<colgroup>
-<col style="width: 60%">
-<col style="width: 25%">
-<col style="width: 15%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>脑区</th>
-<th>言语功能</th>
-<th>图片</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>布洛卡区(Broca’s Area)</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>威尔尼克区(Wernicke’s Area)</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-
-
-</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/notes/index.html" class="no-external">
-<div class="listing-date">
-Aug 9, 2024
-</div>
-<div class="listing-author">
-周博霖
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-无匹配项
-</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
