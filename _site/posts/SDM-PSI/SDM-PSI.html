@@ -89,6 +89,35 @@ div.csl-indent {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -171,6 +200,14 @@ div.csl-indent {
   <ul class="collapse">
   <li><a href="#介绍-1" id="toc-介绍-1" class="nav-link" data-scroll-target="#介绍-1"><span class="header-section-number">1.1</span> 介绍</a></li>
   <li><a href="#方法概述" id="toc-方法概述" class="nav-link" data-scroll-target="#方法概述"><span class="header-section-number">1.2</span> 方法概述</a></li>
+  <li><a href="#峰值坐标的包含准则" id="toc-峰值坐标的包含准则" class="nav-link" data-scroll-target="#峰值坐标的包含准则"><span class="header-section-number">1.3</span> 峰值坐标的包含准则</a></li>
+  <li><a href="#研究的预处理" id="toc-研究的预处理" class="nav-link" data-scroll-target="#研究的预处理"><span class="header-section-number">1.4</span> 研究的预处理</a></li>
+  <li><a href="#统计比较" id="toc-统计比较" class="nav-link" data-scroll-target="#统计比较"><span class="header-section-number">1.5</span> 统计比较</a></li>
+  <li><a href="#sdm软件" id="toc-sdm软件" class="nav-link" data-scroll-target="#sdm软件"><span class="header-section-number">1.6</span> SDM软件</a></li>
+  </ul></li>
+  <li><a href="#准备" id="toc-准备" class="nav-link" data-scroll-target="#准备"><span class="header-section-number">2</span> 准备</a>
+  <ul class="collapse">
+  <li><a href="#sec-Preparing_the_folder" id="toc-sec-Preparing_the_folder" class="nav-link" data-scroll-target="#sec-Preparing_the_folder"><span class="header-section-number">2.1</span> 准备文件夹</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -182,26 +219,70 @@ div.csl-indent {
 
 
 
+<p>SDM-PSI参考手册</p>
 <section id="介绍" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> 介绍</h1>
+<p>总结了方法及其主要特点。</p>
 <section id="介绍-1" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="介绍-1"><span class="header-section-number">1.1</span> 介绍</h2>
-<p>Seed-based <em>d</em> Mapping(以前称为<em>Signed Differential Mapping</em>) with Permutation of Subject Images(即SDM-PSI)是一种使用神经成像技术(如fMRI、VBM、DTI或PET)对脑活动或结构差异进行元分析研究的统计技术。它也可以指由SDM项目组开发的一款用于进行这种元分析的特定软件。</p>
+<p>Seed-based <em>d</em> Mapping (以前称为<em>Signed Differential Mapping</em>) with Permutation of Subject Images (即SDM-PSI) 是一种使用神经成像技术 (如fMRI、VBM、DTI或PET) 对脑活动或结构差异进行元分析研究的统计技术。它也可以指由SDM项目组开发的一款用于进行这种元分析的特定软件。</p>
 </section>
 <section id="方法概述" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="方法概述"><span class="header-section-number">1.2</span> 方法概述</h2>
-<p>SDM采用并结合了以往方法(如ALE或MKDA)的多种优良特性，并引入了一系列改进和新特性。为避免在同一个体素中同时出现正负结果(这是以前方法中常见的问题)，引入了一项新特性，即在同一张图中表示正差异和负差异，从而获得了signed differential map(“SDM”)。在2.11版本中引入的另一项重要改进是效应量的使用(effect-size SDM或“ES-SDM”)，这使得可以将报告的峰值坐标(peak coordinates)与统计参数图(statistical parametric maps)相结合，从而进行更全面和更精确的元分析。另一项改进是在4.11版本中引入的，使用各向异性内核(anisotropic kernels)在重建效应量图(effect size images)时考虑空间协方差的各向异性。</p>
-<p>在6.11版本中，实施了这一方法的新一代技术(结合Permutation of Subject Images的SDM，即SDM-PSI)。SDM-PSI的一些新特性包括：</p>
+<p>SDM采用并结合了以往方法 (如ALE或MKDA) 的多种优良特性，并引入了一系列改进和新特性。为避免在同一个体素中同时出现正负结果 (这是以前方法中常见的问题) ，引入了一项新特性，即在同一张图中表示正差异和负差异，从而获得了signed differential map (“SDM”) 。在2.11版本中引入的另一项重要改进是效应量的使用 (effect-size SDM或“ES-SDM”) ，这使得可以将报告的峰值坐标 (peak coordinates) 与统计参数图 (statistical parametric maps) 相结合，从而进行更全面和更精确的元分析。另一项改进是在4.11版本中引入的，使用各向异性内核 (anisotropic kernels) 在重建效应量图 (effect size images) 时考虑空间协方差的各向异性。</p>
+<p>在6.11版本中，实施了这一方法的新一代技术 (结合Permutation of Subject Images的SDM，即SDM-PSI) 。SDM-PSI的一些新特性包括：</p>
 <ul>
-<li><p>基于MetaNSUE算法的(几乎)无偏效应量估计<span class="citation" data-cites="Albajes_Solanes_Radua_2019">(<a href="#ref-Albajes_Solanes_Radua_2019" role="doc-biblioref">Albajes-Eizagirre et al., 2019</a>)</span>。</p></li>
-<li><p>使用常见的置换检验进行多重比较的Familywise校正，即permuting subject images(PSI)。需要注意的是，以前的方法使用的是空间收敛性检验(tests for spatial convergence)，这些检验依赖于空间假设，而这些假设可能不成立，并且在存在多重效应时统计功效较低<span class="citation" data-cites="Albajes_Radua_2018">(<a href="#ref-Albajes_Radua_2018" role="doc-biblioref">Albajes-Eizagirre &amp; Radua, 2018</a>)</span>。</p></li>
+<li><p>基于MetaNSUE算法的 (几乎) 无偏效应量估计<span class="citation" data-cites="Albajes_Solanes_Radua_2019">(<a href="#ref-Albajes_Solanes_Radua_2019" role="doc-biblioref">Albajes-Eizagirre et al., 2019</a>)</span>。</p></li>
+<li><p>使用常见的置换检验进行多重比较的Familywise校正，即permuting subject images (PSI) 。需要注意的是，以前的方法使用的是空间收敛性检验 (tests for spatial convergence) ，这些检验依赖于空间假设，而这些假设可能不成立，并且在存在多重效应时统计功效较低<span class="citation" data-cites="Albajes_Radua_2018">(<a href="#ref-Albajes_Radua_2018" role="doc-biblioref">Albajes-Eizagirre &amp; Radua, 2018</a>)</span>。</p></li>
 <li><p>Freedman-Lane-based permutation，因其最佳的统计特性而选用<span class="citation" data-cites="Winkler_Ridgway_Webster_2014">(<a href="#ref-Winkler_Ridgway_Webster_2014" role="doc-biblioref">Winkler et al., 2014</a>)</span>。</p></li>
-<li><p>Threshold-free cluster enhancement(TFCE)，在模拟研究中，这种统计方法既不过于保守，也不过于宽松(而基于体素的统计过于严格，基于簇的统计则过于宽松)<span class="citation" data-cites="Smith_Nichols_2009">(<a href="#ref-Smith_Nichols_2009" role="doc-biblioref">Smith &amp; Nichols, 2009</a>)</span>。</p></li>
+<li><p>Threshold-free cluster enhancement (TFCE) ，在模拟研究中，这种统计方法既不过于保守，也不过于宽松 (而基于体素的统计过于严格，基于簇的统计则过于宽松) <span class="citation" data-cites="Smith_Nichols_2009">(<a href="#ref-Smith_Nichols_2009" role="doc-biblioref">Smith &amp; Nichols, 2009</a>)</span>。</p></li>
 </ul>
-<p>该方法分为五步。首先，根据SDM的纳入标准，选择簇峰的坐标(如：患者与健康对照者之间差异最大的体素)以及统计图(如果有的话)。其次，对于只有峰坐标的研究，估计可能的效应量图的上下限。第三，使用MetaNSUE来估计最可能的效应量及其标准误，并通过在这些估计值中加入噪声，在上下限范围内生成多个插补。第四，分别对每个插补的数据集进行元分析，然后使用Rubin’s rules将这些插补的元分析数据集合并。最后，重建主体图像，以便运行标准置换检验(standard permutation test)，在每一组置换的图像上重复该过程，并保存最终图像的最大统计值；这些最大值的分布用于对多重比较进行family-wise误差校正。</p>
+<p>该方法分为五步。首先，根据SDM的纳入标准，选择簇峰的坐标 (如：患者与健康对照者之间差异最大的体素) 以及统计图 (如果有的话) 。其次，对于只有峰坐标的研究，估计可能的效应量图的上下限。第三，使用MetaNSUE来估计最可能的效应量及其标准误，并通过在这些估计值中加入噪声，在上下限范围内生成多个插补。第四，分别对每个插补的数据集进行元分析，然后使用Rubin’s rules将这些插补的元分析数据集合并。最后，重建主体图像，以便运行标准置换检验 (standard permutation test) ，在每一组置换的图像上重复该过程，并保存最终图像的最大统计值；这些最大值的分布用于对多重比较进行family-wise误差校正。</p>
+</section>
+<section id="峰值坐标的包含准则" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="峰值坐标的包含准则"><span class="header-section-number">1.3</span> 峰值坐标的包含准则</h2>
+<p>在神经影像学研究中，某些大脑区域 (如先验的感兴趣的区域) 常常会使用比其他区域更宽松的阈值标准进行分析。这种做法并不罕见。然而，如果在元分析中包含了这种研究内存在区域阈值差异的研究，那么结果可能会偏向这些区域，因为这些区域可能仅仅因为研究者在其上应用了更宽松的阈值而更容易被报告出来。为了解决这个问题，SDM引入了一种坐标选择标准，可以概括为：</p>
+<p>“尽管不同的研究可能使用不同的阈值，但在纳入的<em>每一个研究内</em>，应该确保<strong>整个大脑使用相同的阈值</strong>”。</p>
+</section>
+<section id="研究的预处理" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="研究的预处理"><span class="header-section-number">1.4</span> 研究的预处理</h2>
+<p>统计参数图的预处理相对简单，它们会被直接配准到SDM模板上，并将<span class="math inline">\(t\)</span>值转换为效应量。对于仅有峰值坐标的研究，则为每个研究在特定的掩膜 (mask) 内 (如灰质体积、皮层厚度、白质、TBSS、脑脊液等) 创建可能效应量的上下阈图。这是通过各向异性非归一化的高斯核 (anisotropic un-normalized Gaussian Kernel) 来实现的，依据特定的灰质、白质、分数各向异性或脑脊液相关模板，使得与峰值坐标相关性更高的体素具有与峰值相似的效应量。在每个研究内，由接近各向异性核得到的值通过平方距离加权平均进行组合。</p>
+</section>
+<section id="统计比较" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="统计比较"><span class="header-section-number">1.5</span> 统计比较</h2>
+<p>SDM提供了几种不同的统计分析方法，以通过敏感性和异质性分析来补充主要结果。</p>
+<ul>
+<li><p>主要的统计分析是均值分析，其过程是计算不同研究中体素值的平均值。该平均值会通过方差的倒数进行加权，并考虑研究间 (inter-study) 的异质性。</p></li>
+<li><p>亚组分析是应用于研究组的均值分析，以便研究异质性。</p></li>
+<li><p>线性模型分析 (如元回归) 是均值分析的广义形式，允许组间比较和潜在混杂因素的研究。</p></li>
+</ul>
+<p>这些分析的统计显著性通过未经校正的<span class="math inline">\(p\)</span>值或FWER校正的<span class="math inline">\(p\)</span>值来评估。还可以提取原子标签 (atomical label) 或坐标中的值以进行进一步处理或图形化表示。</p>
+</section>
+<section id="sdm软件" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="sdm软件"><span class="header-section-number">1.6</span> SDM软件</h2>
+<p>SDM是由SDM项目组开发的软件，用于帮助基于体素的神经成像数据的元分析。它作为免费软件发布，包括命令行和图形界面。</p>
+</section>
+</section>
+<section id="准备" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> 准备</h1>
+<p>提取的神经影像数据必须包含在一个文件夹里 (参见<a href="#sec-Preparing_the_folder" class="quarto-xref">小节&nbsp;2.1</a>) ，样本、组别或变量的信息必须在SDM表格中输入 (参见“Creation of the SDM table”) 。准备工作的最后一步是对研究数据进行预处理以及蒙特卡洛随机化 (参见“Preprocessing”) ，如果是TBSS元分析，还需要执行一系列特殊步骤 (参见“TBSS preprocessing”) 。</p>
+<section id="sec-Preparing_the_folder" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="sec-Preparing_the_folder"><span class="header-section-number">2.1</span> 准备文件夹</h2>
+<p>SDM软件假设元分析所需的所有文件都在同一个文件夹中。</p>
+<section id="图像文件" class="level3" data-number="2.1.1">
+<h3 data-number="2.1.1" class="anchored" data-anchor-id="图像文件"><span class="header-section-number">2.1.1</span> 图像文件</h3>
+<p>如果有群体水平 (group-level) 的统计参数图可用，强烈建议使用这些图像文件而不是峰值坐标。这些图像文件必须是NIfTI格式的，并且可以通过SDM的“Convert images”功能轻松适配。注意从其他软件转换的NIfTI文件有时可能会失效，例如，可能导致空白图像或翻转图像。因此，我们强烈建议使用脑图查看器 (如MRICron、FSLView或SPM Display) 进行以下检查：</p>
+<ul>
+<li><p>转换后的文件是否为正确的大脑图像。</p></li>
+<li><p>左右两侧是否未翻转。</p></li>
+<li><p>预处理的峰值是否与文献中报告的峰值相似。</p></li>
+</ul>
+<p>如果转换失败，你可以尝试首先将原始NIfTI文件复制到元分析目录中，然后用MRICron打开并保存该副本，最后用SDM进行转换。这似乎能修复SDM无法正确转换文件的小问题。</p>
+<p>如果左右两侧翻转，您可以尝试使用FSL (“fslswapdim [filename] -x y z [filename]”) 、MRICro (“Save as…”: “Flip Left/Right”) 或SPM (“Display”: “resize {x} = -1”) 修复问题。</p>
 
 
 
+</section>
 </section>
 </section>
 

@@ -53,21 +53,56 @@
     "href": "posts/SDM-PSI/SDM-PSI.html",
     "title": "SDM-PSI Reference Manual(中文翻译)",
     "section": "",
-    "text": "Seed-based d Mapping(以前称为Signed Differential Mapping) with Permutation of Subject Images(即SDM-PSI)是一种使用神经成像技术(如fMRI、VBM、DTI或PET)对脑活动或结构差异进行元分析研究的统计技术。它也可以指由SDM项目组开发的一款用于进行这种元分析的特定软件。\n\n\n\nSDM采用并结合了以往方法(如ALE或MKDA)的多种优良特性，并引入了一系列改进和新特性。为避免在同一个体素中同时出现正负结果(这是以前方法中常见的问题)，引入了一项新特性，即在同一张图中表示正差异和负差异，从而获得了signed differential map(“SDM”)。在2.11版本中引入的另一项重要改进是效应量的使用(effect-size SDM或“ES-SDM”)，这使得可以将报告的峰值坐标(peak coordinates)与统计参数图(statistical parametric maps)相结合，从而进行更全面和更精确的元分析。另一项改进是在4.11版本中引入的，使用各向异性内核(anisotropic kernels)在重建效应量图(effect size images)时考虑空间协方差的各向异性。\n在6.11版本中，实施了这一方法的新一代技术(结合Permutation of Subject Images的SDM，即SDM-PSI)。SDM-PSI的一些新特性包括：\n\n基于MetaNSUE算法的(几乎)无偏效应量估计(Albajes-Eizagirre et al., 2019)。\n使用常见的置换检验进行多重比较的Familywise校正，即permuting subject images(PSI)。需要注意的是，以前的方法使用的是空间收敛性检验(tests for spatial convergence)，这些检验依赖于空间假设，而这些假设可能不成立，并且在存在多重效应时统计功效较低(Albajes-Eizagirre & Radua, 2018)。\nFreedman-Lane-based permutation，因其最佳的统计特性而选用(Winkler et al., 2014)。\nThreshold-free cluster enhancement(TFCE)，在模拟研究中，这种统计方法既不过于保守，也不过于宽松(而基于体素的统计过于严格，基于簇的统计则过于宽松)(Smith & Nichols, 2009)。\n\n该方法分为五步。首先，根据SDM的纳入标准，选择簇峰的坐标(如：患者与健康对照者之间差异最大的体素)以及统计图(如果有的话)。其次，对于只有峰坐标的研究，估计可能的效应量图的上下限。第三，使用MetaNSUE来估计最可能的效应量及其标准误，并通过在这些估计值中加入噪声，在上下限范围内生成多个插补。第四，分别对每个插补的数据集进行元分析，然后使用Rubin’s rules将这些插补的元分析数据集合并。最后，重建主体图像，以便运行标准置换检验(standard permutation test)，在每一组置换的图像上重复该过程，并保存最终图像的最大统计值；这些最大值的分布用于对多重比较进行family-wise误差校正。"
+    "text": "SDM-PSI参考手册"
   },
   {
     "objectID": "posts/SDM-PSI/SDM-PSI.html#介绍-1",
     "href": "posts/SDM-PSI/SDM-PSI.html#介绍-1",
     "title": "SDM-PSI Reference Manual(中文翻译)",
-    "section": "",
-    "text": "Seed-based d Mapping(以前称为Signed Differential Mapping) with Permutation of Subject Images(即SDM-PSI)是一种使用神经成像技术(如fMRI、VBM、DTI或PET)对脑活动或结构差异进行元分析研究的统计技术。它也可以指由SDM项目组开发的一款用于进行这种元分析的特定软件。"
+    "section": "1.1 介绍",
+    "text": "1.1 介绍\nSeed-based d Mapping (以前称为Signed Differential Mapping) with Permutation of Subject Images (即SDM-PSI) 是一种使用神经成像技术 (如fMRI、VBM、DTI或PET) 对脑活动或结构差异进行元分析研究的统计技术。它也可以指由SDM项目组开发的一款用于进行这种元分析的特定软件。"
   },
   {
     "objectID": "posts/SDM-PSI/SDM-PSI.html#方法概述",
     "href": "posts/SDM-PSI/SDM-PSI.html#方法概述",
     "title": "SDM-PSI Reference Manual(中文翻译)",
-    "section": "",
-    "text": "SDM采用并结合了以往方法(如ALE或MKDA)的多种优良特性，并引入了一系列改进和新特性。为避免在同一个体素中同时出现正负结果(这是以前方法中常见的问题)，引入了一项新特性，即在同一张图中表示正差异和负差异，从而获得了signed differential map(“SDM”)。在2.11版本中引入的另一项重要改进是效应量的使用(effect-size SDM或“ES-SDM”)，这使得可以将报告的峰值坐标(peak coordinates)与统计参数图(statistical parametric maps)相结合，从而进行更全面和更精确的元分析。另一项改进是在4.11版本中引入的，使用各向异性内核(anisotropic kernels)在重建效应量图(effect size images)时考虑空间协方差的各向异性。\n在6.11版本中，实施了这一方法的新一代技术(结合Permutation of Subject Images的SDM，即SDM-PSI)。SDM-PSI的一些新特性包括：\n\n基于MetaNSUE算法的(几乎)无偏效应量估计(Albajes-Eizagirre et al., 2019)。\n使用常见的置换检验进行多重比较的Familywise校正，即permuting subject images(PSI)。需要注意的是，以前的方法使用的是空间收敛性检验(tests for spatial convergence)，这些检验依赖于空间假设，而这些假设可能不成立，并且在存在多重效应时统计功效较低(Albajes-Eizagirre & Radua, 2018)。\nFreedman-Lane-based permutation，因其最佳的统计特性而选用(Winkler et al., 2014)。\nThreshold-free cluster enhancement(TFCE)，在模拟研究中，这种统计方法既不过于保守，也不过于宽松(而基于体素的统计过于严格，基于簇的统计则过于宽松)(Smith & Nichols, 2009)。\n\n该方法分为五步。首先，根据SDM的纳入标准，选择簇峰的坐标(如：患者与健康对照者之间差异最大的体素)以及统计图(如果有的话)。其次，对于只有峰坐标的研究，估计可能的效应量图的上下限。第三，使用MetaNSUE来估计最可能的效应量及其标准误，并通过在这些估计值中加入噪声，在上下限范围内生成多个插补。第四，分别对每个插补的数据集进行元分析，然后使用Rubin’s rules将这些插补的元分析数据集合并。最后，重建主体图像，以便运行标准置换检验(standard permutation test)，在每一组置换的图像上重复该过程，并保存最终图像的最大统计值；这些最大值的分布用于对多重比较进行family-wise误差校正。"
+    "section": "1.2 方法概述",
+    "text": "1.2 方法概述\nSDM采用并结合了以往方法 (如ALE或MKDA) 的多种优良特性，并引入了一系列改进和新特性。为避免在同一个体素中同时出现正负结果 (这是以前方法中常见的问题) ，引入了一项新特性，即在同一张图中表示正差异和负差异，从而获得了signed differential map (“SDM”) 。在2.11版本中引入的另一项重要改进是效应量的使用 (effect-size SDM或“ES-SDM”) ，这使得可以将报告的峰值坐标 (peak coordinates) 与统计参数图 (statistical parametric maps) 相结合，从而进行更全面和更精确的元分析。另一项改进是在4.11版本中引入的，使用各向异性内核 (anisotropic kernels) 在重建效应量图 (effect size images) 时考虑空间协方差的各向异性。\n在6.11版本中，实施了这一方法的新一代技术 (结合Permutation of Subject Images的SDM，即SDM-PSI) 。SDM-PSI的一些新特性包括：\n\n基于MetaNSUE算法的 (几乎) 无偏效应量估计(Albajes-Eizagirre et al., 2019)。\n使用常见的置换检验进行多重比较的Familywise校正，即permuting subject images (PSI) 。需要注意的是，以前的方法使用的是空间收敛性检验 (tests for spatial convergence) ，这些检验依赖于空间假设，而这些假设可能不成立，并且在存在多重效应时统计功效较低(Albajes-Eizagirre & Radua, 2018)。\nFreedman-Lane-based permutation，因其最佳的统计特性而选用(Winkler et al., 2014)。\nThreshold-free cluster enhancement (TFCE) ，在模拟研究中，这种统计方法既不过于保守，也不过于宽松 (而基于体素的统计过于严格，基于簇的统计则过于宽松) (Smith & Nichols, 2009)。\n\n该方法分为五步。首先，根据SDM的纳入标准，选择簇峰的坐标 (如：患者与健康对照者之间差异最大的体素) 以及统计图 (如果有的话) 。其次，对于只有峰坐标的研究，估计可能的效应量图的上下限。第三，使用MetaNSUE来估计最可能的效应量及其标准误，并通过在这些估计值中加入噪声，在上下限范围内生成多个插补。第四，分别对每个插补的数据集进行元分析，然后使用Rubin’s rules将这些插补的元分析数据集合并。最后，重建主体图像，以便运行标准置换检验 (standard permutation test) ，在每一组置换的图像上重复该过程，并保存最终图像的最大统计值；这些最大值的分布用于对多重比较进行family-wise误差校正。"
+  },
+  {
+    "objectID": "posts/SDM-PSI/SDM-PSI.html#峰值坐标的包含准则",
+    "href": "posts/SDM-PSI/SDM-PSI.html#峰值坐标的包含准则",
+    "title": "SDM-PSI Reference Manual(中文翻译)",
+    "section": "1.3 峰值坐标的包含准则",
+    "text": "1.3 峰值坐标的包含准则\n在神经影像学研究中，某些大脑区域 (如先验的感兴趣的区域) 常常会使用比其他区域更宽松的阈值标准进行分析。这种做法并不罕见。然而，如果在元分析中包含了这种研究内存在区域阈值差异的研究，那么结果可能会偏向这些区域，因为这些区域可能仅仅因为研究者在其上应用了更宽松的阈值而更容易被报告出来。为了解决这个问题，SDM引入了一种坐标选择标准，可以概括为：\n“尽管不同的研究可能使用不同的阈值，但在纳入的每一个研究内，应该确保整个大脑使用相同的阈值”。"
+  },
+  {
+    "objectID": "posts/SDM-PSI/SDM-PSI.html#研究的预处理",
+    "href": "posts/SDM-PSI/SDM-PSI.html#研究的预处理",
+    "title": "SDM-PSI Reference Manual(中文翻译)",
+    "section": "1.4 研究的预处理",
+    "text": "1.4 研究的预处理\n统计参数图的预处理相对简单，它们会被直接配准到SDM模板上，并将\\(t\\)值转换为效应量。对于仅有峰值坐标的研究，则为每个研究在特定的掩膜 (mask) 内 (如灰质体积、皮层厚度、白质、TBSS、脑脊液等) 创建可能效应量的上下阈图。这是通过各向异性非归一化的高斯核 (anisotropic un-normalized Gaussian Kernel) 来实现的，依据特定的灰质、白质、分数各向异性或脑脊液相关模板，使得与峰值坐标相关性更高的体素具有与峰值相似的效应量。在每个研究内，由接近各向异性核得到的值通过平方距离加权平均进行组合。"
+  },
+  {
+    "objectID": "posts/SDM-PSI/SDM-PSI.html#统计比较",
+    "href": "posts/SDM-PSI/SDM-PSI.html#统计比较",
+    "title": "SDM-PSI Reference Manual(中文翻译)",
+    "section": "1.5 统计比较",
+    "text": "1.5 统计比较\nSDM提供了几种不同的统计分析方法，以通过敏感性和异质性分析来补充主要结果。\n\n主要的统计分析是均值分析，其过程是计算不同研究中体素值的平均值。该平均值会通过方差的倒数进行加权，并考虑研究间 (inter-study) 的异质性。\n亚组分析是应用于研究组的均值分析，以便研究异质性。\n线性模型分析 (如元回归) 是均值分析的广义形式，允许组间比较和潜在混杂因素的研究。\n\n这些分析的统计显著性通过未经校正的\\(p\\)值或FWER校正的\\(p\\)值来评估。还可以提取原子标签 (atomical label) 或坐标中的值以进行进一步处理或图形化表示。"
+  },
+  {
+    "objectID": "posts/SDM-PSI/SDM-PSI.html#sdm软件",
+    "href": "posts/SDM-PSI/SDM-PSI.html#sdm软件",
+    "title": "SDM-PSI Reference Manual(中文翻译)",
+    "section": "1.6 SDM软件",
+    "text": "1.6 SDM软件\nSDM是由SDM项目组开发的软件，用于帮助基于体素的神经成像数据的元分析。它作为免费软件发布，包括命令行和图形界面。"
+  },
+  {
+    "objectID": "posts/SDM-PSI/SDM-PSI.html#sec-Preparing_the_folder",
+    "href": "posts/SDM-PSI/SDM-PSI.html#sec-Preparing_the_folder",
+    "title": "SDM-PSI Reference Manual(中文翻译)",
+    "section": "2.1 准备文件夹",
+    "text": "2.1 准备文件夹\nSDM软件假设元分析所需的所有文件都在同一个文件夹中。\n\n2.1.1 图像文件\n如果有群体水平 (group-level) 的统计参数图可用，强烈建议使用这些图像文件而不是峰值坐标。这些图像文件必须是NIfTI格式的，并且可以通过SDM的“Convert images”功能轻松适配。注意从其他软件转换的NIfTI文件有时可能会失效，例如，可能导致空白图像或翻转图像。因此，我们强烈建议使用脑图查看器 (如MRICron、FSLView或SPM Display) 进行以下检查：\n\n转换后的文件是否为正确的大脑图像。\n左右两侧是否未翻转。\n预处理的峰值是否与文献中报告的峰值相似。\n\n如果转换失败，你可以尝试首先将原始NIfTI文件复制到元分析目录中，然后用MRICron打开并保存该副本，最后用SDM进行转换。这似乎能修复SDM无法正确转换文件的小问题。\n如果左右两侧翻转，您可以尝试使用FSL (“fslswapdim [filename] -x y z [filename]”) 、MRICro (“Save as…”: “Flip Left/Right”) 或SPM (“Display”: “resize {x} = -1”) 修复问题。"
   },
   {
     "objectID": "index.html",
