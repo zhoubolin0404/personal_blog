@@ -248,6 +248,8 @@ window.Quarto = {
   <li><a href="#小节-3" id="toc-小节-3" class="nav-link" data-scroll-target="#小节-3">1.4小节</a>
   <ul class="collapse">
   <li><a href="#section-5" id="toc-section-5" class="nav-link" data-scroll-target="#section-5">1.6</a></li>
+  <li><a href="#section-6" id="toc-section-6" class="nav-link" data-scroll-target="#section-6">1.7</a></li>
+  <li><a href="#section-7" id="toc-section-7" class="nav-link" data-scroll-target="#section-7">1.8</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -561,6 +563,117 @@ v_t&amp;=\frac{1}{2q+1}\sum_{j=-q}^{q}(\beta_1+\beta_2t-\beta_2j+w_{t-j})\\
 \end{cases}
 \]</span></p>
 <p>因为<span class="math inline">\(j\)</span>和<span class="math inline">\(k\)</span>的取值范围都是<span class="math inline">\([-q,q]\)</span>，所以<span class="math inline">\(|h|\le 2q\)</span>。</p>
+</section>
+<section id="section-6" class="level2">
+<h2 class="anchored" data-anchor-id="section-6">1.7</h2>
+<p><strong>自协方差函数</strong></p>
+<p><span class="math display">\[
+\begin{aligned}
+\gamma_x(h)&amp;=\operatorname{cov}(x_s.x_t)=\operatorname{cov}(x_{t+h},x_t)\\
+&amp;=\operatorname{cov}(w_{t+h-1}+2w_{t+h}+w_{t+h+1},w_{t-1}+2w_t+w_{t+1})\\
+&amp;\begin{aligned}=
+&amp;\operatorname{cov}(w_{t+h-1},w_{t-1})+2\operatorname{cov}(w_{t+h-1},w_t)+\operatorname{cov}(w_{t+h-1},w_{t+1})+\\
+&amp;2\operatorname{cov}(w_{t+h},w_{t-1})+4\operatorname{cov}(w_{t+h},w_t)+2\operatorname{cov}(w_{t+h},w_{t+1})+\\
+&amp;\operatorname{cov}(w_{t+h+1},w_{t-1})+2\operatorname{cov}(w_{t+h+1},w_t)+\operatorname{cov}(w_{t+h+1},w_{t+1})
+\end{aligned}
+\end{aligned}
+\]</span></p>
+<p>所以：</p>
+<p><span class="math display">\[
+\gamma_x(h)=\begin{cases}
+6\sigma_w^2&amp;h=0\\
+4\sigma_w^2&amp;|h|=1\\
+\sigma_w^2&amp;|h|=2\\
+0&amp;|h|\ge3
+\end{cases}
+\]</span></p>
+<p><strong>自相关函数</strong></p>
+<p><span class="math display">\[
+\rho_x(h)=\frac{\gamma_x(h)}{\gamma_x(0)}=\begin{cases}
+1&amp;h=0\\
+\frac{2}{3}&amp;|h|=1\\
+\frac{1}{6}&amp;|h|=2\\
+0&amp;|h|\ge3
+\end{cases}
+\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">44</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>w_17 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1050</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>x_17 <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">filter</span>(w_17,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">method =</span> <span class="st">"convolution"</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">filter =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>),</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                      <span class="at">sides =</span> <span class="dv">2</span>)[<span class="sc">-</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>)]</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">acf1</span>(x_17, <span class="at">max.lag =</span> <span class="dv">5</span>, <span class="at">gg =</span> T)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Chapter_1_sol_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="section-7" class="level2">
+<h2 class="anchored" data-anchor-id="section-7">1.8</h2>
+<ol type="a">
+<li></li>
+</ol>
+<p><span class="math display">\[
+\begin{aligned}
+x_t&amp;=\delta+x_{t-1}+w_t\\
+&amp;=\delta+(\delta+x_{t-2}+w_{t-1})+w_t\\
+&amp;=\delta j+w_{t-j}+\sum_{k=t-j+1}^tw_k\\
+&amp;=\delta t+\sum_{k=1}^tw_k
+\end{aligned}
+\]</span></p>
+<ol start="2" type="a">
+<li></li>
+</ol>
+<p><strong>均值函数</strong></p>
+<p><span class="math display">\[
+\begin{aligned}
+\operatorname{E}x_t=\operatorname{E}(\delta t+\sum_{k=1}^tw_k)=\delta t
+\end{aligned}
+\]</span></p>
+<p><strong>自协方差函数</strong></p>
+<p><span class="math display">\[
+\begin{aligned}
+\gamma_x(s,t)&amp;=\operatorname{cov}(x_s,x_t)=\operatorname{E}\{(x_s-\mu_s)(x_t-\mu_t)\}\\
+&amp;=\operatorname{E}(\sum_{j=1}^sw_j\sum_{k=1}^tw_k)\\
+&amp;=\operatorname{min}(s,t)\sigma_w^2
+\end{aligned}
+\]</span></p>
+<ol start="3" type="a">
+<li></li>
+</ol>
+<p>均值函数和自协方差函数都随<span class="math inline">\(t\)</span>变化，所以不平稳。</p>
+<ol start="4" type="a">
+<li></li>
+</ol>
+<p><span class="math display">\[
+\rho_x(t-1,t)=\frac{(t-1)\sigma_w^2}{\sqrt{(t-1)\sigma_w^2}\sqrt{t\sigma_w^2}}=\sqrt{\frac{t-1}{t}}
+\]</span></p>
+<p>当<span class="math inline">\(t\to\infty\)</span>，<span class="math inline">\(\rho_x(t-1,t)\to0\)</span>，说明该时间序列变化逐渐变缓，<span class="math inline">\(x_t\)</span>近似于<span class="math inline">\(x_{t-1}\)</span>。</p>
+<ol start="5" type="a">
+<li></li>
+</ol>
+<p><span class="math display">\[
+\nabla x_t=x_t-x_{t-1}=\delta+w_t
+\]</span></p>
+<p>均值函数<span class="math inline">\(\mu_{x,t}=\delta\)</span>，自相关函数<span class="math inline">\(\gamma_x(h)=\sigma_w^2\delta_0(h)\)</span>，均和<span class="math inline">\(t\)</span>无关。</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+提示
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(\delta_0(h)\)</span>表示当<span class="math inline">\(h=0\)</span>时，<span class="math inline">\(\delta_0(h)=1\)</span>；当<span class="math inline">\(h\neq0\)</span>时，<span class="math inline">\(\delta_0(h)=0\)</span>。</p>
+</div>
+</div>
 
 
 

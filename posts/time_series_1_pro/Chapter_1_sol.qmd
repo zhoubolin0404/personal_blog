@@ -294,3 +294,108 @@ $$
 $$
 
 因为$j$和$k$的取值范围都是$[-q,q]$，所以$|h|\le 2q$。
+
+## 1.7
+
+**自协方差函数**
+
+$$
+\begin{aligned}
+\gamma_x(h)&=\operatorname{cov}(x_s.x_t)=\operatorname{cov}(x_{t+h},x_t)\\
+&=\operatorname{cov}(w_{t+h-1}+2w_{t+h}+w_{t+h+1},w_{t-1}+2w_t+w_{t+1})\\
+&\begin{aligned}=
+&\operatorname{cov}(w_{t+h-1},w_{t-1})+2\operatorname{cov}(w_{t+h-1},w_t)+\operatorname{cov}(w_{t+h-1},w_{t+1})+\\
+&2\operatorname{cov}(w_{t+h},w_{t-1})+4\operatorname{cov}(w_{t+h},w_t)+2\operatorname{cov}(w_{t+h},w_{t+1})+\\
+&\operatorname{cov}(w_{t+h+1},w_{t-1})+2\operatorname{cov}(w_{t+h+1},w_t)+\operatorname{cov}(w_{t+h+1},w_{t+1})
+\end{aligned}
+\end{aligned}
+$$
+
+所以：
+
+$$
+\gamma_x(h)=\begin{cases}
+6\sigma_w^2&h=0\\
+4\sigma_w^2&|h|=1\\
+\sigma_w^2&|h|=2\\
+0&|h|\ge3
+\end{cases}
+$$
+
+**自相关函数**
+
+$$
+\rho_x(h)=\frac{\gamma_x(h)}{\gamma_x(0)}=\begin{cases}
+1&h=0\\
+\frac{2}{3}&|h|=1\\
+\frac{1}{6}&|h|=2\\
+0&|h|\ge3
+\end{cases}
+$$
+
+```{r, results='hide'}
+set.seed(44)
+w_17 <- rnorm(1050)
+x_17 <- stats::filter(w_17,
+                      method = "convolution",
+                      filter = c(1, 2, 1),
+                      sides = 2)[-(1:50)]
+acf1(x_17, max.lag = 5, gg = T)
+```
+
+## 1.8
+
+(a)
+
+$$
+\begin{aligned}
+x_t&=\delta+x_{t-1}+w_t\\
+&=\delta+(\delta+x_{t-2}+w_{t-1})+w_t\\
+&=\delta j+w_{t-j}+\sum_{k=t-j+1}^tw_k\\
+&=\delta t+\sum_{k=1}^tw_k
+\end{aligned}
+$$
+
+(b)
+
+**均值函数**
+
+$$
+\begin{aligned}
+\operatorname{E}x_t=\operatorname{E}(\delta t+\sum_{k=1}^tw_k)=\delta t
+\end{aligned}
+$$
+
+**自协方差函数**
+
+$$
+\begin{aligned}
+\gamma_x(s,t)&=\operatorname{cov}(x_s,x_t)=\operatorname{E}\{(x_s-\mu_s)(x_t-\mu_t)\}\\
+&=\operatorname{E}(\sum_{j=1}^sw_j\sum_{k=1}^tw_k)\\
+&=\operatorname{min}(s,t)\sigma_w^2
+\end{aligned}
+$$
+
+(c)
+
+均值函数和自协方差函数都随$t$变化，所以不平稳。
+
+(d)
+
+$$
+\rho_x(t-1,t)=\frac{(t-1)\sigma_w^2}{\sqrt{(t-1)\sigma_w^2}\sqrt{t\sigma_w^2}}=\sqrt{\frac{t-1}{t}}
+$$
+
+当$t\to\infty$，$\rho_x(t-1,t)\to0$，说明该时间序列变化逐渐变缓，$x_t$近似于$x_{t-1}$。
+
+(e)
+
+$$
+\nabla x_t=x_t-x_{t-1}=\delta+w_t
+$$
+
+均值函数$\mu_{x,t}=\delta$，自相关函数$\gamma_x(h)=\sigma_w^2\delta_0(h)$，均和$t$无关。
+
+:::{.callout-tip}
+$\delta_0(h)$表示当$h=0$时，$\delta_0(h)=1$；当$h\neq0$时，$\delta_0(h)=0$。
+:::

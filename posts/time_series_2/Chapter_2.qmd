@@ -1,0 +1,47 @@
+---
+title: "时间序列分析：第二章"
+subtitle: "时间序列回归和探索性数据分析"
+author: "周博霖"
+date: "2024/9/11"
+categories: [学习笔记,统计方法,时间序列分析]
+image: "cover.png"
+bibliography: references.bib
+csl: apa.csl
+number-sections: true
+toc: true
+toc-depth: 2
+---
+
+```{r chapter-status, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+library(webexercises)
+library(astsa)
+library(xts)
+```
+
+主要参考书籍为Shumway和Stoffer[-@Shumway_2017]的Time Series Analysis and Its Applications: With R Examples。
+
+该书第五版正在制作，配套`astsa`包中的部分数据集会逐渐更新，所以后期也许会换成第五版内容。
+
+该内容为学习笔记，会很碎片化，同时参考了作者在[github](https://github.com/nickpoison/tsa4/blob/master/textRcode.md)上给出的代码。
+
+:::{.callout-tip}
+提示框表明这部分完全是个人理解，可能有误。
+
+一切错误和想讨论的内容欢迎联系邮箱(zhoubolin0404@126.com)，感谢！
+:::
+
+在本章中，我们将介绍时间序列背景下的经典多元线性回归、模型选择、非平稳时间序列预处理(如趋势去除)的探索性数据分析、差分(differencing)和后移算子(backshift operator)的概念、方差稳定和时间序列的非参数平滑。
+
+# 时间序列背景下的经典回归
+
+对于时间序列$x_t$($t=1,\cdots,n$)，受到一组可能的输入或自变量序列($z_{t1},z_{t2},\cdots,z_{tq}$)的影响。用线性回归模型来考虑这种关系，则模型为：
+
+$$
+x_t=\beta_0+\beta_1z_{t1}+\beta_2z_{t2}+\cdots+\beta_qz_{tq}+w_t
+$$
+
+其中$\beta_0,\beta_1,\cdots,\beta_q$是固定的回归系数，$w_t$是随机误差或噪声过程，均值为$0$，方差为$\sigma_w^2$，正态分布。
+
+:::{.callout-tip}
+$z_{t}$一般就是时间。
+:::
