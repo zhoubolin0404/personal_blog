@@ -22,6 +22,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 /* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
@@ -89,6 +123,35 @@ div.csl-indent {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -165,7 +228,16 @@ div.csl-indent {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">该页面内容</h2>
+   
+  <ul class="collapse">
+  <li><a href="#时间序列背景下的经典回归" id="toc-时间序列背景下的经典回归" class="nav-link active" data-scroll-target="#时间序列背景下的经典回归"><span class="header-section-number">1</span> 时间序列背景下的经典回归</a>
+  <ul class="collapse">
+  <li><a href="#估计线性趋势" id="toc-估计线性趋势" class="nav-link" data-scroll-target="#估计线性趋势"><span class="header-section-number">1.1</span> 估计线性趋势</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
@@ -192,9 +264,198 @@ div.csl-indent {
 </div>
 </div>
 <p>在本章中，我们将介绍时间序列背景下的经典多元线性回归、模型选择、非平稳时间序列预处理(如趋势去除)的探索性数据分析、差分(differencing)和后移算子(backshift operator)的概念、方差稳定和时间序列的非参数平滑。</p>
+<section id="时间序列背景下的经典回归" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> 时间序列背景下的经典回归</h1>
+<p>对于时间序列<span class="math inline">\(x_t\)</span>(<span class="math inline">\(t=1,\cdots,n\)</span>)，受到一组可能的输入或自变量序列(<span class="math inline">\(z_{t1},z_{t2},\cdots,z_{tq}\)</span>)的影响。用线性回归模型来考虑这种关系，则模型为：</p>
+<p><span class="math display">\[
+x_t=\beta_0+\beta_1z_{t1}+\beta_2z_{t2}+\cdots+\beta_qz_{tq}+w_t
+\]</span></p>
+<p>其中<span class="math inline">\(\beta_0,\beta_1,\cdots,\beta_q\)</span>是固定的回归系数，<span class="math inline">\(w_t\)</span>是随机误差或噪声过程，均值为<span class="math inline">\(0\)</span>，方差为<span class="math inline">\(\sigma_w^2\)</span>，正态分布。</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+提示
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(z_{t}\)</span>一般就是时间。</p>
+</div>
+</div>
+<section id="估计线性趋势" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="估计线性趋势"><span class="header-section-number">1.1</span> 估计线性趋势</h2>
+<p><a href="#fig-chicken" class="quarto-xref">图&nbsp;1</a>展示了2001年8月到2016年7月美国某码头鸡肉每月价格，直线是线性回归的拟合。</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-chicken" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-chicken-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter_2_files/figure-html/fig-chicken-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chicken-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;1: 鸡肉价格
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>拟合模型为：</p>
+<p><span class="math display">\[
+x_t=\beta_0+\beta_1z_t+w_t,\ z_t=2001\frac{7}{12},2001\frac{8}{12},\cdots,2016\frac{6}{12}
+\]</span></p>
+<p>其中<span class="math inline">\(w_t\)</span>被假设为一个独立同分布的正态分布序列(如不成立需要进行额外操作，第三章会介绍)。</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+提示
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>没看懂为什么是<span class="math inline">\(2001\frac{7}{12}\)</span>到<span class="math inline">\(2016\frac{6}{12}\)</span>。</p>
+<p>之后是对一元线性回归的计算，再后面是多元的，方法类似，故不对一元的进行解释，直接给出结果。</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(chicken <span class="sc">~</span> <span class="fu">time</span>(chicken), <span class="at">na.action =</span> <span class="cn">NULL</span>))</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = chicken ~ time(chicken), na.action = NULL)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-8.7411 -3.4730  0.8251  2.7738 11.5804 
+
+Coefficients:
+                Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   -7.131e+03  1.624e+02  -43.91   &lt;2e-16 ***
+time(chicken)  3.592e+00  8.084e-02   44.43   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 4.696 on 178 degrees of freedom
+Multiple R-squared:  0.9173,    Adjusted R-squared:  0.9168 
+F-statistic:  1974 on 1 and 178 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>结果表明：斜率系数<span class="math inline">\(\hat\beta_1=3.59\)</span>(标准误差为<span class="math inline">\(0.08\)</span>)，<span class="math inline">\(p&lt;0.001\)</span>，结果显著。</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+提示
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>接下来会论述多元线性回归的计算过程，方便引出Akaike信息准则(Akaike’s Information Criterion，AIC)，个人感觉不知道怎么推导也没什么问题。仅从个人理解角度进行概括，看不懂可以跳过，或者给出修改建议。</p>
+</div>
+</div>
+<p>多元线性回归模型，<span class="math inline">\(z_t=(z_{t1},\ z_{t2},\ \cdots,\ z_{tq})'\)</span>和<span class="math inline">\(\beta=(\beta_0,\ \beta_1,\ \cdots,\ \beta_q)'\)</span>这种列向量表示起来更为方便。</p>
+<p>模型可以表示为：</p>
+<p><span class="math display">\[
+x_t=\beta_0+\beta_1z_{t1}+\beta_2z_{t2}+\cdots+\beta_qz_{tq}+w_t=\beta'z_t+w_t
+\]</span></p>
+<p>其中<span class="math inline">\(w_t\sim\operatorname{iid\ N}(0,\ \sigma_w^2)\)</span>。</p>
+<p>普通最小二乘法(Ordinary Least Square，OLS)下，最小化的误差平方和(residual sum of squares或sum of squares for error，RSS或SSE)为：</p>
+<p><span class="math display">\[
+Q=\sum_{t=1}^{n}w_t^2=\sum_{t=1}^{n}(x_t-\beta'z_t)^2
+\]</span></p>
+<p>最小化(<span class="math inline">\(Q\)</span>关于<span class="math inline">\(\beta\)</span>的偏导数为0)需要满足<span class="math inline">\(\sum_{t=1}^n(x_t-\hat\beta'z_t)z_t'=0\)</span>(表示<span class="math inline">\(w_t\)</span>和<span class="math inline">\(z_t\)</span>不相关)，得到正规方程(normal equations)：</p>
+<p><span class="math display">\[
+(\sum_{t=1}^{n}z_tz_t')\hat\beta=\sum_{t=1}^{n}z_tx_t
+\]</span></p>
+<p>对这个方程求解就可以得到：</p>
+<p><span class="math display">\[
+\hat\beta=(\sum_{t=1}^{n}z_tz_t')^{-1}\sum_{t=1}^{n}z_tx_t
+\]</span></p>
+<p>所以最小化的误差平方和为：</p>
+<p><span class="math display">\[
+\operatorname{SSE}=\sum_{t=1}^{n}(x_t-\hat\beta'z_t)^2
+\]</span></p>
+<p>这是无偏的(<span class="math inline">\(\operatorname{E}(\hat\beta)=\beta\)</span>)，且具有最小方差。</p>
+<p>如果误差<span class="math inline">\(w_t\)</span>是正态分布，<span class="math inline">\(\hat\beta\)</span>是<span class="math inline">\(\beta\)</span>的最大似然估计，且具有正态分布</p>
+<p><span class="math display">\[
+\operatorname{cov}(\hat\beta)=\sigma_w^2C
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[
+C=(\sum_{t=1}^{n}z_tz_t')^{-1}
+\]</span></p>
+<p><span class="math inline">\(C\)</span>是<span class="math inline">\(z_t\)</span>的协方差矩阵的逆。</p>
+<p>方差<span class="math inline">\(\sigma_w^2\)</span>的无偏估计是</p>
+<p><span class="math display">\[
+s_w^2=\operatorname{MSE}=\frac{\operatorname{SSE}}{n-(q+1)}
+\]</span></p>
+<p><span class="math inline">\(\operatorname{SSE}\)</span>表示均方误差(mean squared error)。正态假设下</p>
+<p><span class="math display">\[
+t=\frac{(\hat\beta_i-\beta_i)}{s_w\sqrt{c_{ii}}}
+\]</span></p>
+<p>服从自由度为<span class="math inline">\(n-(q+1)\)</span>的<span class="math inline">\(t\)</span>分布，<span class="math inline">\(c_{ii}\)</span>表示矩阵<span class="math inline">\(C\)</span>的第<span class="math inline">\(i\)</span>个对角线元素。对于<span class="math inline">\(i=1,\ \cdots,\ q\)</span>，该结果常用于检验零假设<span class="math inline">\(\operatorname{H_0}:\beta_t=0\)</span>.</p>
+<p>竞争模型关注隔离或选择最佳自变量子集点。选择<span class="math inline">\(r&lt;q\)</span>个独立模型，即<span class="math inline">\(z_{t,1:r}={z_{t1},\ z_{t2},\ \cdots,\ z_{tr}}\)</span>。模型为</p>
+<p><span class="math display">\[
+x_t=\beta_0+\beta_1z_{t1}+\cdots+\beta_rz_{tr}+w_t
+\]</span></p>
+<p>零假设为<span class="math inline">\(\operatorname{H_0}:\beta_{r+1}=\cdots=\beta_q=0\)</span>，使用<span class="math inline">\(F\)</span>检验</p>
+<p><span class="math display">\[
+F=\frac{(\operatorname{SSE}_r-\operatorname{SSE}/(q-r))}{\operatorname{SSE}/(n-q-1)}=\frac{\operatorname{MSR}}{\operatorname{MSE}}
+\]</span></p>
+<p>在自由度为<span class="math inline">\(q-r\)</span>和<span class="math inline">\(n-q-1\)</span>的<span class="math inline">\(F\)</span>分布中进行检验。</p>
+<p>整体逻辑是看添加上其他自变量，是否显著增加拟合效果。如果<span class="math inline">\(\operatorname{H}_0\)</span>为真，则可以化简模型，反之则不可以。</p>
+<div id="tbl-ranova" class="quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ranova-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+表&nbsp;1: 回归分析的方差分析
+</figcaption>
+<div aria-describedby="tbl-ranova-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">误差源</th>
+<th style="text-align: center;">自由度(df)</th>
+<th style="text-align: center;">平方和</th>
+<th style="text-align: center;">均方</th>
+<th style="text-align: center;"><span class="math inline">\(F\)</span>值</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(z_{t,r+1:q}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(q-r\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\operatorname{SSR}=\operatorname{SSE}_r-\operatorname{SSE}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\operatorname{MSR}=\operatorname{SSR}/(q-r)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(F=\frac{\operatorname{MSR}}{\operatorname{MSE}}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Error</td>
+<td style="text-align: center;"><span class="math inline">\(n-(q+1)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\operatorname{SSE}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\operatorname{MSE}=\operatorname{SSE}/(n-q-1)\)</span></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
 
 
 
+</section>
+</section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">参考文献</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
 <div id="ref-Shumway_2017" class="csl-entry" role="listitem">
