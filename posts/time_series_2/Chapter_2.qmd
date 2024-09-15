@@ -173,3 +173,24 @@ $$
 |     Error     | $n-(q+1)$  |                     $\operatorname{SSE}$                     | $\operatorname{MSE}=\operatorname{SSE}/(n-q-1)$ |                                                   |
 
 : 回归分析的方差分析 {#tbl-ranova}
+
+当$\beta_1=\cdots=\beta_q=0$时，$x_t=\beta_0+w_t$，有：
+
+$$
+R^2=\frac{\operatorname{SSE}_0-\operatorname{SSE}}{\operatorname{SSE}_0}\\
+\operatorname{SSE}_0=\sum_{t=1}^n(x_t-\bar x)^2
+$$
+
+$R^2$是确定系数(coefficient of determination)。
+
+通过上述$F$检验来选择变量的纳入或删除，这就是逐步多元回归(stepwise multiple regression)。
+
+下面介绍通过模型优度来进行模型选择的方法。
+
+### Akaike信息准则(Akaike’s Information Criterion，AIC)
+
+$k$个系数的正态回归模型，方差的最大似然估计可表示为：
+
+$$
+\hat\sigma_k^2=\frac{\operatorname{SSE}(k)}{n}
+$$

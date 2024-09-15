@@ -295,7 +295,7 @@ $$
 
 因为$j$和$k$的取值范围都是$[-q,q]$，所以$|h|\le 2q$。
 
-## 1.7
+## 1.7{#sec-1_7}
 
 **自协方差函数**
 
@@ -399,3 +399,92 @@ $$
 :::{.callout-tip}
 $\delta_0(h)$表示当$h=0$时，$\delta_0(h)=1$；当$h\neq0$时，$\delta_0(h)=0$。
 :::
+
+## 1.9
+
+**均值函数**
+
+$$
+\because \operatorname{E}(U_1)=\operatorname{E}(U_2)=0\\
+\therefore \operatorname{E}(x_t)=\sin(2\pi w_0t)\operatorname{E}(U_1)+\cos(2\pi w_0t)\operatorname{E}(U_2)=0
+$$
+
+**自协方差函数**
+
+$$
+\begin{aligned}
+\gamma(h)&=\operatorname{E}(x_{t+h}x_t)\\
+&=\operatorname{E}\{(U_1\sin[2\pi w_0(t+h)]+U_2\cos[2\pi w_0(t+h)])(U_1\sin[2\pi w_0t]+U_2\cos[2\pi w_0t])\}\\
+&=\sigma^2(\sin[2\pi w_0(t+h)]\sin[2\pi w_0t]+\cos[2\pi w_0(t+h)]\cos[2\pi w_0t])\\
+&=\sigma^2\cos[2\pi w_0(t+h)-2\pi w_0t]\\
+&=\sigma^2\cos(2\pi w_0h)
+\end{aligned}
+$$
+
+均值函数和自协方差函数与$t$无关，为弱平稳序列。
+
+## 1.10
+
+(a)
+
+$$
+\begin{aligned}
+\operatorname{MSE}(A)&=\operatorname{E}[(x_{t+\ell}-Ax_t)^2]=\operatorname{E}[x_{t+\ell}^2+A^2x_t^2-2Ax_{t+\ell}x_t]\\
+&=\gamma(0)+A^2\gamma(0)-2A\gamma(\ell)\\
+&=\gamma(0)(A^2-2A\rho(\ell)+1)\\
+&=\gamma(0)([A-\rho(\ell)]^2-\rho^2(\ell)+1)
+\end{aligned}
+$$
+
+在$A=\rho(\ell)$取最小值。
+
+(b)
+
+当$A=\rho(\ell)$时，有：
+
+$$
+\begin{aligned}
+\operatorname{MSE}(A)&=\operatorname{E}[(x_{t+\ell}-Ax_t)^2]=\operatorname{E}[x_{t+\ell}^2+A^2x_t^2-2Ax_{t+\ell}x_t]\\
+&=\gamma(0)+A^2\gamma(0)-2A\gamma(\ell)\\
+&=\gamma(0)[1+\rho^2(\ell)-2\rho^2(\ell)]\\
+&=\gamma(0)[1-\rho^2(\ell)]
+\end{aligned}
+$$
+
+(c)
+
+如果$x_{x+\ell}=Ax_t$，则$\operatorname{MSE}(A)=0$恒成立，一定有$\gamma(0)[1-\rho^2(\ell)]=0$，所以$\rho(\ell)=\pm1$。成立。
+
+## 1.11
+
+(a)
+
+$$
+\begin{aligned}
+\gamma(h)&=\operatorname{cov}(\sum_k\psi_kw_{t+h-k},\sum_j\psi_jw_{t-j})\\
+&=\operatorname{E}(\sum_{k=-\infty}^\infty\sum_{j=-\infty}^\infty\psi_k\psi_jw_{t+h-k}w_{t-j})\\
+&=\sigma_w^2\sum_{j,k}\psi_k\psi_j\delta_{h-k+j}\\
+&=\sigma_w^2\sum_{k=-\infty}^\infty\psi_{k+h}\psi_k
+\end{aligned}
+$$
+
+:::{.callout-tip}
+对[@sec-1_7]解法进行优化。
+
+$$
+\begin{aligned}
+\gamma_x(h)&=\operatorname{cov}(\sum_{k=-1}^1\psi_kw_{t+h-k},\sum_{j=-1}^1\psi_jw_{t-j})\\
+&=\sigma_w^2\sum_{k=-1}^1\sum_{j=-1}^1\psi_k\psi_j\delta_{h-k+j}
+\end{aligned}
+$$
+:::
+
+(b)
+
+见原书附录。
+
+## 1.12
+
+$$
+\gamma_{xy}(h)=\operatorname{E}[(x_{t+h}-\mu_x)(y_t-\mu_y)]=\operatorname{E}[(y_t-\mu_y)(x_{t+h}-\mu_x)]=\gamma_{yx}(-h)
+$$

@@ -451,9 +451,24 @@ F=\frac{(\operatorname{SSE}_r-\operatorname{SSE}/(q-r))}{\operatorname{SSE}/(n-q
 </div>
 </figure>
 </div>
+<p>当<span class="math inline">\(\beta_1=\cdots=\beta_q=0\)</span>时，<span class="math inline">\(x_t=\beta_0+w_t\)</span>，有：</p>
+<p><span class="math display">\[
+R^2=\frac{\operatorname{SSE}_0-\operatorname{SSE}}{\operatorname{SSE}_0}\\
+\operatorname{SSE}_0=\sum_{t=1}^n(x_t-\bar x)^2
+\]</span></p>
+<p><span class="math inline">\(R^2\)</span>是确定系数(coefficient of determination)。</p>
+<p>通过上述<span class="math inline">\(F\)</span>检验来选择变量的纳入或删除，这就是逐步多元回归(stepwise multiple regression)。</p>
+<p>下面介绍通过模型优度来进行模型选择的方法。</p>
+<section id="akaike信息准则akaikes-information-criterionaic" class="level3" data-number="1.1.1">
+<h3 data-number="1.1.1" class="anchored" data-anchor-id="akaike信息准则akaikes-information-criterionaic"><span class="header-section-number">1.1.1</span> Akaike信息准则(Akaike’s Information Criterion，AIC)</h3>
+<p><span class="math inline">\(k\)</span>个系数的正态回归模型，方差的最大似然估计可表示为：</p>
+<p><span class="math display">\[
+\hat\sigma_k^2=\frac{\operatorname{SSE}(k)}{n}
+\]</span></p>
 
 
 
+</section>
 </section>
 </section>
 

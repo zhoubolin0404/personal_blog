@@ -248,8 +248,12 @@ window.Quarto = {
   <li><a href="#小节-3" id="toc-小节-3" class="nav-link" data-scroll-target="#小节-3">1.4小节</a>
   <ul class="collapse">
   <li><a href="#section-5" id="toc-section-5" class="nav-link" data-scroll-target="#section-5">1.6</a></li>
-  <li><a href="#section-6" id="toc-section-6" class="nav-link" data-scroll-target="#section-6">1.7</a></li>
-  <li><a href="#section-7" id="toc-section-7" class="nav-link" data-scroll-target="#section-7">1.8</a></li>
+  <li><a href="#sec-1_7" id="toc-sec-1_7" class="nav-link" data-scroll-target="#sec-1_7">1.7</a></li>
+  <li><a href="#section-6" id="toc-section-6" class="nav-link" data-scroll-target="#section-6">1.8</a></li>
+  <li><a href="#section-7" id="toc-section-7" class="nav-link" data-scroll-target="#section-7">1.9</a></li>
+  <li><a href="#section-8" id="toc-section-8" class="nav-link" data-scroll-target="#section-8">1.10</a></li>
+  <li><a href="#section-9" id="toc-section-9" class="nav-link" data-scroll-target="#section-9">1.11</a></li>
+  <li><a href="#section-10" id="toc-section-10" class="nav-link" data-scroll-target="#section-10">1.12</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -564,8 +568,8 @@ v_t&amp;=\frac{1}{2q+1}\sum_{j=-q}^{q}(\beta_1+\beta_2t-\beta_2j+w_{t-j})\\
 \]</span></p>
 <p>因为<span class="math inline">\(j\)</span>和<span class="math inline">\(k\)</span>的取值范围都是<span class="math inline">\([-q,q]\)</span>，所以<span class="math inline">\(|h|\le 2q\)</span>。</p>
 </section>
-<section id="section-6" class="level2">
-<h2 class="anchored" data-anchor-id="section-6">1.7</h2>
+<section id="sec-1_7" class="level2">
+<h2 class="anchored" data-anchor-id="sec-1_7">1.7</h2>
 <p><strong>自协方差函数</strong></p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -613,8 +617,8 @@ v_t&amp;=\frac{1}{2q+1}\sum_{j=-q}^{q}(\beta_1+\beta_2t-\beta_2j+w_{t-j})\\
 </div>
 </div>
 </section>
-<section id="section-7" class="level2">
-<h2 class="anchored" data-anchor-id="section-7">1.8</h2>
+<section id="section-6" class="level2">
+<h2 class="anchored" data-anchor-id="section-6">1.8</h2>
 <ol type="a">
 <li></li>
 </ol>
@@ -674,6 +678,99 @@ x_t&amp;=\delta+x_{t-1}+w_t\\
 <p><span class="math inline">\(\delta_0(h)\)</span>表示当<span class="math inline">\(h=0\)</span>时，<span class="math inline">\(\delta_0(h)=1\)</span>；当<span class="math inline">\(h\neq0\)</span>时，<span class="math inline">\(\delta_0(h)=0\)</span>。</p>
 </div>
 </div>
+</section>
+<section id="section-7" class="level2">
+<h2 class="anchored" data-anchor-id="section-7">1.9</h2>
+<p><strong>均值函数</strong></p>
+<p><span class="math display">\[
+\because \operatorname{E}(U_1)=\operatorname{E}(U_2)=0\\
+\therefore \operatorname{E}(x_t)=\sin(2\pi w_0t)\operatorname{E}(U_1)+\cos(2\pi w_0t)\operatorname{E}(U_2)=0
+\]</span></p>
+<p><strong>自协方差函数</strong></p>
+<p><span class="math display">\[
+\begin{aligned}
+\gamma(h)&amp;=\operatorname{E}(x_{t+h}x_t)\\
+&amp;=\operatorname{E}\{(U_1\sin[2\pi w_0(t+h)]+U_2\cos[2\pi w_0(t+h)])(U_1\sin[2\pi w_0t]+U_2\cos[2\pi w_0t])\}\\
+&amp;=\sigma^2(\sin[2\pi w_0(t+h)]\sin[2\pi w_0t]+\cos[2\pi w_0(t+h)]\cos[2\pi w_0t])\\
+&amp;=\sigma^2\cos[2\pi w_0(t+h)-2\pi w_0t]\\
+&amp;=\sigma^2\cos(2\pi w_0h)
+\end{aligned}
+\]</span></p>
+<p>均值函数和自协方差函数与<span class="math inline">\(t\)</span>无关，为弱平稳序列。</p>
+</section>
+<section id="section-8" class="level2">
+<h2 class="anchored" data-anchor-id="section-8">1.10</h2>
+<ol type="a">
+<li></li>
+</ol>
+<p><span class="math display">\[
+\begin{aligned}
+\operatorname{MSE}(A)&amp;=\operatorname{E}[(x_{t+\ell}-Ax_t)^2]=\operatorname{E}[x_{t+\ell}^2+A^2x_t^2-2Ax_{t+\ell}x_t]\\
+&amp;=\gamma(0)+A^2\gamma(0)-2A\gamma(\ell)\\
+&amp;=\gamma(0)(A^2-2A\rho(\ell)+1)\\
+&amp;=\gamma(0)([A-\rho(\ell)]^2-\rho^2(\ell)+1)
+\end{aligned}
+\]</span></p>
+<p>在<span class="math inline">\(A=\rho(\ell)\)</span>取最小值。</p>
+<ol start="2" type="a">
+<li></li>
+</ol>
+<p>当<span class="math inline">\(A=\rho(\ell)\)</span>时，有：</p>
+<p><span class="math display">\[
+\begin{aligned}
+\operatorname{MSE}(A)&amp;=\operatorname{E}[(x_{t+\ell}-Ax_t)^2]=\operatorname{E}[x_{t+\ell}^2+A^2x_t^2-2Ax_{t+\ell}x_t]\\
+&amp;=\gamma(0)+A^2\gamma(0)-2A\gamma(\ell)\\
+&amp;=\gamma(0)[1+\rho^2(\ell)-2\rho^2(\ell)]\\
+&amp;=\gamma(0)[1-\rho^2(\ell)]
+\end{aligned}
+\]</span></p>
+<ol start="3" type="a">
+<li></li>
+</ol>
+<p>如果<span class="math inline">\(x_{x+\ell}=Ax_t\)</span>，则<span class="math inline">\(\operatorname{MSE}(A)=0\)</span>恒成立，一定有<span class="math inline">\(\gamma(0)[1-\rho^2(\ell)]=0\)</span>，所以<span class="math inline">\(\rho(\ell)=\pm1\)</span>。成立。</p>
+</section>
+<section id="section-9" class="level2">
+<h2 class="anchored" data-anchor-id="section-9">1.11</h2>
+<ol type="a">
+<li></li>
+</ol>
+<p><span class="math display">\[
+\begin{aligned}
+\gamma(h)&amp;=\operatorname{cov}(\sum_k\psi_kw_{t+h-k},\sum_j\psi_jw_{t-j})\\
+&amp;=\operatorname{E}(\sum_{k=-\infty}^\infty\sum_{j=-\infty}^\infty\psi_k\psi_jw_{t+h-k}w_{t-j})\\
+&amp;=\sigma_w^2\sum_{j,k}\psi_k\psi_j\delta_{h-k+j}\\
+&amp;=\sigma_w^2\sum_{k=-\infty}^\infty\psi_{k+h}\psi_k
+\end{aligned}
+\]</span></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+提示
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>对<a href="#sec-1_7" class="quarto-xref">小节&nbsp;4.2</a>解法进行优化。</p>
+<p><span class="math display">\[
+\begin{aligned}
+\gamma_x(h)&amp;=\operatorname{cov}(\sum_{k=-1}^1\psi_kw_{t+h-k},\sum_{j=-1}^1\psi_jw_{t-j})\\
+&amp;=\sigma_w^2\sum_{k=-1}^1\sum_{j=-1}^1\psi_k\psi_j\delta_{h-k+j}
+\end{aligned}
+\]</span></p>
+</div>
+</div>
+<ol start="2" type="a">
+<li></li>
+</ol>
+<p>见原书附录。</p>
+</section>
+<section id="section-10" class="level2">
+<h2 class="anchored" data-anchor-id="section-10">1.12</h2>
+<p><span class="math display">\[
+\gamma_{xy}(h)=\operatorname{E}[(x_{t+h}-\mu_x)(y_t-\mu_y)]=\operatorname{E}[(y_t-\mu_y)(x_{t+h}-\mu_x)]=\gamma_{yx}(-h)
+\]</span></p>
 
 
 
