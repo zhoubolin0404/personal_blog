@@ -9,7 +9,7 @@ bibliography: references.bib
 csl: apa.csl
 number-sections: true
 toc: true
-toc-depth: 2
+toc-depth: 3
 ---
 
 ```{r chapter-status, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}

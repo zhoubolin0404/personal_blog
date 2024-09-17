@@ -231,7 +231,7 @@ window.Quarto = {
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">该页面内容</h2>
    
-  <ul class="collapse">
+  <ul>
   <li><a href="#时间序列数据" id="toc-时间序列数据" class="nav-link active" data-scroll-target="#时间序列数据"><span class="header-section-number">1</span> 时间序列数据</a>
   <ul class="collapse">
   <li><a href="#强生公司季度每股收益" id="toc-强生公司季度每股收益" class="nav-link" data-scroll-target="#强生公司季度每股收益"><span class="header-section-number">1.1</span> 强生公司季度每股收益</a></li>
@@ -252,15 +252,41 @@ window.Quarto = {
   </ul></li>
   <li><a href="#相关性测量" id="toc-相关性测量" class="nav-link" data-scroll-target="#相关性测量"><span class="header-section-number">3</span> 相关性测量</a>
   <ul class="collapse">
-  <li><a href="#平均函数" id="toc-平均函数" class="nav-link" data-scroll-target="#平均函数"><span class="header-section-number">3.1</span> 平均函数</a></li>
-  <li><a href="#自协方差函数autocovariance-function" id="toc-自协方差函数autocovariance-function" class="nav-link" data-scroll-target="#自协方差函数autocovariance-function"><span class="header-section-number">3.2</span> 自协方差函数(Autocovariance Function)</a></li>
-  <li><a href="#自相关函数autocorrelation-functionacf" id="toc-自相关函数autocorrelation-functionacf" class="nav-link" data-scroll-target="#自相关函数autocorrelation-functionacf"><span class="header-section-number">3.3</span> 自相关函数(Autocorrelation Function，ACF)</a></li>
+  <li><a href="#平均函数" id="toc-平均函数" class="nav-link" data-scroll-target="#平均函数"><span class="header-section-number">3.1</span> 平均函数</a>
+  <ul class="collapse">
+  <li><a href="#sec-movemean" id="toc-sec-movemean" class="nav-link" data-scroll-target="#sec-movemean"><span class="header-section-number">3.1.1</span> 移动平均序列的平均函数</a></li>
+  <li><a href="#sec-randommean" id="toc-sec-randommean" class="nav-link" data-scroll-target="#sec-randommean"><span class="header-section-number">3.1.2</span> 带漂移项的随机游走的平均函数</a></li>
+  <li><a href="#信号加噪声的平均函数" id="toc-信号加噪声的平均函数" class="nav-link" data-scroll-target="#信号加噪声的平均函数"><span class="header-section-number">3.1.3</span> 信号加噪声的平均函数</a></li>
+  </ul></li>
+  <li><a href="#自协方差函数autocovariance-function" id="toc-自协方差函数autocovariance-function" class="nav-link" data-scroll-target="#自协方差函数autocovariance-function"><span class="header-section-number">3.2</span> 自协方差函数(Autocovariance Function)</a>
+  <ul class="collapse">
+  <li><a href="#白噪声的自协方差" id="toc-白噪声的自协方差" class="nav-link" data-scroll-target="#白噪声的自协方差"><span class="header-section-number">3.2.1</span> 白噪声的自协方差</a></li>
+  <li><a href="#线性组合的协方差" id="toc-线性组合的协方差" class="nav-link" data-scroll-target="#线性组合的协方差"><span class="header-section-number">3.2.2</span> 线性组合的协方差</a></li>
+  <li><a href="#sec-movecov" id="toc-sec-movecov" class="nav-link" data-scroll-target="#sec-movecov"><span class="header-section-number">3.2.3</span> 移动平均值的自协方差</a></li>
+  <li><a href="#sec-randomcov" id="toc-sec-randomcov" class="nav-link" data-scroll-target="#sec-randomcov"><span class="header-section-number">3.2.4</span> 随机游走的自协方差</a></li>
+  </ul></li>
+  <li><a href="#自相关函数autocorrelation-functionacf" id="toc-自相关函数autocorrelation-functionacf" class="nav-link" data-scroll-target="#自相关函数autocorrelation-functionacf"><span class="header-section-number">3.3</span> 自相关函数(Autocorrelation Function，ACF)</a>
+  <ul class="collapse">
+  <li><a href="#交叉协方差函数cross-covariance-function" id="toc-交叉协方差函数cross-covariance-function" class="nav-link" data-scroll-target="#交叉协方差函数cross-covariance-function"><span class="header-section-number">3.3.1</span> 交叉协方差函数(Cross-covariance Function)</a></li>
+  <li><a href="#交叉相关函数cross-correlation-functionccf" id="toc-交叉相关函数cross-correlation-functionccf" class="nav-link" data-scroll-target="#交叉相关函数cross-correlation-functionccf"><span class="header-section-number">3.3.2</span> 交叉相关函数(cross-correlation function，CCF)</a></li>
+  </ul></li>
   </ul></li>
   <li><a href="#平稳时间序列stationary-time-series" id="toc-平稳时间序列stationary-time-series" class="nav-link" data-scroll-target="#平稳时间序列stationary-time-series"><span class="header-section-number">4</span> 平稳时间序列(Stationary Time Series)</a>
   <ul class="collapse">
   <li><a href="#严格平稳strictly-stationary" id="toc-严格平稳strictly-stationary" class="nav-link" data-scroll-target="#严格平稳strictly-stationary"><span class="header-section-number">4.1</span> 严格平稳(Strictly Stationary)</a></li>
-  <li><a href="#弱平稳weakly-stationary" id="toc-弱平稳weakly-stationary" class="nav-link" data-scroll-target="#弱平稳weakly-stationary"><span class="header-section-number">4.2</span> 弱平稳(Weakly Stationary)</a></li>
-  <li><a href="#联合平稳jointly-stationary" id="toc-联合平稳jointly-stationary" class="nav-link" data-scroll-target="#联合平稳jointly-stationary"><span class="header-section-number">4.3</span> 联合平稳(Jointly Stationary)</a></li>
+  <li><a href="#弱平稳weakly-stationary" id="toc-弱平稳weakly-stationary" class="nav-link" data-scroll-target="#弱平稳weakly-stationary"><span class="header-section-number">4.2</span> 弱平稳(Weakly Stationary)</a>
+  <ul class="collapse">
+  <li><a href="#白噪声的平稳性" id="toc-白噪声的平稳性" class="nav-link" data-scroll-target="#白噪声的平稳性"><span class="header-section-number">4.2.1</span> 白噪声的平稳性</a></li>
+  <li><a href="#移动平均序列的平稳性" id="toc-移动平均序列的平稳性" class="nav-link" data-scroll-target="#移动平均序列的平稳性"><span class="header-section-number">4.2.2</span> 移动平均序列的平稳性</a></li>
+  <li><a href="#随机游走是非平稳的" id="toc-随机游走是非平稳的" class="nav-link" data-scroll-target="#随机游走是非平稳的"><span class="header-section-number">4.2.3</span> 随机游走是非平稳的</a></li>
+  <li><a href="#趋势平稳性trend-stationarity" id="toc-趋势平稳性trend-stationarity" class="nav-link" data-scroll-target="#趋势平稳性trend-stationarity"><span class="header-section-number">4.2.4</span> 趋势平稳性(Trend Stationarity)</a></li>
+  </ul></li>
+  <li><a href="#联合平稳jointly-stationary" id="toc-联合平稳jointly-stationary" class="nav-link" data-scroll-target="#联合平稳jointly-stationary"><span class="header-section-number">4.3</span> 联合平稳(Jointly Stationary)</a>
+  <ul class="collapse">
+  <li><a href="#交叉相关函数cross-correlation-functionccf-1" id="toc-交叉相关函数cross-correlation-functionccf-1" class="nav-link" data-scroll-target="#交叉相关函数cross-correlation-functionccf-1"><span class="header-section-number">4.3.1</span> 交叉相关函数(Cross-Correlation Function，CCF)</a></li>
+  <li><a href="#联合平稳性joint-stationarity" id="toc-联合平稳性joint-stationarity" class="nav-link" data-scroll-target="#联合平稳性joint-stationarity"><span class="header-section-number">4.3.2</span> 联合平稳性(Joint Stationarity)</a></li>
+  <li><a href="#使用交叉相关进行预测" id="toc-使用交叉相关进行预测" class="nav-link" data-scroll-target="#使用交叉相关进行预测"><span class="header-section-number">4.3.3</span> 使用交叉相关进行预测</a></li>
+  </ul></li>
   <li><a href="#线性随机过程linear-process" id="toc-线性随机过程linear-process" class="nav-link" data-scroll-target="#线性随机过程linear-process"><span class="header-section-number">4.4</span> 线性(随机)过程(Linear Process)</a></li>
   </ul></li>
   <li><a href="#相关系数的估计" id="toc-相关系数的估计" class="nav-link" data-scroll-target="#相关系数的估计"><span class="header-section-number">5</span> 相关系数的估计</a>
