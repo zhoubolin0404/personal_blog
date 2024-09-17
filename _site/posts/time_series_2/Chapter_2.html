@@ -234,7 +234,8 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#时间序列背景下的经典回归" id="toc-时间序列背景下的经典回归" class="nav-link active" data-scroll-target="#时间序列背景下的经典回归"><span class="header-section-number">1</span> 时间序列背景下的经典回归</a>
   <ul class="collapse">
-  <li><a href="#估计线性趋势" id="toc-估计线性趋势" class="nav-link" data-scroll-target="#估计线性趋势"><span class="header-section-number">1.1</span> 估计线性趋势</a></li>
+  <li><a href="#简单线性回归" id="toc-简单线性回归" class="nav-link" data-scroll-target="#简单线性回归"><span class="header-section-number">1.1</span> 简单线性回归</a></li>
+  <li><a href="#多元线性回归" id="toc-多元线性回归" class="nav-link" data-scroll-target="#多元线性回归"><span class="header-section-number">1.2</span> 多元线性回归</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -284,8 +285,8 @@ x_t=\beta_0+\beta_1z_{t1}+\beta_2z_{t2}+\cdots+\beta_qz_{tq}+w_t
 <p><span class="math inline">\(z_{t}\)</span>一般就是时间。</p>
 </div>
 </div>
-<section id="估计线性趋势" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="估计线性趋势"><span class="header-section-number">1.1</span> 估计线性趋势</h2>
+<section id="简单线性回归" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="简单线性回归"><span class="header-section-number">1.1</span> 简单线性回归</h2>
 <p><a href="#fig-chicken" class="quarto-xref">图&nbsp;1</a>展示了2001年8月到2016年7月美国某码头鸡肉每月价格，直线是线性回归的拟合。</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -357,6 +358,9 @@ F-statistic:  1974 on 1 and 178 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>接下来会论述多元线性回归的计算过程，方便引出Akaike信息准则(Akaike’s Information Criterion，AIC)，个人感觉不知道怎么推导也没什么问题。仅从个人理解角度进行概括，看不懂可以跳过，或者给出修改建议。</p>
 </div>
 </div>
+</section>
+<section id="多元线性回归" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="多元线性回归"><span class="header-section-number">1.2</span> 多元线性回归</h2>
 <p>多元线性回归模型，<span class="math inline">\(z_t=(z_{t1},\ z_{t2},\ \cdots,\ z_{tq})'\)</span>和<span class="math inline">\(\beta=(\beta_0,\ \beta_1,\ \cdots,\ \beta_q)'\)</span>这种列向量表示起来更为方便。</p>
 <p>模型可以表示为：</p>
 <p><span class="math display">\[
@@ -459,12 +463,52 @@ R^2=\frac{\operatorname{SSE}_0-\operatorname{SSE}}{\operatorname{SSE}_0}\\
 <p><span class="math inline">\(R^2\)</span>是确定系数(coefficient of determination)。</p>
 <p>通过上述<span class="math inline">\(F\)</span>检验来选择变量的纳入或删除，这就是逐步多元回归(stepwise multiple regression)。</p>
 <p>下面介绍通过模型优度来进行模型选择的方法。</p>
-<section id="akaike信息准则akaikes-information-criterionaic" class="level3" data-number="1.1.1">
-<h3 data-number="1.1.1" class="anchored" data-anchor-id="akaike信息准则akaikes-information-criterionaic"><span class="header-section-number">1.1.1</span> Akaike信息准则(Akaike’s Information Criterion，AIC)</h3>
+<section id="信息准则" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="信息准则"><span class="header-section-number">1.2.1</span> 信息准则</h3>
 <p><span class="math inline">\(k\)</span>个系数的正态回归模型，方差的最大似然估计可表示为：</p>
 <p><span class="math display">\[
 \hat\sigma_k^2=\frac{\operatorname{SSE}(k)}{n}
 \]</span></p>
+<p>其中<span class="math inline">\(\operatorname{SSE}(k)\)</span>表示<span class="math inline">\(k\)</span>个回归系数的模型的残差平方和。显然<span class="math inline">\(\operatorname{SSE}(k)\)</span>会随着<span class="math inline">\(k\)</span>的增加而单调减少。</p>
+<p>信息准则的基本思路是在最小化<span class="math inline">\(\hat\sigma_k^2\)</span>的同时，添加一个随<span class="math inline">\(k\)</span>的增加而单调增加的惩罚项，来选择合适的参数数量。</p>
+<section id="akaike信息准则akaikes-information-criterionaic" class="level4" data-number="1.2.1.1">
+<h4 data-number="1.2.1.1" class="anchored" data-anchor-id="akaike信息准则akaikes-information-criterionaic"><span class="header-section-number">1.2.1.1</span> Akaike信息准则(Akaike’s Information Criterion，AIC)</h4>
+<p><span class="math display">\[
+\operatorname{AIC}=\log\hat\sigma_k^2+\frac{n+2k}{n}
+\]</span></p>
+<p>最常用。</p>
+</section>
+<section id="aic偏差修正aicc" class="level4" data-number="1.2.1.2">
+<h4 data-number="1.2.1.2" class="anchored" data-anchor-id="aic偏差修正aicc"><span class="header-section-number">1.2.1.2</span> AIC，偏差修正(AICc)</h4>
+<p><span class="math display">\[
+\operatorname{AICc}=\log\hat\sigma_k^2+\frac{n+k}{n-k-2}
+\]</span></p>
+<p>适用于参数数量相对较大，但样本量较小的情况。</p>
+</section>
+<section id="贝叶斯信息准则bayesian-information-criterionbic" class="level4" data-number="1.2.1.3">
+<h4 data-number="1.2.1.3" class="anchored" data-anchor-id="贝叶斯信息准则bayesian-information-criterionbic"><span class="header-section-number">1.2.1.3</span> 贝叶斯信息准则(Bayesian Information Criterion，BIC)</h4>
+<p><span class="math display">\[
+\operatorname{BIC}=\log\hat\sigma_k^2+\frac{k\log n}{n}
+\]</span></p>
+<p>BIC惩罚项的值远大于AIC，适合在大样本中选出较小的模型，防止过拟合。</p>
+</section>
+</section>
+<section id="模型选择" class="level3" data-number="1.2.2">
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="模型选择"><span class="header-section-number">1.2.2</span> 模型选择</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-card" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-card-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter_2_files/figure-html/fig-card-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-card-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;2: 洛杉矶地区平均每周心血管死亡率(上)、温度(中)、颗粒污染(下)
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
 
 
 

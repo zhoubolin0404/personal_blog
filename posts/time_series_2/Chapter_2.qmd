@@ -47,7 +47,7 @@ $$
 $z_{t}$一般就是时间。
 :::
 
-## 估计线性趋势
+## 简单线性回归
 
 [@fig-chicken]展示了2001年8月到2016年7月美国某码头鸡肉每月价格，直线是线性回归的拟合。
 
@@ -86,6 +86,8 @@ summary(fit <- lm(chicken ~ time(chicken), na.action = NULL))
 ::: callout-tip
 接下来会论述多元线性回归的计算过程，方便引出Akaike信息准则(Akaike’s Information Criterion，AIC)，个人感觉不知道怎么推导也没什么问题。仅从个人理解角度进行概括，看不懂可以跳过，或者给出修改建议。
 :::
+
+## 多元线性回归
 
 多元线性回归模型，$z_t=(z_{t1},\ z_{t2},\ \cdots,\ z_{tq})'$和$\beta=(\beta_0,\ \beta_1,\ \cdots,\ \beta_q)'$这种列向量表示起来更为方便。
 
@@ -187,10 +189,49 @@ $R^2$是确定系数(coefficient of determination)。
 
 下面介绍通过模型优度来进行模型选择的方法。
 
-### Akaike信息准则(Akaike’s Information Criterion，AIC)
+### 信息准则
 
 $k$个系数的正态回归模型，方差的最大似然估计可表示为：
 
 $$
 \hat\sigma_k^2=\frac{\operatorname{SSE}(k)}{n}
 $$
+
+其中$\operatorname{SSE}(k)$表示$k$个回归系数的模型的残差平方和。显然$\operatorname{SSE}(k)$会随着$k$的增加而单调减少。
+
+信息准则的基本思路是在最小化$\hat\sigma_k^2$的同时，添加一个随$k$的增加而单调增加的惩罚项，来选择合适的参数数量。
+
+#### Akaike信息准则(Akaike’s Information Criterion，AIC)
+
+$$
+\operatorname{AIC}=\log\hat\sigma_k^2+\frac{n+2k}{n}
+$$
+
+最常用。
+
+#### AIC，偏差修正(AICc)
+
+$$
+\operatorname{AICc}=\log\hat\sigma_k^2+\frac{n+k}{n-k-2}
+$$
+
+适用于参数数量相对较大，但样本量较小的情况。
+
+#### 贝叶斯信息准则(Bayesian Information Criterion，BIC)
+
+$$
+\operatorname{BIC}=\log\hat\sigma_k^2+\frac{k\log n}{n}
+$$
+
+BIC惩罚项的值远大于AIC，适合在大样本中选出较小的模型，防止过拟合。
+
+### 模型选择
+
+```{r, echo = FALSE, warning = FALSE, message=FALSE}
+#| label: fig-card
+#| fig-cap: 洛杉矶地区平均每周心血管死亡率(上)、温度(中)、颗粒污染(下)
+par(mfrow=c(3,1))
+tsplot(cmort, main="Cardiovascular Mortality", col=6, type="o", pch=19, ylab="")
+tsplot(tempr, main="Temperature", col=4, type="o", pch=19, ylab="")
+tsplot(part, main="Particulates", col=2, type="o", pch=19, ylab="")
+```

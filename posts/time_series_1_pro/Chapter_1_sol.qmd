@@ -603,5 +603,67 @@ $$
 \end{aligned}
 $$
 
+## 1.15
 
+**均值函数**
+
+$$
+\mu_t=\operatorname{E}(w_tw_{t-1})=\operatorname{E}(w_t)\operatorname{E}(w_{t-1})=0
+$$
+
+**自协方差函数**
+
+$$
+\begin{aligned}
+\gamma_x(h)&=\operatorname{cov}(w_{t+h}w_{t+h-1},w_tw_{t-1})\\
+&=\operatorname{E}(w_{t+h}w_{t+h-1}w_tw_{t-1})
+\end{aligned}
+$$
+
+所以
+
+$$
+\gamma_x(h)=\begin{cases}
+\sigma_w^4&h=0\\
+\sigma_w^2&|h|=1\\
+0&|h|\ge2
+\end{cases}
+$$
+
+均和$t$无关，平稳。
+
+## 1.16
+
+(a)
+
+**均值函数**
+
+$$
+\begin{aligned}
+\operatorname{E}(x_t)=\int_0^1\sin(2\pi ut)\mathrm{d}u=-\frac{1}{2\pi t}\cos(2\pi ut)\Bigg|_0^1=-\frac{1}{2\pi t}[\cos(2\pi t)-1]=0
+\end{aligned}
+$$
+
+**自协方差函数**
+
+$$
+\begin{aligned}
+\gamma(h)&=\int_0^1\sin[2\pi u(t+h)]\sin[2\pi ut]\mathrm{d}u\\
+&=\frac{1}{2}\int_0^1\cos(2\pi uh)\mathrm{d}u-\frac{1}{2}\int_0^1\cos(2\pi u(2t + h))\mathrm{d}u
+\end{aligned}
+$$
+
+当$h=0$时，$\gamma(h)=\frac{1}{2}$
+
+当$h\neq0$时
+
+$$
+\gamma(h)=\frac{1}{2}\left[\frac{\sin(2\pi h)}{2\pi h}-\frac{\sin(2\pi (2t+h))}{2\pi (2t+h)}\right]=0
+$$
+
+综上，为弱平稳。
+
+(b)
+
+$t=1$、$t=2$、$t=3$代入，$x_1$和$x_2$，$x_2$和$x_3$关系不一样，所以非严平稳。
 
