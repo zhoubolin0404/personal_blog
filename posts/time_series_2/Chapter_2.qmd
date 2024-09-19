@@ -291,9 +291,9 @@ num = length(cmort)
 
 |模型|$k$(df1)|误差平方和(SSE)|自由度(df2)|均方和(MSE)|可决系数($R^2$)|AIC|BIC|
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-|[@eq-2_18]|`r s1[[1]]$Df[1]`|`r s1[[1]]$"Sum Sq"[2] %>% round(0)`|`r s1[[1]]$Df[2]`|`r s1[[1]]$"Mean Sq" %>% round(1)`|`r summary(fit1)$r.squared %>% round(2)`|`r (AIC(fit1)/num-log(2*pi)) %>% sprintf("%.2f", .)`|`r (BIC(fit1)/num-log(2*pi)) %>% sprintf("%.2f", .)`|
-|[@eq-2_19]|`r s2[[1]]$Df[1]`|`r s2[[1]]$"Sum Sq"[2] %>% round(0)`|`r s2[[1]]$Df[2]`|`r s2[[1]]$"Mean Sq" %>% round(1)`|`r summary(fit2)$r.squared %>% round(2)`|`r (AIC(fit2)/num-log(2*pi)) %>% sprintf("%.2f", .)`|`r (BIC(fit2)/num-log(2*pi)) %>% sprintf("%.2f", .)`|
-|[@eq-2_20]|`r s3[[1]]$Df[1]`|`r s3[[1]]$"Sum Sq"[2] %>% round(0)`|`r s3[[1]]$Df[2]`|`r s3[[1]]$"Mean Sq" %>% round(1)`|`r summary(fit3)$r.squared %>% round(2)`|`r (AIC(fit3)/num-log(2*pi)) %>% sprintf("%.2f", .)`|`r (BIC(fit3)/num-log(2*pi)) %>% sprintf("%.2f", .)`|
-|[@eq-2_21]|`r s4[[1]]$Df[1]`|`r s4[[1]]$"Sum Sq"[2] %>% round(0)`|`r s4[[1]]$Df[2]`|`r s4[[1]]$"Mean Sq" %>% round(1)`|`r summary(fit4)$r.squared %>% round(2)`|`r (AIC(fit4)/num-log(2*pi)) %>% sprintf("%.2f", .)`|`r (BIC(fit4)/num-log(2*pi)) %>% sprintf("%.2f", .)`|
+|[@eq-2_18]|`r s1[[1]]$Df[1]`|`r s1[[1]]$"Sum Sq"[2] %>% round(0)`|`r s1[[1]]$Df[2]`|`r s1[[1]]$"Mean Sq"[2] %>% round(1)`|`r summary(fit1)$r.squared %>% round(2)`|`r (AIC(fit1)/num-log(2*pi)) %>% sprintf("%.2f", .)`|`r (BIC(fit1)/num-log(2*pi)) %>% sprintf("%.2f", .)`|
+|[@eq-2_19]|`r s2[[1]]$Df[1]`|`r s2[[1]]$"Sum Sq"[2] %>% round(0)`|`r s2[[1]]$Df[2]`|`r s2[[1]]$"Mean Sq"[2] %>% round(1)`|`r summary(fit2)$r.squared %>% round(2)`|`r (AIC(fit2)/num-log(2*pi)) %>% sprintf("%.2f", .)`|`r (BIC(fit2)/num-log(2*pi)) %>% sprintf("%.2f", .)`|
+|[@eq-2_20]|`r s3[[1]]$Df[1]`|`r s3[[1]]$"Sum Sq"[2] %>% round(0)`|`r s3[[1]]$Df[2]`|`r s3[[1]]$"Mean Sq"[2] %>% round(1)`|`r summary(fit3)$r.squared %>% round(2)`|`r (AIC(fit3)/num-log(2*pi)) %>% sprintf("%.2f", .)`|`r (BIC(fit3)/num-log(2*pi)) %>% sprintf("%.2f", .)`|
+|[@eq-2_21]|`r s4[[1]]$Df[1]`|`r s4[[1]]$"Sum Sq"[2] %>% round(0)`|`r s4[[1]]$Df[2]`|`r s4[[1]]$"Mean Sq"[2] %>% round(1)`|`r summary(fit4)$r.squared %>% round(2)`|`r (AIC(fit4)/num-log(2*pi)) %>% sprintf("%.2f", .)`|`r (BIC(fit4)/num-log(2*pi)) %>% sprintf("%.2f", .)`|
 
 : 模型汇总 {#tbl-mort}
