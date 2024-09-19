@@ -9,6 +9,8 @@ csl: apa.csl
 number-sections: true
 toc: true
 toc-depth: 2
+execute:
+  freeze: auto
 ---
 
 SDM-PSI参考手册

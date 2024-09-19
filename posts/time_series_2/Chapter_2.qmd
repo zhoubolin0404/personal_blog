@@ -10,6 +10,8 @@ csl: apa.csl
 number-sections: true
 toc: true
 toc-depth: 3
+execute:
+  freeze: auto
 ---
 
 ```{r chapter-status, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
