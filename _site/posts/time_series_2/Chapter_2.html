@@ -337,15 +337,15 @@ Residuals:
 -8.7411 -3.4730  0.8251  2.7738 11.5804 
 
 Coefficients:
-                Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)   -7.131e+03  1.624e+02  -43.91   &lt;2e-16 ***
-time(chicken)  3.592e+00  8.084e-02   44.43   &lt;2e-16 ***
+                 Estimate  Std. Error t value            Pr(&gt;|t|)    
+(Intercept)   -7131.02247   162.41335  -43.91 &lt;0.0000000000000002 ***
+time(chicken)     3.59211     0.08084   44.43 &lt;0.0000000000000002 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 4.696 on 178 degrees of freedom
 Multiple R-squared:  0.9173,    Adjusted R-squared:  0.9168 
-F-statistic:  1974 on 1 and 178 DF,  p-value: &lt; 2.2e-16</code></pre>
+F-statistic:  1974 on 1 and 178 DF,  p-value: &lt; 0.00000000000000022</code></pre>
 </div>
 </div>
 <p>结果表明：斜率系数<span class="math inline">\(\hat\beta_1=3.59\)</span>(标准误差为<span class="math inline">\(0.08\)</span>)，<span class="math inline">\(p&lt;0.001\)</span>，结果显著。</p>
@@ -495,10 +495,24 @@ R^2=\frac{\operatorname{SSE}_0-\operatorname{SSE}}{\operatorname{SSE}_0}\\
 \operatorname{BIC}=\log\hat\sigma_k^2+\frac{k\log n}{n}
 \]</span></p>
 <p>BIC惩罚项的值远大于AIC，适合在大样本中选出较小的模型，防止过拟合。</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+提示
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>这里的AIC，BIC都不是标准模式，是在正态分布线性回归中的一种等效形式。普通线性回归常用<code>AIC()</code>函数提取AIC值，时间序列分析中在<code>ar()</code>等函数会直接计算AIC值。前者公式是标准公式，后者是现在提供的公式，结果不相同。但AIC具体值不是最重要的，其差值才是我们需要考察的点，所以只需要保证同一个模型迭代中公式一致就行(BIC也一样)。</p>
+</div>
+</div>
 </section>
 </section>
 <section id="模型选择" class="level3" data-number="1.2.2">
 <h3 data-number="1.2.2" class="anchored" data-anchor-id="模型选择"><span class="header-section-number">1.2.2</span> 模型选择</h3>
+<p><a href="#fig-card" class="quarto-xref">图&nbsp;2</a>展示1970-1979年间洛杉矶温度、污染和心血管死亡率的变化。展现出强烈的对于冬夏季节的变化，且死亡率整体为下降趋势。</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-card" class="quarto-figure quarto-figure-center quarto-float anchored">
@@ -512,6 +526,106 @@ R^2=\frac{\operatorname{SSE}_0-\operatorname{SSE}}{\operatorname{SSE}_0}\\
 </figure>
 </div>
 </div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-cardcor" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cardcor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter_2_files/figure-html/fig-cardcor-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cardcor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;3: 散点图矩阵(左下方是相关系数)
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>我们可以假设<span class="math inline">\(4\)</span>种模型，其中<span class="math inline">\(M_t\)</span>表示心血管死亡率，<span class="math inline">\(T_t\)</span>表示温度，<span class="math inline">\(P_t\)</span>表示颗粒水平，<span class="math inline">\(T.\)</span>是<span class="math inline">\(T_t\)</span>的平均值<span class="math inline">\(74.26\)</span>，用于调整温度，避免共线性问题。模型如下：</p>
+<p><span id="eq-2_18"><span class="math display">\[
+M_t=\beta_0+\beta_1t+w_t
+\tag{1}\]</span></span> <span id="eq-2_19"><span class="math display">\[
+M_t=\beta_0+\beta_1t+\beta_2(T_t-T.)+w_t
+\tag{2}\]</span></span> <span id="eq-2_20"><span class="math display">\[
+M_t=\beta_0+\beta_1t+\beta_2(T_t-T.)+\beta_3(T_t-T.)^2+w_t
+\tag{3}\]</span></span> <span id="eq-2_21"><span class="math display">\[
+M_t=\beta_0+\beta_1t+\beta_2(T_t-T.)+\beta_3(T_t-T.)^2+\beta_4P_t+w_t
+\tag{4}\]</span></span></p>
+<p><a href="#eq-2_18" class="quarto-xref">式&nbsp;1</a>是简单的趋势模型；<a href="#eq-2_19" class="quarto-xref">式&nbsp;2</a>额外添加了线性的温度变量；<a href="#eq-2_20" class="quarto-xref">式&nbsp;3</a>温度变量是二次的；<a href="#eq-2_21" class="quarto-xref">式&nbsp;4</a>还添加了污染变量。</p>
+<div id="tbl-mort" class="quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mort-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+表&nbsp;2: 模型汇总
+</figcaption>
+<div aria-describedby="tbl-mort-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">模型</th>
+<th style="text-align: center;"><span class="math inline">\(k\)</span>(df1)</th>
+<th style="text-align: center;">误差平方和(SSE)</th>
+<th style="text-align: center;">自由度(df2)</th>
+<th style="text-align: center;">均方和(MSE)</th>
+<th style="text-align: center;">可决系数(<span class="math inline">\(R^2\)</span>)</th>
+<th style="text-align: center;">AIC</th>
+<th style="text-align: center;">BIC</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><a href="#eq-2_18" class="quarto-xref">式&nbsp;1</a></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">40020</td>
+<td style="text-align: center;">506</td>
+<td style="text-align: center;">10666.9, 79.1</td>
+<td style="text-align: center;">0.21</td>
+<td style="text-align: center;">5.38</td>
+<td style="text-align: center;">5.40</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><a href="#eq-2_19" class="quarto-xref">式&nbsp;2</a></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">31413</td>
+<td style="text-align: center;">505</td>
+<td style="text-align: center;">9636.7, 62.2</td>
+<td style="text-align: center;">0.38</td>
+<td style="text-align: center;">5.14</td>
+<td style="text-align: center;">5.17</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><a href="#eq-2_20" class="quarto-xref">式&nbsp;3</a></td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">27985</td>
+<td style="text-align: center;">504</td>
+<td style="text-align: center;">7567.4, 55.5</td>
+<td style="text-align: center;">0.45</td>
+<td style="text-align: center;">5.03</td>
+<td style="text-align: center;">5.07</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><a href="#eq-2_21" class="quarto-xref">式&nbsp;4</a></td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">20508</td>
+<td style="text-align: center;">503</td>
+<td style="text-align: center;">7544.6, 40.8</td>
+<td style="text-align: center;">0.6</td>
+<td style="text-align: center;">4.72</td>
+<td style="text-align: center;">4.77</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
 </div>
 
 

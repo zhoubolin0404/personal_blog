@@ -17,6 +17,7 @@ library(webexercises)
 library(astsa)
 library(xts)
 library(tidyverse)
+options(scipen=200)
 ```
 
 主要参考书籍为Shumway和Stoffer[-@Shumway_2017]的Time Series Analysis and Its Applications: With R Examples。
@@ -225,7 +226,13 @@ $$
 
 BIC惩罚项的值远大于AIC，适合在大样本中选出较小的模型，防止过拟合。
 
+:::{.callout-tip}
+这里的AIC，BIC都不是标准模式，是在正态分布线性回归中的一种等效形式。普通线性回归常用`AIC()`函数提取AIC值，时间序列分析中在`ar()`等函数会直接计算AIC值。前者公式是标准公式，后者是现在提供的公式，结果不相同。但AIC具体值不是最重要的，其差值才是我们需要考察的点，所以只需要保证同一个模型迭代中公式一致就行(BIC也一样)。
+:::
+
 ### 模型选择
+
+[@fig-card]展示1970-1979年间洛杉矶温度、污染和心血管死亡率的变化。展现出强烈的对于冬夏季节的变化，且死亡率整体为下降趋势。
 
 ```{r, echo = FALSE, warning = FALSE, message=FALSE}
 #| label: fig-card
@@ -235,3 +242,58 @@ tsplot(cmort, main="Cardiovascular Mortality", col=6, type="o", pch=19, ylab="")
 tsplot(tempr, main="Temperature", col=4, type="o", pch=19, ylab="")
 tsplot(part, main="Particulates", col=2, type="o", pch=19, ylab="")
 ```
+
+
+
+```{r, echo = FALSE, warning = FALSE, message=FALSE}
+#| label: fig-cardcor
+#| fig-cap: 散点图矩阵(左下方是相关系数)
+panel.cor <- function(x, y, ...){
+usr <- par("usr")
+par(usr = c(0, 1, 0, 1))
+r <- round(cor(x, y), 2)
+text(0.5, 0.5, r, cex = 1.75)
+}
+pairs(cbind(Mortality=cmort, Temperature=tempr, Particulates=part), col=4, lower.panel=panel.cor)
+```
+
+我们可以假设$4$种模型，其中$M_t$表示心血管死亡率，$T_t$表示温度，$P_t$表示颗粒水平，$T.$是$T_t$的平均值$74.26$，用于调整温度，避免共线性问题。模型如下：
+
+$$
+M_t=\beta_0+\beta_1t+w_t
+$$ {#eq-2_18}
+$$
+M_t=\beta_0+\beta_1t+\beta_2(T_t-T.)+w_t
+$$ {#eq-2_19}
+$$
+M_t=\beta_0+\beta_1t+\beta_2(T_t-T.)+\beta_3(T_t-T.)^2+w_t
+$$ {#eq-2_20}
+$$
+M_t=\beta_0+\beta_1t+\beta_2(T_t-T.)+\beta_3(T_t-T.)^2+\beta_4P_t+w_t
+$$ {#eq-2_21}
+
+[@eq-2_18]是简单的趋势模型；[@eq-2_19]额外添加了线性的温度变量；[@eq-2_20]温度变量是二次的；[@eq-2_21]还添加了污染变量。
+
+```{r,echo=FALSE}
+temp  = tempr - mean(tempr)
+temp2 = temp ^ 2
+trend = time(cmort)
+fit1 = lm(cmort ~ trend)
+fit2 = lm(cmort ~ cbind(trend, temp))
+fit3 = lm(cmort ~ cbind(trend, temp, temp2))
+fit4 = lm(cmort ~ cbind(trend, temp, temp2, part))
+s1=summary(aov(fit1))
+s2=summary(aov(fit2))
+s3=summary(aov(fit3))
+s4=summary(aov(fit4))
+num = length(cmort)
+```
+
+|模型|$k$(df1)|误差平方和(SSE)|自由度(df2)|均方和(MSE)|可决系数($R^2$)|AIC|BIC|
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+|[@eq-2_18]|`r s1[[1]]$Df[1]`|`r s1[[1]]$"Sum Sq"[2] %>% round(0)`|`r s1[[1]]$Df[2]`|`r s1[[1]]$"Mean Sq" %>% round(1)`|`r summary(fit1)$r.squared %>% round(2)`|`r (AIC(fit1)/num-log(2*pi)) %>% sprintf("%.2f", .)`|`r (BIC(fit1)/num-log(2*pi)) %>% sprintf("%.2f", .)`|
+|[@eq-2_19]|`r s2[[1]]$Df[1]`|`r s2[[1]]$"Sum Sq"[2] %>% round(0)`|`r s2[[1]]$Df[2]`|`r s2[[1]]$"Mean Sq" %>% round(1)`|`r summary(fit2)$r.squared %>% round(2)`|`r (AIC(fit2)/num-log(2*pi)) %>% sprintf("%.2f", .)`|`r (BIC(fit2)/num-log(2*pi)) %>% sprintf("%.2f", .)`|
+|[@eq-2_20]|`r s3[[1]]$Df[1]`|`r s3[[1]]$"Sum Sq"[2] %>% round(0)`|`r s3[[1]]$Df[2]`|`r s3[[1]]$"Mean Sq" %>% round(1)`|`r summary(fit3)$r.squared %>% round(2)`|`r (AIC(fit3)/num-log(2*pi)) %>% sprintf("%.2f", .)`|`r (BIC(fit3)/num-log(2*pi)) %>% sprintf("%.2f", .)`|
+|[@eq-2_21]|`r s4[[1]]$Df[1]`|`r s4[[1]]$"Sum Sq"[2] %>% round(0)`|`r s4[[1]]$Df[2]`|`r s4[[1]]$"Mean Sq" %>% round(1)`|`r summary(fit4)$r.squared %>% round(2)`|`r (AIC(fit4)/num-log(2*pi)) %>% sprintf("%.2f", .)`|`r (BIC(fit4)/num-log(2*pi)) %>% sprintf("%.2f", .)`|
+
+: 模型汇总 {#tbl-mort}
