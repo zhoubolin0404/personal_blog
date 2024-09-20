@@ -19,7 +19,7 @@ library(webexercises)
 library(astsa)
 library(xts)
 library(tidyverse)
-options(scipen=200)
+options(scipen=5)
 ```
 
 主要参考书籍为Shumway和Stoffer[-@Shumway_2017]的Time Series Analysis and Its Applications: With R Examples。
@@ -51,6 +51,10 @@ $z_{t}$一般就是时间。
 :::
 
 ## 简单线性回归
+
+:::{.callout-tip}
+[@sec-lagreg]之前的内容就是将时间、时间的平方等变量作为自变量添加到模型中的线性回归，如果已经熟悉线性回归基础知识，可以直接跳到[@sec-lagreg]。
+:::
 
 [@fig-chicken]展示了2001年8月到2016年7月美国某码头鸡肉每月价格，直线是线性回归的拟合。
 
@@ -186,7 +190,7 @@ R^2=\frac{\operatorname{SSE}_0-\operatorname{SSE}}{\operatorname{SSE}_0}\\
 \operatorname{SSE}_0=\sum_{t=1}^n(x_t-\bar x)^2
 $$
 
-$R^2$是确定系数(coefficient of determination)。
+$R^2$是决定系数(coefficient of determination)。
 
 通过上述$F$检验来选择变量的纳入或删除，这就是逐步多元回归(stepwise multiple regression)。
 
@@ -208,7 +212,7 @@ $$
 
 $$
 \operatorname{AIC}=\log\hat\sigma_k^2+\frac{n+2k}{n}
-$$
+$${#eq-aicsp}
 
 最常用。
 
@@ -229,7 +233,29 @@ $$
 BIC惩罚项的值远大于AIC，适合在大样本中选出较小的模型，防止过拟合。
 
 :::{.callout-tip}
-这里的AIC，BIC都不是标准模式，是在正态分布线性回归中的一种等效形式。普通线性回归常用`AIC()`函数提取AIC值，时间序列分析中在`ar()`等函数会直接计算AIC值。前者公式是标准公式，后者是现在提供的公式，结果不相同。但AIC具体值不是最重要的，其差值才是我们需要考察的点，所以只需要保证同一个模型迭代中公式一致就行(BIC也一样)。
+这里的AIC，BIC都不是标准模式，是在正态分布线性回归中的一种等效形式。`R`中`AIC()`函数和`BIC()`函数使用的是通用形式。
+
+以AIC为例，通用形式为：
+
+$$
+\operatorname{AIC}(k)=2k-2\log(L)
+$${#eq-aic1}
+
+其中$k$是参数个数，$L$是似然函数最大值，这是`AIC()`函数得到的结果。在某些模型中可转换为：
+
+$$
+\operatorname{AIC}(k)=2k+n\log(\hat\sigma_k^2)
+$${#eq-aic2}
+
+其中其中$n$是样本量，$\hat\sigma_k^2$是均方误差估计值。[@eq-aic1]和[@eq-aic2]在成立时是等价的，[@eq-aic2]可通过下列公式转换为[@eq-aicsp]。
+
+$$
+\operatorname{AIC}_1=\frac{\operatorname{AIC}_2}{n}-\log(2\pi)
+$$
+
+其中$\operatorname{AIC}_1$是[@eq-aicsp]的值，$\operatorname{AIC}_2$是[@eq-aic1]的值。BIC也可以通过相似公式转换。
+
+AIC和BIC的具体值并不是关注的重点，更需要关注的是一组模型中，同一算法下值的变化，值越小越好。
 :::
 
 ### 模型选择
@@ -291,7 +317,7 @@ s4=summary(aov(fit4))
 num = length(cmort)
 ```
 
-|模型|$k$(df1)|误差平方和(SSE)|自由度(df2)|均方和(MSE)|可决系数($R^2$)|AIC|BIC|
+|模型|$k$|误差平方和(SSE)|自由度(df)|均方和(MSE)|可决系数($R^2$)|AIC|BIC|
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 |[@eq-2_18]|`r s1[[1]]$Df[1]`|`r s1[[1]]$"Sum Sq"[2] %>% round(0)`|`r s1[[1]]$Df[2]`|`r s1[[1]]$"Mean Sq"[2] %>% round(1)`|`r summary(fit1)$r.squared %>% round(2)`|`r (AIC(fit1)/num-log(2*pi)) %>% sprintf("%.2f", .)`|`r (BIC(fit1)/num-log(2*pi)) %>% sprintf("%.2f", .)`|
 |[@eq-2_19]|`r s2[[1]]$Df[1]`|`r s2[[1]]$"Sum Sq"[2] %>% round(0)`|`r s2[[1]]$Df[2]`|`r s2[[1]]$"Mean Sq"[2] %>% round(1)`|`r summary(fit2)$r.squared %>% round(2)`|`r (AIC(fit2)/num-log(2*pi)) %>% sprintf("%.2f", .)`|`r (BIC(fit2)/num-log(2*pi)) %>% sprintf("%.2f", .)`|
@@ -299,3 +325,67 @@ num = length(cmort)
 |[@eq-2_21]|`r s4[[1]]$Df[1]`|`r s4[[1]]$"Sum Sq"[2] %>% round(0)`|`r s4[[1]]$Df[2]`|`r s4[[1]]$"Mean Sq"[2] %>% round(1)`|`r summary(fit4)$r.squared %>% round(2)`|`r (AIC(fit4)/num-log(2*pi)) %>% sprintf("%.2f", .)`|`r (BIC(fit4)/num-log(2*pi)) %>% sprintf("%.2f", .)`|
 
 : 模型汇总 {#tbl-mort}
+
+对比[@eq-2_18]和[@eq-2_21]，检验$\operatorname{H}_0:\beta_2=\beta_3=\beta_4=0$。
+
+$$
+F_{3,503}=\frac{(40020-20508)/3}{20508/503}\approx160>F_{3,503}(0.001)
+$$
+
+拒绝$\operatorname{H}_0$。
+
+```{r}
+temp  = tempr - mean(tempr)
+temp2 = temp ^ 2
+trend = time(cmort)
+fit = lm(cmort ~ trend + temp + temp2 + part, na.action = NULL) # na.action用来保存残差和拟合值的时间属性
+summary(fit)
+```
+
+进一步分析就需要检查残差$\hat w_t=M_t-\hat M_t$的自相关，这个在第三章会进行讲解。
+
+### 滞后回归(Lagged Regression){#sec-lagreg}
+
+```{r,results='hide'}
+#| label: fig-soirec_ccf
+#| fig-cap: SOI序列和新鱼数量序列的CCF
+ccf2(soi, rec, main="SOI vs 新鱼数量")
+```
+
+[@fig-soirec_ccf]是第一章中提到的SOI和新鱼数量数据，当时是认为时间$t-6$测量的SOI和时间$t$的新鱼数量相关，现在进行检验(虽然这不是线性的，但我们先用线性进行检验)。
+
+模型如下：
+
+$$
+R_t=\beta_0+\beta_1S_{t-6}+w_t
+$$
+
+其中$R_t$是时间$t$时的新鱼数量，$S_{t-6}$是时间$t-6$时的SOI，假设$w_t$是白噪声。
+
+```{r}
+# 创建对齐的数据框
+fish = ts.intersect(rec, soiL6 = stats::lag(soi, -6), dframe = TRUE)
+summary(fit <- lm(rec ~ soiL6, data = fish, na.action = NULL))
+```
+
+也可以借助`dynlm`包来完成。
+
+```{r, warning=FALSE}
+library(dynlm)
+summary(fit2 <- dynlm(rec ~ L(soi, 6)))
+```
+
+`fit2`还保留了时间信息。
+
+
+
+```{r, results='hide'}
+#| label: fig-soiresid
+#| fig-cap: 残差情况
+par(mfrow=2:1)
+tsplot(resid(fit))
+acf1(resid(fit))
+```
+
+可见残差不是白噪声，之后需要进一步分析。
+

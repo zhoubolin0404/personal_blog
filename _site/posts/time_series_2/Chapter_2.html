@@ -239,6 +239,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#信息准则" id="toc-信息准则" class="nav-link" data-scroll-target="#信息准则"><span class="header-section-number">1.2.1</span> 信息准则</a></li>
   <li><a href="#模型选择" id="toc-模型选择" class="nav-link" data-scroll-target="#模型选择"><span class="header-section-number">1.2.2</span> 模型选择</a></li>
+  <li><a href="#sec-lagreg" id="toc-sec-lagreg" class="nav-link" data-scroll-target="#sec-lagreg"><span class="header-section-number">1.2.3</span> 滞后回归(Lagged Regression)</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -291,6 +292,19 @@ x_t=\beta_0+\beta_1z_{t1}+\beta_2z_{t2}+\cdots+\beta_qz_{tq}+w_t
 </div>
 <section id="简单线性回归" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="简单线性回归"><span class="header-section-number">1.1</span> 简单线性回归</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+提示
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><a href="#sec-lagreg" class="quarto-xref">小节&nbsp;1.2.3</a>之前的内容就是将时间、时间的平方等变量作为自变量添加到模型中的线性回归，如果已经熟悉线性回归基础知识，可以直接跳到<a href="#sec-lagreg" class="quarto-xref">小节&nbsp;1.2.3</a>。</p>
+</div>
+</div>
 <p><a href="#fig-chicken" class="quarto-xref">图&nbsp;1</a>展示了2001年8月到2016年7月美国某码头鸡肉每月价格，直线是线性回归的拟合。</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -337,15 +351,15 @@ Residuals:
 -8.7411 -3.4730  0.8251  2.7738 11.5804 
 
 Coefficients:
-                 Estimate  Std. Error t value            Pr(&gt;|t|)    
-(Intercept)   -7131.02247   162.41335  -43.91 &lt;0.0000000000000002 ***
-time(chicken)     3.59211     0.08084   44.43 &lt;0.0000000000000002 ***
+                 Estimate  Std. Error t value Pr(&gt;|t|)    
+(Intercept)   -7131.02247   162.41335  -43.91   &lt;2e-16 ***
+time(chicken)     3.59211     0.08084   44.43   &lt;2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 4.696 on 178 degrees of freedom
 Multiple R-squared:  0.9173,    Adjusted R-squared:  0.9168 
-F-statistic:  1974 on 1 and 178 DF,  p-value: &lt; 0.00000000000000022</code></pre>
+F-statistic:  1974 on 1 and 178 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 <p>结果表明：斜率系数<span class="math inline">\(\hat\beta_1=3.59\)</span>(标准误差为<span class="math inline">\(0.08\)</span>)，<span class="math inline">\(p&lt;0.001\)</span>，结果显著。</p>
@@ -464,7 +478,7 @@ F=\frac{(\operatorname{SSE}_r-\operatorname{SSE}/(q-r))}{\operatorname{SSE}/(n-q
 R^2=\frac{\operatorname{SSE}_0-\operatorname{SSE}}{\operatorname{SSE}_0}\\
 \operatorname{SSE}_0=\sum_{t=1}^n(x_t-\bar x)^2
 \]</span></p>
-<p><span class="math inline">\(R^2\)</span>是确定系数(coefficient of determination)。</p>
+<p><span class="math inline">\(R^2\)</span>是决定系数(coefficient of determination)。</p>
 <p>通过上述<span class="math inline">\(F\)</span>检验来选择变量的纳入或删除，这就是逐步多元回归(stepwise multiple regression)。</p>
 <p>下面介绍通过模型优度来进行模型选择的方法。</p>
 <section id="信息准则" class="level3" data-number="1.2.1">
@@ -477,9 +491,9 @@ R^2=\frac{\operatorname{SSE}_0-\operatorname{SSE}}{\operatorname{SSE}_0}\\
 <p>信息准则的基本思路是在最小化<span class="math inline">\(\hat\sigma_k^2\)</span>的同时，添加一个随<span class="math inline">\(k\)</span>的增加而单调增加的惩罚项，来选择合适的参数数量。</p>
 <section id="akaike信息准则akaikes-information-criterionaic" class="level4" data-number="1.2.1.1">
 <h4 data-number="1.2.1.1" class="anchored" data-anchor-id="akaike信息准则akaikes-information-criterionaic"><span class="header-section-number">1.2.1.1</span> Akaike信息准则(Akaike’s Information Criterion，AIC)</h4>
-<p><span class="math display">\[
+<p><span id="eq-aicsp"><span class="math display">\[
 \operatorname{AIC}=\log\hat\sigma_k^2+\frac{n+2k}{n}
-\]</span></p>
+\tag{1}\]</span></span></p>
 <p>最常用。</p>
 </section>
 <section id="aic偏差修正aicc" class="level4" data-number="1.2.1.2">
@@ -505,7 +519,21 @@ R^2=\frac{\operatorname{SSE}_0-\operatorname{SSE}}{\operatorname{SSE}_0}\\
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>这里的AIC，BIC都不是标准模式，是在正态分布线性回归中的一种等效形式。普通线性回归常用<code>AIC()</code>函数提取AIC值，时间序列分析中在<code>ar()</code>等函数会直接计算AIC值。前者公式是标准公式，后者是现在提供的公式，结果不相同。但AIC具体值不是最重要的，其差值才是我们需要考察的点，所以只需要保证同一个模型迭代中公式一致就行(BIC也一样)。</p>
+<p>这里的AIC，BIC都不是标准模式，是在正态分布线性回归中的一种等效形式。<code>R</code>中<code>AIC()</code>函数和<code>BIC()</code>函数使用的是通用形式。</p>
+<p>以AIC为例，通用形式为：</p>
+<p><span id="eq-aic1"><span class="math display">\[
+\operatorname{AIC}(k)=2k-2\log(L)
+\tag{2}\]</span></span></p>
+<p>其中<span class="math inline">\(k\)</span>是参数个数，<span class="math inline">\(L\)</span>是似然函数最大值，这是<code>AIC()</code>函数得到的结果。在某些模型中可转换为：</p>
+<p><span id="eq-aic2"><span class="math display">\[
+\operatorname{AIC}(k)=2k+n\log(\hat\sigma_k^2)
+\tag{3}\]</span></span></p>
+<p>其中其中<span class="math inline">\(n\)</span>是样本量，<span class="math inline">\(\hat\sigma_k^2\)</span>是均方误差估计值。<a href="#eq-aic1" class="quarto-xref">式&nbsp;2</a>和<a href="#eq-aic2" class="quarto-xref">式&nbsp;3</a>在成立时是等价的，<a href="#eq-aic2" class="quarto-xref">式&nbsp;3</a>可通过下列公式转换为<a href="#eq-aicsp" class="quarto-xref">式&nbsp;1</a>。</p>
+<p><span class="math display">\[
+\operatorname{AIC}_1=\frac{\operatorname{AIC}_2}{n}-\log(2\pi)
+\]</span></p>
+<p>其中<span class="math inline">\(\operatorname{AIC}_1\)</span>是<a href="#eq-aicsp" class="quarto-xref">式&nbsp;1</a>的值，<span class="math inline">\(\operatorname{AIC}_2\)</span>是<a href="#eq-aic1" class="quarto-xref">式&nbsp;2</a>的值。BIC也可以通过相似公式转换。</p>
+<p>AIC和BIC的具体值并不是关注的重点，更需要关注的是一组模型中，同一算法下值的变化，值越小越好。</p>
 </div>
 </div>
 </section>
@@ -544,14 +572,14 @@ R^2=\frac{\operatorname{SSE}_0-\operatorname{SSE}}{\operatorname{SSE}_0}\\
 <p>我们可以假设<span class="math inline">\(4\)</span>种模型，其中<span class="math inline">\(M_t\)</span>表示心血管死亡率，<span class="math inline">\(T_t\)</span>表示温度，<span class="math inline">\(P_t\)</span>表示颗粒水平，<span class="math inline">\(T.\)</span>是<span class="math inline">\(T_t\)</span>的平均值<span class="math inline">\(74.26\)</span>，用于调整温度，避免共线性问题。模型如下：</p>
 <p><span id="eq-2_18"><span class="math display">\[
 M_t=\beta_0+\beta_1t+w_t
-\tag{1}\]</span></span> <span id="eq-2_19"><span class="math display">\[
+\tag{4}\]</span></span> <span id="eq-2_19"><span class="math display">\[
 M_t=\beta_0+\beta_1t+\beta_2(T_t-T.)+w_t
-\tag{2}\]</span></span> <span id="eq-2_20"><span class="math display">\[
+\tag{5}\]</span></span> <span id="eq-2_20"><span class="math display">\[
 M_t=\beta_0+\beta_1t+\beta_2(T_t-T.)+\beta_3(T_t-T.)^2+w_t
-\tag{3}\]</span></span> <span id="eq-2_21"><span class="math display">\[
+\tag{6}\]</span></span> <span id="eq-2_21"><span class="math display">\[
 M_t=\beta_0+\beta_1t+\beta_2(T_t-T.)+\beta_3(T_t-T.)^2+\beta_4P_t+w_t
-\tag{4}\]</span></span></p>
-<p><a href="#eq-2_18" class="quarto-xref">式&nbsp;1</a>是简单的趋势模型；<a href="#eq-2_19" class="quarto-xref">式&nbsp;2</a>额外添加了线性的温度变量；<a href="#eq-2_20" class="quarto-xref">式&nbsp;3</a>温度变量是二次的；<a href="#eq-2_21" class="quarto-xref">式&nbsp;4</a>还添加了污染变量。</p>
+\tag{7}\]</span></span></p>
+<p><a href="#eq-2_18" class="quarto-xref">式&nbsp;4</a>是简单的趋势模型；<a href="#eq-2_19" class="quarto-xref">式&nbsp;5</a>额外添加了线性的温度变量；<a href="#eq-2_20" class="quarto-xref">式&nbsp;6</a>温度变量是二次的；<a href="#eq-2_21" class="quarto-xref">式&nbsp;7</a>还添加了污染变量。</p>
 <div id="tbl-mort" class="quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mort-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -572,9 +600,9 @@ M_t=\beta_0+\beta_1t+\beta_2(T_t-T.)+\beta_3(T_t-T.)^2+\beta_4P_t+w_t
 <thead>
 <tr class="header">
 <th style="text-align: center;">模型</th>
-<th style="text-align: center;"><span class="math inline">\(k\)</span>(df1)</th>
+<th style="text-align: center;"><span class="math inline">\(k\)</span></th>
 <th style="text-align: center;">误差平方和(SSE)</th>
-<th style="text-align: center;">自由度(df2)</th>
+<th style="text-align: center;">自由度(df)</th>
 <th style="text-align: center;">均方和(MSE)</th>
 <th style="text-align: center;">可决系数(<span class="math inline">\(R^2\)</span>)</th>
 <th style="text-align: center;">AIC</th>
@@ -583,7 +611,7 @@ M_t=\beta_0+\beta_1t+\beta_2(T_t-T.)+\beta_3(T_t-T.)^2+\beta_4P_t+w_t
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;"><a href="#eq-2_18" class="quarto-xref">式&nbsp;1</a></td>
+<td style="text-align: center;"><a href="#eq-2_18" class="quarto-xref">式&nbsp;4</a></td>
 <td style="text-align: center;">1</td>
 <td style="text-align: center;">40020</td>
 <td style="text-align: center;">506</td>
@@ -593,7 +621,7 @@ M_t=\beta_0+\beta_1t+\beta_2(T_t-T.)+\beta_3(T_t-T.)^2+\beta_4P_t+w_t
 <td style="text-align: center;">5.40</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;"><a href="#eq-2_19" class="quarto-xref">式&nbsp;2</a></td>
+<td style="text-align: center;"><a href="#eq-2_19" class="quarto-xref">式&nbsp;5</a></td>
 <td style="text-align: center;">2</td>
 <td style="text-align: center;">31413</td>
 <td style="text-align: center;">505</td>
@@ -603,7 +631,7 @@ M_t=\beta_0+\beta_1t+\beta_2(T_t-T.)+\beta_3(T_t-T.)^2+\beta_4P_t+w_t
 <td style="text-align: center;">5.17</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;"><a href="#eq-2_20" class="quarto-xref">式&nbsp;3</a></td>
+<td style="text-align: center;"><a href="#eq-2_20" class="quarto-xref">式&nbsp;6</a></td>
 <td style="text-align: center;">3</td>
 <td style="text-align: center;">27985</td>
 <td style="text-align: center;">504</td>
@@ -613,7 +641,7 @@ M_t=\beta_0+\beta_1t+\beta_2(T_t-T.)+\beta_3(T_t-T.)^2+\beta_4P_t+w_t
 <td style="text-align: center;">5.07</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;"><a href="#eq-2_21" class="quarto-xref">式&nbsp;4</a></td>
+<td style="text-align: center;"><a href="#eq-2_21" class="quarto-xref">式&nbsp;7</a></td>
 <td style="text-align: center;">4</td>
 <td style="text-align: center;">20508</td>
 <td style="text-align: center;">503</td>
@@ -627,6 +655,138 @@ M_t=\beta_0+\beta_1t+\beta_2(T_t-T.)+\beta_3(T_t-T.)^2+\beta_4P_t+w_t
 </div>
 </figure>
 </div>
+<p>对比<a href="#eq-2_18" class="quarto-xref">式&nbsp;4</a>和<a href="#eq-2_21" class="quarto-xref">式&nbsp;7</a>，检验<span class="math inline">\(\operatorname{H}_0:\beta_2=\beta_3=\beta_4=0\)</span>。</p>
+<p><span class="math display">\[
+F_{3,503}=\frac{(40020-20508)/3}{20508/503}\approx160&gt;F_{3,503}(0.001)
+\]</span></p>
+<p>拒绝<span class="math inline">\(\operatorname{H}_0\)</span>。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>temp  <span class="ot">=</span> tempr <span class="sc">-</span> <span class="fu">mean</span>(tempr)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>temp2 <span class="ot">=</span> temp <span class="sc">^</span> <span class="dv">2</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>trend <span class="ot">=</span> <span class="fu">time</span>(cmort)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">=</span> <span class="fu">lm</span>(cmort <span class="sc">~</span> trend <span class="sc">+</span> temp <span class="sc">+</span> temp2 <span class="sc">+</span> part, <span class="at">na.action =</span> <span class="cn">NULL</span>) <span class="co"># na.action用来保存残差和拟合值的时间属性</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = cmort ~ trend + temp + temp2 + part, na.action = NULL)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-19.0760  -4.2153  -0.4878   3.7435  29.2448 
+
+Coefficients:
+               Estimate  Std. Error t value Pr(&gt;|t|)    
+(Intercept) 2831.490246  199.556899   14.19  &lt; 2e-16 ***
+trend         -1.395901    0.101009  -13.82  &lt; 2e-16 ***
+temp          -0.472469    0.031622  -14.94  &lt; 2e-16 ***
+temp2          0.022588    0.002827    7.99 9.26e-15 ***
+part           0.255350    0.018857   13.54  &lt; 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 6.385 on 503 degrees of freedom
+Multiple R-squared:  0.5954,    Adjusted R-squared:  0.5922 
+F-statistic:   185 on 4 and 503 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>进一步分析就需要检查残差<span class="math inline">\(\hat w_t=M_t-\hat M_t\)</span>的自相关，这个在第三章会进行讲解。</p>
+</section>
+<section id="sec-lagreg" class="level3" data-number="1.2.3">
+<h3 data-number="1.2.3" class="anchored" data-anchor-id="sec-lagreg"><span class="header-section-number">1.2.3</span> 滞后回归(Lagged Regression)</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ccf2</span>(soi, rec, <span class="at">main=</span><span class="st">"SOI vs 新鱼数量"</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-soirec_ccf" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-soirec_ccf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter_2_files/figure-html/fig-soirec_ccf-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-soirec_ccf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;4: SOI序列和新鱼数量序列的CCF
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><a href="#fig-soirec_ccf" class="quarto-xref">图&nbsp;4</a>是第一章中提到的SOI和新鱼数量数据，当时是认为时间<span class="math inline">\(t-6\)</span>测量的SOI和时间<span class="math inline">\(t\)</span>的新鱼数量相关，现在进行检验(虽然这不是线性的，但我们先用线性进行检验)。</p>
+<p>模型如下：</p>
+<p><span class="math display">\[
+R_t=\beta_0+\beta_1S_{t-6}+w_t
+\]</span></p>
+<p>其中<span class="math inline">\(R_t\)</span>是时间<span class="math inline">\(t\)</span>时的新鱼数量，<span class="math inline">\(S_{t-6}\)</span>是时间<span class="math inline">\(t-6\)</span>时的SOI，假设<span class="math inline">\(w_t\)</span>是白噪声。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 创建对齐的数据框</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>fish <span class="ot">=</span> <span class="fu">ts.intersect</span>(rec, <span class="at">soiL6 =</span> stats<span class="sc">::</span><span class="fu">lag</span>(soi, <span class="sc">-</span><span class="dv">6</span>), <span class="at">dframe =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(rec <span class="sc">~</span> soiL6, <span class="at">data =</span> fish, <span class="at">na.action =</span> <span class="cn">NULL</span>))</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = rec ~ soiL6, data = fish, na.action = NULL)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-65.187 -18.234   0.354  16.580  55.790 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   65.790      1.088   60.47   &lt;2e-16 ***
+soiL6        -44.283      2.781  -15.92   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 22.5 on 445 degrees of freedom
+Multiple R-squared:  0.3629,    Adjusted R-squared:  0.3615 
+F-statistic: 253.5 on 1 and 445 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>也可以借助<code>dynlm</code>包来完成。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dynlm)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit2 <span class="ot">&lt;-</span> <span class="fu">dynlm</span>(rec <span class="sc">~</span> <span class="fu">L</span>(soi, <span class="dv">6</span>)))</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Time series regression with "ts" data:
+Start = 1950(7), End = 1987(9)
+
+Call:
+dynlm(formula = rec ~ L(soi, 6))
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-65.187 -18.234   0.354  16.580  55.790 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   65.790      1.088   60.47   &lt;2e-16 ***
+L(soi, 6)    -44.283      2.781  -15.92   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 22.5 on 445 degrees of freedom
+Multiple R-squared:  0.3629,    Adjusted R-squared:  0.3615 
+F-statistic: 253.5 on 1 and 445 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p><code>fit2</code>还保留了时间信息。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="dv">2</span><span class="sc">:</span><span class="dv">1</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(<span class="fu">resid</span>(fit))</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">acf1</span>(<span class="fu">resid</span>(fit))</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-soiresid" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-soiresid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter_2_files/figure-html/fig-soiresid-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-soiresid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;5: 残差情况
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>可见残差不是白噪声，之后需要进一步分析。</p>
 
 
 
