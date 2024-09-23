@@ -418,5 +418,26 @@
     "title": "时间序列分析：第一章习题答案",
     "section": "1.16",
     "text": "1.16\n\n\n\n均值函数\n\\[\n\\begin{aligned}\n\\operatorname{E}(x_t)=\\int_0^1\\sin(2\\pi ut)\\mathrm{d}u=-\\frac{1}{2\\pi t}\\cos(2\\pi ut)\\Bigg|_0^1=-\\frac{1}{2\\pi t}[\\cos(2\\pi t)-1]=0\n\\end{aligned}\n\\]\n自协方差函数\n\\[\n\\begin{aligned}\n\\gamma(h)&=\\int_0^1\\sin[2\\pi u(t+h)]\\sin[2\\pi ut]\\mathrm{d}u\\\\\n&=\\frac{1}{2}\\int_0^1\\cos(2\\pi uh)\\mathrm{d}u-\\frac{1}{2}\\int_0^1\\cos(2\\pi u(2t + h))\\mathrm{d}u\n\\end{aligned}\n\\]\n当\\(h=0\\)时，\\(\\gamma(h)=\\frac{1}{2}\\)\n当\\(h\\neq0\\)时\n\\[\n\\gamma(h)=\\frac{1}{2}\\left[\\frac{\\sin(2\\pi h)}{2\\pi h}-\\frac{\\sin(2\\pi (2t+h))}{2\\pi (2t+h)}\\right]=0\n\\]\n综上，为弱平稳。\n\n\n\n\\(t=1\\)、\\(t=2\\)、\\(t=3\\)代入，\\(x_1\\)和\\(x_2\\)，\\(x_2\\)和\\(x_3\\)关系不一样，所以非严平稳。"
+  },
+  {
+    "objectID": "posts/time_series_2/Chapter_2.html#去趋势detrended和差分difference",
+    "href": "posts/time_series_2/Chapter_2.html#去趋势detrended和差分difference",
+    "title": "时间序列分析：第二章",
+    "section": "2.1 去趋势(Detrended)和差分(Difference)",
+    "text": "2.1 去趋势(Detrended)和差分(Difference)\n图 1中模型形式为：\n\\[\nx_t=\\mu_t+y_t\n\\tag{8}\\]\n去除线性趋势：\n\\[\n\\mu_t=\\beta_0+\\beta_1t\n\\tag{9}\\]\n最小二乘法估计得到：\n\\[\n\\hat\\mu_t=-3.59t+7131\n\\]\n得到：\n\\[\n\\hat y_t=x_t-3.59t+7131\n\\]\n\npar(mfrow = 2:1)\ntsplot(detrend(chicken), main = \"去趋势\")\ntsplot(diff(chicken), main = \"差分\")\n\n\n\n\n\n\n\n图 6: 去趋势(上)和差分(下)后的鸡肉价格序列\n\n\n\n\n\n\npar(mfrow = c(3, 1))\nacf1(chicken, 48, main = \"原始\")\nacf1(detrend(chicken), 48, main = \"去趋势\")\nacf1(diff(chicken), 48, main = \"差分\")\n\n\n\n\n\n\n\n图 7: 原始(上)、去趋势(中)和差分(下)后的鸡肉价格序列ACF\n\n\n\n\n\n在这里差分可能是一种更好的办法。去趋势是把趋势固定来建模(如式 9)，差分是用带漂移项的随机游走模型来表示趋势模型：\n\\[\n\\mu_t=\\delta+\\mu_{t-1}+w_t\n\\]\n其中\\(w_t\\)是与\\(y_t\\)无关的白噪声。\n针对式 8进行差分，有：\n\\[\nx_t-x_{t-1}=(\\mu_t+y_t)-(\\mu_{t-1}+y_{t-1})=\\delta+w_t+y_t-y_{t-1}\n\\]\n\\(x_t-x_{t-1}\\)是平稳的。\n差分消除趋势的优点是不需要估计参数，缺点是破坏了\\(y_t\\)的结构。\n一阶差分可以表示为：\n\\[\n\\nabla x_t=x_t-x_{t-1}\n\\tag{10}\\]\n式 10的差分就是二阶差分，以此类推。"
+  },
+  {
+    "objectID": "posts/time_series_2/Chapter_2.html#d阶差分differences-of-order-d",
+    "href": "posts/time_series_2/Chapter_2.html#d阶差分differences-of-order-d",
+    "title": "时间序列分析：第二章",
+    "section": "2.3 \\(d\\)阶差分(Differences of order \\(d\\))",
+    "text": "2.3 \\(d\\)阶差分(Differences of order \\(d\\))\n\\[\n\\nabla^d=(1-B)^d\n\\tag{11}\\]\n当\\(d=1\\)时可以省略。"
+  },
+  {
+    "objectID": "posts/time_series_2/Chapter_2.html#分数差分fractional-differencing和变换",
+    "href": "posts/time_series_2/Chapter_2.html#分数差分fractional-differencing和变换",
+    "title": "时间序列分析：第二章",
+    "section": "2.5 分数差分(Fractional Differencing)和变换",
+    "text": "2.5 分数差分(Fractional Differencing)和变换\n分数差分就是把差分算子(式 11)扩展到分数幂\\(-0.5&lt;d&lt;0.5\\)，常见于长记忆时间序列，会在第五章进行详细讨论。\n有时对数据进行变换可能更有助于我们分析，常见的变换有：\n\\[\ny_t=\\log x_t\n\\]\n和\n\\[\ny_t=\\begin{cases}\n(x^{\\lambda}_t-1)/\\lambda&\\lambda\\neq0\\\\\n\\log x_t&\\lambda=0\n\\end{cases}\n\\]\n前一种适合原始序列数值较大且波动较大的情况，后一种是Box-Cox的幂律变换(power transformations)，细节详见 Shumway & Stoffer (1992) 文献的4.7节。\n这些变换也用于提高和正态性的相似性以及增强两个序列之间的线性关系。"
   }
 ]

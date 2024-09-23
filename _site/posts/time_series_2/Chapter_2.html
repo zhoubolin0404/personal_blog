@@ -244,10 +244,11 @@ window.Quarto = {
   </ul></li>
   <li><a href="#探索性数据分析" id="toc-探索性数据分析" class="nav-link" data-scroll-target="#探索性数据分析"><span class="header-section-number">2</span> 探索性数据分析</a>
   <ul class="collapse">
-  <li><a href="#去趋势和差分" id="toc-去趋势和差分" class="nav-link" data-scroll-target="#去趋势和差分"><span class="header-section-number">2.1</span> 去趋势和差分</a></li>
+  <li><a href="#去趋势detrended和差分difference" id="toc-去趋势detrended和差分difference" class="nav-link" data-scroll-target="#去趋势detrended和差分difference"><span class="header-section-number">2.1</span> 去趋势(Detrended)和差分(Difference)</a></li>
   <li><a href="#后移算子backshift-operator" id="toc-后移算子backshift-operator" class="nav-link" data-scroll-target="#后移算子backshift-operator"><span class="header-section-number">2.2</span> 后移算子(Backshift Operator)</a></li>
-  <li><a href="#d阶差分" id="toc-d阶差分" class="nav-link" data-scroll-target="#d阶差分"><span class="header-section-number">2.3</span> <span class="math inline">\(d\)</span>阶差分</a></li>
+  <li><a href="#d阶差分differences-of-order-d" id="toc-d阶差分differences-of-order-d" class="nav-link" data-scroll-target="#d阶差分differences-of-order-d"><span class="header-section-number">2.3</span> <span class="math inline">\(d\)</span>阶差分(Differences of order <span class="math inline">\(d\)</span>)</a></li>
   <li><a href="#全球温度数据的差分" id="toc-全球温度数据的差分" class="nav-link" data-scroll-target="#全球温度数据的差分"><span class="header-section-number">2.4</span> 全球温度数据的差分</a></li>
+  <li><a href="#分数差分fractional-differencing和变换" id="toc-分数差分fractional-differencing和变换" class="nav-link" data-scroll-target="#分数差分fractional-differencing和变换"><span class="header-section-number">2.5</span> 分数差分(Fractional Differencing)和变换</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -808,8 +809,8 @@ x_t=\mu_t+y_t
 <p><span class="math display">\[
 \hat y_t=x_t-\hat\mu_t
 \]</span></p>
-<section id="去趋势和差分" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="去趋势和差分"><span class="header-section-number">2.1</span> 去趋势和差分</h2>
+<section id="去趋势detrended和差分difference" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="去趋势detrended和差分difference"><span class="header-section-number">2.1</span> 去趋势(Detrended)和差分(Difference)</h2>
 <p><a href="#fig-chicken" class="quarto-xref">图&nbsp;1</a>中模型形式为：</p>
 <p><span id="eq-2_24"><span class="math display">\[
 x_t=\mu_t+y_t
@@ -903,11 +904,11 @@ x_t=B^{-1}Bx_t=B^{-1}x_{t-1}
 \nabla^2x_t=(1-B)^2x_t=(1-2B+B^2)x_t=x_t-2x_{t-1}+x_{t-2}
 \]</span></p>
 </section>
-<section id="d阶差分" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="d阶差分"><span class="header-section-number">2.3</span> <span class="math inline">\(d\)</span>阶差分</h2>
-<p><span class="math display">\[
+<section id="d阶差分differences-of-order-d" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="d阶差分differences-of-order-d"><span class="header-section-number">2.3</span> <span class="math inline">\(d\)</span>阶差分(Differences of order <span class="math inline">\(d\)</span>)</h2>
+<p><span id="eq-2_32"><span class="math display">\[
 \nabla^d=(1-B)^d
-\]</span></p>
+\tag{11}\]</span></span></p>
 <p>当<span class="math inline">\(d=1\)</span>时可以省略。</p>
 </section>
 <section id="全球温度数据的差分" class="level2" data-number="2.4">
@@ -945,6 +946,23 @@ x_t=B^{-1}Bx_t=B^{-1}x_{t-1}
 </div>
 </div>
 <p>差分后自相关很小，说明该序列几乎是带漂移项的随机游走。使用<code>mean(diff(gtemp_land))</code>计算得到差分平均值约为0.016，说明每100年增加1.6摄氏度。</p>
+</section>
+<section id="分数差分fractional-differencing和变换" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="分数差分fractional-differencing和变换"><span class="header-section-number">2.5</span> 分数差分(Fractional Differencing)和变换</h2>
+<p>分数差分就是把差分算子(<a href="#eq-2_32" class="quarto-xref">式&nbsp;11</a>)扩展到分数幂<span class="math inline">\(-0.5&lt;d&lt;0.5\)</span>，常见于长记忆时间序列，会在第五章进行详细讨论。</p>
+<p>有时对数据进行变换可能更有助于我们分析，常见的变换有：</p>
+<p><span class="math display">\[
+y_t=\log x_t
+\]</span></p>
+<p>和</p>
+<p><span class="math display">\[
+y_t=\begin{cases}
+(x^{\lambda}_t-1)/\lambda&amp;\lambda\neq0\\
+\log x_t&amp;\lambda=0
+\end{cases}
+\]</span></p>
+<p>前一种适合原始序列数值较大且波动较大的情况，后一种是Box-Cox的幂律变换(power transformations)，细节详见 <span class="citation" data-cites="jw_1992">Shumway &amp; Stoffer (<a href="#ref-jw_1992" role="doc-biblioref">1992</a>)</span> 文献的4.7节。</p>
+<p>这些变换也用于提高和正态性的相似性以及增强两个序列之间的线性关系。</p>
 
 
 
@@ -952,6 +970,9 @@ x_t=B^{-1}Bx_t=B^{-1}x_{t-1}
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">参考文献</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-jw_1992" class="csl-entry" role="listitem">
+Shumway, R. H., &amp; Stoffer, D. S. (1992). <em>Applied multivariate statistical analysis</em> (3rd ed.). Prentice-Hall.
+</div>
 <div id="ref-Shumway_2017" class="csl-entry" role="listitem">
 Shumway, R. H., &amp; Stoffer, D. S. (2017). <em>Time series analysis and its applications: With r examples</em> (4th ed.). Springer Cham. <a href="https://doi.org/10.1007/978-3-319-52452-8">https://doi.org/10.1007/978-3-319-52452-8</a>
 </div>
