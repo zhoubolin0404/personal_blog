@@ -246,9 +246,14 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#去趋势detrended和差分difference" id="toc-去趋势detrended和差分difference" class="nav-link" data-scroll-target="#去趋势detrended和差分difference"><span class="header-section-number">2.1</span> 去趋势(Detrended)和差分(Difference)</a></li>
   <li><a href="#后移算子backshift-operator" id="toc-后移算子backshift-operator" class="nav-link" data-scroll-target="#后移算子backshift-operator"><span class="header-section-number">2.2</span> 后移算子(Backshift Operator)</a></li>
-  <li><a href="#d阶差分differences-of-order-d" id="toc-d阶差分differences-of-order-d" class="nav-link" data-scroll-target="#d阶差分differences-of-order-d"><span class="header-section-number">2.3</span> <span class="math inline">\(d\)</span>阶差分(Differences of order <span class="math inline">\(d\)</span>)</a></li>
-  <li><a href="#全球温度数据的差分" id="toc-全球温度数据的差分" class="nav-link" data-scroll-target="#全球温度数据的差分"><span class="header-section-number">2.4</span> 全球温度数据的差分</a></li>
-  <li><a href="#分数差分fractional-differencing和变换" id="toc-分数差分fractional-differencing和变换" class="nav-link" data-scroll-target="#分数差分fractional-differencing和变换"><span class="header-section-number">2.5</span> 分数差分(Fractional Differencing)和变换</a></li>
+  <li><a href="#d阶差分differences-of-order-d" id="toc-d阶差分differences-of-order-d" class="nav-link" data-scroll-target="#d阶差分differences-of-order-d"><span class="header-section-number">2.3</span> <span class="math inline">\(d\)</span>阶差分(Differences of order <span class="math inline">\(d\)</span>)</a>
+  <ul class="collapse">
+  <li><a href="#全球温度数据的差分" id="toc-全球温度数据的差分" class="nav-link" data-scroll-target="#全球温度数据的差分"><span class="header-section-number">2.3.1</span> 全球温度数据的差分</a></li>
+  </ul></li>
+  <li><a href="#分数差分fractional-differencing和变换" id="toc-分数差分fractional-differencing和变换" class="nav-link" data-scroll-target="#分数差分fractional-differencing和变换"><span class="header-section-number">2.4</span> 分数差分(Fractional Differencing)和变换</a>
+  <ul class="collapse">
+  <li><a href="#古气候冰川纹层" id="toc-古气候冰川纹层" class="nav-link" data-scroll-target="#古气候冰川纹层"><span class="header-section-number">2.4.1</span> 古气候冰川纹层</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -910,9 +915,8 @@ x_t=B^{-1}Bx_t=B^{-1}x_{t-1}
 \nabla^d=(1-B)^d
 \tag{11}\]</span></span></p>
 <p>当<span class="math inline">\(d=1\)</span>时可以省略。</p>
-</section>
-<section id="全球温度数据的差分" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="全球温度数据的差分"><span class="header-section-number">2.4</span> 全球温度数据的差分</h2>
+<section id="全球温度数据的差分" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="全球温度数据的差分"><span class="header-section-number">2.3.1</span> 全球温度数据的差分</h3>
 <p><a href="#fig-gm" class="quarto-xref">图&nbsp;8</a>看起来像随机游走，对其进行差分，结果如<a href="#fig-gmacf" class="quarto-xref">图&nbsp;9</a>所示。</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -947,8 +951,9 @@ x_t=B^{-1}Bx_t=B^{-1}x_{t-1}
 </div>
 <p>差分后自相关很小，说明该序列几乎是带漂移项的随机游走。使用<code>mean(diff(gtemp_land))</code>计算得到差分平均值约为0.016，说明每100年增加1.6摄氏度。</p>
 </section>
-<section id="分数差分fractional-differencing和变换" class="level2" data-number="2.5">
-<h2 data-number="2.5" class="anchored" data-anchor-id="分数差分fractional-differencing和变换"><span class="header-section-number">2.5</span> 分数差分(Fractional Differencing)和变换</h2>
+</section>
+<section id="分数差分fractional-differencing和变换" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="分数差分fractional-differencing和变换"><span class="header-section-number">2.4</span> 分数差分(Fractional Differencing)和变换</h2>
 <p>分数差分就是把差分算子(<a href="#eq-2_32" class="quarto-xref">式&nbsp;11</a>)扩展到分数幂<span class="math inline">\(-0.5&lt;d&lt;0.5\)</span>，常见于长记忆时间序列，会在第五章进行详细讨论。</p>
 <p>有时对数据进行变换可能更有助于我们分析，常见的变换有：</p>
 <p><span class="math display">\[
@@ -963,9 +968,120 @@ y_t=\begin{cases}
 \]</span></p>
 <p>前一种适合原始序列数值较大且波动较大的情况，后一种是Box-Cox的幂律变换(power transformations)，细节详见 <span class="citation" data-cites="jw_1992">Shumway &amp; Stoffer (<a href="#ref-jw_1992" role="doc-biblioref">1992</a>)</span> 文献的4.7节。</p>
 <p>这些变换也用于提高和正态性的相似性以及增强两个序列之间的线性关系。</p>
+<section id="古气候冰川纹层" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="古气候冰川纹层"><span class="header-section-number">2.4.1</span> 古气候冰川纹层</h3>
+<p>春季的时候冰川就会发生融化，会因为沙子、淤泥沉积形成的纹层(varve)，这些纹层可以用来反映古气候参数。<a href="#fig-2_7" class="quarto-xref">图&nbsp;10</a> 的上图展示了马萨诸塞州某地纹层情况，下图是对数变换后的数据。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">layout</span>(<span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,<span class="dv">2</span>), <span class="at">widths=</span><span class="fu">c</span>(<span class="fl">2.5</span>,<span class="dv">1</span>))</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(varve, <span class="at">main=</span><span class="st">""</span>, <span class="at">ylab=</span><span class="st">""</span>, <span class="at">col=</span><span class="dv">4</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">mtext</span>(<span class="st">"varve"</span>, <span class="at">side=</span><span class="dv">3</span>, <span class="at">line=</span>.<span class="dv">5</span>, <span class="at">cex=</span><span class="fl">1.2</span>, <span class="at">font=</span><span class="dv">2</span>, <span class="at">adj=</span><span class="dv">0</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(<span class="fu">log</span>(varve), <span class="at">main=</span><span class="st">""</span>, <span class="at">ylab=</span><span class="st">""</span>, <span class="at">col=</span><span class="dv">4</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a> <span class="fu">mtext</span>(<span class="st">"log(varve)"</span>, <span class="at">side=</span><span class="dv">3</span>, <span class="at">line=</span>.<span class="dv">5</span>, <span class="at">cex=</span><span class="fl">1.2</span>, <span class="at">font=</span><span class="dv">2</span>, <span class="at">adj=</span><span class="dv">0</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(varve, <span class="at">main=</span><span class="st">""</span>, <span class="at">col=</span><span class="dv">4</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a> <span class="fu">qqline</span>(varve, <span class="at">col=</span><span class="dv">2</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">log</span>(varve), <span class="at">main=</span><span class="st">""</span>, <span class="at">col=</span><span class="dv">4</span>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a> <span class="fu">qqline</span>(<span class="fu">log</span>(varve), <span class="at">col=</span><span class="dv">2</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-2_7" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-2_7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter_2_files/figure-html/fig-2_7-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2_7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;10: 冰川纹层厚度(上)和对数变换后的厚度(下)以及它们的Q-Q图(右)
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>可见对数变换后正态性得到改善。</p>
+<div class="cell" data-layout-nrow="2">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log</span>(varve))</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(<span class="fu">log</span>(varve))</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-2_7acf" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-2_7acf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-2_7acf" style="flex-basis: 100.0%;justify-content: flex-start;">
+<div id="fig-2_7acf-1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-2_7acf-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter_2_files/figure-html/fig-2_7acf-1.png" class="img-fluid figure-img" data-ref-parent="fig-2_7acf" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-2_7acf-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) 数据
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-2_7acf" style="flex-basis: 100.0%;justify-content: flex-start;">
+<div id="fig-2_7acf-2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-2_7acf-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter_2_files/figure-html/fig-2_7acf-2.png" class="img-fluid figure-img" data-ref-parent="fig-2_7acf" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-2_7acf-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) ACF
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2_7acf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;11: 对数变换
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell" data-layout-nrow="2">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log</span>(varve))</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(<span class="fu">log</span>(varve))</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-2_7acf1" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-2_7acf1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-2_7acf1" style="flex-basis: 100.0%;justify-content: flex-start;">
+<div id="fig-2_7acf1-1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-2_7acf1-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter_2_files/figure-html/fig-2_7acf1-1.png" class="img-fluid figure-img" data-ref-parent="fig-2_7acf1" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-2_7acf1-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) 数据
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-2_7acf1" style="flex-basis: 100.0%;justify-content: flex-start;">
+<div id="fig-2_7acf1-2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-2_7acf1-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter_2_files/figure-html/fig-2_7acf1-2.png" class="img-fluid figure-img" data-ref-parent="fig-2_7acf1" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-2_7acf1-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) ACF
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2_7acf1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;12: 对数变换后差分
+</figcaption>
+</figure>
+</div>
+</div>
+<p>可见一阶差分后在滞后<span class="math inline">\(h=1\)</span>时显著负相关。</p>
 
 
 
+</section>
 </section>
 </section>
 

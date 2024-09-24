@@ -518,7 +518,7 @@ $${#eq-2_32}
 
 当$d=1$时可以省略。
 
-## 全球温度数据的差分
+### 全球温度数据的差分
 
 [@fig-gm]看起来像随机游走，对其进行差分，结果如[@fig-gmacf]所示。
 
@@ -561,7 +561,48 @@ $$
 
 这些变换也用于提高和正态性的相似性以及增强两个序列之间的线性关系。
 
+### 古气候冰川纹层
 
+春季的时候冰川就会发生融化，会因为沙子、淤泥沉积形成的纹层(varve)，这些纹层可以用来反映古气候参数。[@fig-2_7] 的上图展示了马萨诸塞州某地纹层情况，下图是对数变换后的数据。
 
+```{r}
+#| label: fig-2_7
+#| fig-cap: 冰川纹层厚度(上)和对数变换后的厚度(下)以及它们的Q-Q图(右)
+layout(matrix(1:4,2), widths=c(2.5,1))
+tsplot(varve, main="", ylab="", col=4)
+ mtext("varve", side=3, line=.5, cex=1.2, font=2, adj=0)
+tsplot(log(varve), main="", ylab="", col=4)
+ mtext("log(varve)", side=3, line=.5, cex=1.2, font=2, adj=0)
+qqnorm(varve, main="", col=4)
+ qqline(varve, col=2, lwd=2)
+qqnorm(log(varve), main="", col=4)
+ qqline(log(varve), col=2, lwd=2)
+```
 
+可见对数变换后正态性得到改善。
 
+```{r}
+#| label: fig-2_7acf
+#| layout-nrow: 2
+#| fig-cap:
+#|   - "对数变换"
+#| fig-subcap:
+#|   - "数据"
+#|   - "ACF"
+plot(log(varve))
+acf(log(varve))
+```
+
+```{r}
+#| label: fig-2_7acf1
+#| layout-nrow: 2
+#| fig-cap:
+#|   - "对数变换后差分"
+#| fig-subcap:
+#|   - "数据"
+#|   - "ACF"
+plot(log(varve))
+acf(log(varve))
+```
+
+可见一阶差分后在滞后$h=1$时显著负相关。

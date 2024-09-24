@@ -431,13 +431,13 @@
     "href": "posts/time_series_2/Chapter_2.html#d阶差分differences-of-order-d",
     "title": "时间序列分析：第二章",
     "section": "2.3 \\(d\\)阶差分(Differences of order \\(d\\))",
-    "text": "2.3 \\(d\\)阶差分(Differences of order \\(d\\))\n\\[\n\\nabla^d=(1-B)^d\n\\tag{11}\\]\n当\\(d=1\\)时可以省略。"
+    "text": "2.3 \\(d\\)阶差分(Differences of order \\(d\\))\n\\[\n\\nabla^d=(1-B)^d\n\\tag{11}\\]\n当\\(d=1\\)时可以省略。\n\n2.3.1 全球温度数据的差分\n图 8看起来像随机游走，对其进行差分，结果如图 9所示。\n\n\n\n\n\n\n\n\n图 8: 全球陆地年平均温度偏差(1850-2023)\n\n\n\n\n\n\npar(mfrow = c(2, 1))\ntsplot(diff(gtemp_land), type = \"o\")\nacf1(diff(gtemp_land), 48, main = \"\")\n\n\n\n\n\n\n\n图 9: 差分(上)和ACF(下)\n\n\n\n\n\n差分后自相关很小，说明该序列几乎是带漂移项的随机游走。使用mean(diff(gtemp_land))计算得到差分平均值约为0.016，说明每100年增加1.6摄氏度。"
   },
   {
     "objectID": "posts/time_series_2/Chapter_2.html#分数差分fractional-differencing和变换",
     "href": "posts/time_series_2/Chapter_2.html#分数差分fractional-differencing和变换",
     "title": "时间序列分析：第二章",
-    "section": "2.5 分数差分(Fractional Differencing)和变换",
-    "text": "2.5 分数差分(Fractional Differencing)和变换\n分数差分就是把差分算子(式 11)扩展到分数幂\\(-0.5&lt;d&lt;0.5\\)，常见于长记忆时间序列，会在第五章进行详细讨论。\n有时对数据进行变换可能更有助于我们分析，常见的变换有：\n\\[\ny_t=\\log x_t\n\\]\n和\n\\[\ny_t=\\begin{cases}\n(x^{\\lambda}_t-1)/\\lambda&\\lambda\\neq0\\\\\n\\log x_t&\\lambda=0\n\\end{cases}\n\\]\n前一种适合原始序列数值较大且波动较大的情况，后一种是Box-Cox的幂律变换(power transformations)，细节详见 Shumway & Stoffer (1992) 文献的4.7节。\n这些变换也用于提高和正态性的相似性以及增强两个序列之间的线性关系。"
+    "section": "2.4 分数差分(Fractional Differencing)和变换",
+    "text": "2.4 分数差分(Fractional Differencing)和变换\n分数差分就是把差分算子(式 11)扩展到分数幂\\(-0.5&lt;d&lt;0.5\\)，常见于长记忆时间序列，会在第五章进行详细讨论。\n有时对数据进行变换可能更有助于我们分析，常见的变换有：\n\\[\ny_t=\\log x_t\n\\]\n和\n\\[\ny_t=\\begin{cases}\n(x^{\\lambda}_t-1)/\\lambda&\\lambda\\neq0\\\\\n\\log x_t&\\lambda=0\n\\end{cases}\n\\]\n前一种适合原始序列数值较大且波动较大的情况，后一种是Box-Cox的幂律变换(power transformations)，细节详见 Shumway & Stoffer (1992) 文献的4.7节。\n这些变换也用于提高和正态性的相似性以及增强两个序列之间的线性关系。\n\n2.4.1 古气候冰川纹层\n春季的时候冰川就会发生融化，会因为沙子、淤泥沉积形成的纹层(varve)，这些纹层可以用来反映古气候参数。图 10 的上图展示了马萨诸塞州某地纹层情况，下图是对数变换后的数据。\n\nlayout(matrix(1:4,2), widths=c(2.5,1))\ntsplot(varve, main=\"\", ylab=\"\", col=4)\n mtext(\"varve\", side=3, line=.5, cex=1.2, font=2, adj=0)\ntsplot(log(varve), main=\"\", ylab=\"\", col=4)\n mtext(\"log(varve)\", side=3, line=.5, cex=1.2, font=2, adj=0)\nqqnorm(varve, main=\"\", col=4)\n qqline(varve, col=2, lwd=2)\nqqnorm(log(varve), main=\"\", col=4)\n qqline(log(varve), col=2, lwd=2)\n\n\n\n\n\n\n\n图 10: 冰川纹层厚度(上)和对数变换后的厚度(下)以及它们的Q-Q图(右)\n\n\n\n\n\n可见对数变换后正态性得到改善。\n\nplot(log(varve))\nacf(log(varve))\n\n\n\n\n\n\n\n\n\n\n\n(a) 数据\n\n\n\n\n\n\n\n\n\n\n\n\n\n(b) ACF\n\n\n\n\n\n\n\n图 11: 对数变换\n\n\n\n\n\nplot(log(varve))\nacf(log(varve))\n\n\n\n\n\n\n\n\n\n\n\n(a) 数据\n\n\n\n\n\n\n\n\n\n\n\n\n\n(b) ACF\n\n\n\n\n\n\n\n图 12: 对数变换后差分\n\n\n\n\n可见一阶差分后在滞后\\(h=1\\)时显著负相关。"
   }
 ]
