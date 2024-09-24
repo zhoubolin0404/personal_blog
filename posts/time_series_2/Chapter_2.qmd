@@ -474,7 +474,7 @@ $${#eq-2_28}
 
 [@eq-2_28]的差分就是二阶差分，以此类推。
 
-## 后移算子(Backshift Operator)
+### 后移算子(Backshift Operator)
 
 后移算子用来表示高阶差分。
 
@@ -510,7 +510,7 @@ $$
 \nabla^2x_t=(1-B)^2x_t=(1-2B+B^2)x_t=x_t-2x_{t-1}+x_{t-2}
 $$
 
-## $d$阶差分(Differences of order $d$)
+### $d$阶差分(Differences of order $d$)
 
 $$
 \nabla^d=(1-B)^d
@@ -538,7 +538,7 @@ acf1(diff(gtemp_land), 48, main = "")
 
 差分后自相关很小，说明该序列几乎是带漂移项的随机游走。使用`mean(diff(gtemp_land))`计算得到差分平均值约为`r mean(diff(gtemp_land)) %>% round(3)`，说明每100年增加`r (mean(diff(gtemp_land))*100) %>% round(2)`摄氏度。
 
-## 分数差分(Fractional Differencing)和变换
+### 分数差分(Fractional Differencing)和变换
 
 分数差分就是把差分算子([@eq-2_32])扩展到分数幂$-0.5<d<0.5$，常见于长记忆时间序列，会在第五章进行详细讨论。
 
@@ -606,3 +606,31 @@ acf(log(varve))
 ```
 
 可见一阶差分后在滞后$h=1$时显著负相关。
+
+## 散点图矩阵
+
+散点图矩阵可以帮助我们观察数据的相关性和是否是线性关系。[@fig-2_8]展示了SOI在$t$($S_t$)和$t-h$($S_{t-h}$)时的相关性，右上角是相关系数，红线是局部加权的散点图平滑(Locally Weighted Scatterplot Smoothing，lowess)。
+
+```{r}
+#| label: fig-2_8
+#| fig-cap: SOI散点图矩阵
+lag1.plot(soi, 12, col=astsa.col(4, .3), cex=1.5, pch=20)
+```
+
+可以观察到，在滞后$h=1,\ 2,\ 11,\ 12$处强相关，这和[@fig-2_8_1]里观察到的一致。
+
+```{r}
+#| label: fig-2_8_1
+#| fig-cap: SOI的ACF
+acf1(soi, main="SOI")
+```
+
+[@fig-2_9]展示了新鱼数量系列$t$时($R_t$)和$S_{t-h}$的相关性。
+
+```{r}
+#| label: fig-2_9
+#| fig-cap: SOI和新鱼数量散点图矩阵
+lag2.plot(soi, rec, 8, col=astsa.col(4, .3), cex=1.5, pch=20)
+```
+
+可以观察到是非线性相关，且SOI正值和负值与新鱼数量的关系不一样。
