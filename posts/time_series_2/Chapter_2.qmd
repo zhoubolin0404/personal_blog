@@ -634,3 +634,106 @@ lag2.plot(soi, rec, 8, col=astsa.col(4, .3), cex=1.5, pch=20)
 ```
 
 可以观察到是非线性相关，且SOI正值和负值与新鱼数量的关系不一样。
+
+## 滞后回归(续)
+
+在[@sec-lagreg]中，我们将新鱼数量序列对滞后SOI进行回归：
+
+$$
+R_t=\beta_0+\beta_1S_{t-6}+w_t
+$$
+
+但[@fig-2_9]显示其不是线性关系，通过添加虚拟变量来表示非线性关系。
+
+$$
+R_t=\beta_0+\beta_1S_{t-6}+\beta_2D_{t-6}+\beta_3D_{t-6}S_{t-6}+w_t
+$$
+
+其中$D_t$是虚拟变量，如果$S_t<0$则为0，否则为1。也可以写为：
+
+$$
+R_t=\begin{cases}
+\beta_0+\beta_1S_{t-6}+w_t&S_{t-6}<0\\
+(\beta_0+\beta_2)+(\beta_1+\beta_3)S_{t-6}+w_t&S_{t-6}\ge0
+\end{cases}
+$$
+
+```{r}
+#| label: fig-2_10
+#| fig-cap: 新鱼数量($R_t$)和SOI滞后6个月($S_{t-6}$)
+dummy = ifelse(soi < 0, 0, 1)
+fish  = ts.intersect(
+    rec,
+    soiL6 = stats::lag(soi, -6),
+    dL6 = stats::lag(dummy, -6),
+    dframe = TRUE
+)
+summary(fit <- lm(rec ~ soiL6 * dL6, data = fish, na.action = NULL))
+tsplot(
+    fish$soiL6,
+    fish$rec,
+    type = 'p',
+    col = 4,
+    ylab = 'rec',
+    xlab = 'soiL6'
+)
+lines(lowess(fish$soiL6, fish$rec), col = 4, lwd = 2)
+points(fish$soiL6, fitted(fit), pch = '+', col = 6)
+```
+
+[@fig-2_10]中“+”是回归的拟合值，直线是lowess的拟合值。
+
+[@fig-2_10_1]对回归拟合后的残差进行了探索。
+
+```{r,results='hide'}
+#| label: fig-2_10_1
+#| layout-nrow: 2
+#| fig-cap: 残差
+#| fig-subcap: 
+#|  - "原始值"
+#|  - "ACF"
+tsplot(resid(fit))
+acf1(resid(fit))
+```
+
+可见残差不是白噪声，还需要进一步分解，这也在第三章进行讨论。
+
+## 使用回归发现噪声中的信号
+
+第一章2.5小节中我们根据下面的模型生成了500个观测值。
+
+$$
+x_t=A\cos(2\pi\omega t+\phi)+w_t
+$$
+
+其中$\omega=1/50$，$A=2$，$\phi=0.6\pi$，$\sigma_w=5$。也就是：
+
+$$
+x_t=2\cos(2\pi\frac{t+15}{50})+w_t
+$$
+
+假设$\omega=1/50$已知，$A$和$\phi$是未知参数。可以得到：
+
+$$
+A\cos(2\pi\omega t+\phi)=\beta_1\cos(2\pi\omega t)+\beta_2\sin(2\pi\omega t)
+$$
+
+其中$\beta_1=A\cos(\phi)$，$\beta_2=-A\sin(\phi)$。
+
+```{r}
+set.seed(90210)
+x = 2 * cos(2 * pi * 1:500 / 50 + 0.6 * pi) + rnorm(500, 0, 5)
+z1 = cos(2 * pi * 1:500 / 50)
+z2 = sin(2 * pi * 1:500 / 50)
+sum_fit = summary(fit <- lm(x ~ 0 + z1 + z2))
+sum_fit
+```
+
+得到$\hat\beta_1$为`r sum_fit$coefficients[1,1] %>% round(3)`，$\hat\beta_2$为`r sum_fit$coefficients[2,1] %>% round(3)`。而实际值为$\beta_1=2\cos(0.6\pi)\approx-0.62$和$\beta_2=-2\sin(0.6\pi)\approx-1.90$。可见即使信噪比很小，我们也可以使用回归找出其中的信号。[@fig-2_11]展示了拟合结果。
+
+```{r}
+#| label: fig-2_11
+#| fig-cap: 拟合结果
+tsplot(x, col=astsa.col(4,.7), ylab=expression(hat(x)))
+lines(fitted(fit), col=2, lwd=2)
+```

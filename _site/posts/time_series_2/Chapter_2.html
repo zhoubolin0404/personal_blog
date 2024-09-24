@@ -253,6 +253,8 @@ window.Quarto = {
   <li><a href="#古气候冰川纹层" id="toc-古气候冰川纹层" class="nav-link" data-scroll-target="#古气候冰川纹层"><span class="header-section-number">2.1.5</span> 古气候冰川纹层</a></li>
   </ul></li>
   <li><a href="#散点图矩阵" id="toc-散点图矩阵" class="nav-link" data-scroll-target="#散点图矩阵"><span class="header-section-number">2.2</span> 散点图矩阵</a></li>
+  <li><a href="#滞后回归续" id="toc-滞后回归续" class="nav-link" data-scroll-target="#滞后回归续"><span class="header-section-number">2.3</span> 滞后回归(续)</a></li>
+  <li><a href="#使用回归发现噪声中的信号" id="toc-使用回归发现噪声中的信号" class="nav-link" data-scroll-target="#使用回归发现噪声中的信号"><span class="header-section-number">2.4</span> 使用回归发现噪声中的信号</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -1130,6 +1132,183 @@ y_t=\begin{cases}
 </div>
 </div>
 <p>可以观察到是非线性相关，且SOI正值和负值与新鱼数量的关系不一样。</p>
+</section>
+<section id="滞后回归续" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="滞后回归续"><span class="header-section-number">2.3</span> 滞后回归(续)</h2>
+<p>在<a href="#sec-lagreg" class="quarto-xref">小节&nbsp;1.2.3</a>中，我们将新鱼数量序列对滞后SOI进行回归：</p>
+<p><span class="math display">\[
+R_t=\beta_0+\beta_1S_{t-6}+w_t
+\]</span></p>
+<p>但<a href="#fig-2_9" class="quarto-xref">图&nbsp;15</a>显示其不是线性关系，通过添加虚拟变量来表示非线性关系。</p>
+<p><span class="math display">\[
+R_t=\beta_0+\beta_1S_{t-6}+\beta_2D_{t-6}+\beta_3D_{t-6}S_{t-6}+w_t
+\]</span></p>
+<p>其中<span class="math inline">\(D_t\)</span>是虚拟变量，如果<span class="math inline">\(S_t&lt;0\)</span>则为0，否则为1。也可以写为：</p>
+<p><span class="math display">\[
+R_t=\begin{cases}
+\beta_0+\beta_1S_{t-6}+w_t&amp;S_{t-6}&lt;0\\
+(\beta_0+\beta_2)+(\beta_1+\beta_3)S_{t-6}+w_t&amp;S_{t-6}\ge0
+\end{cases}
+\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>dummy <span class="ot">=</span> <span class="fu">ifelse</span>(soi <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>fish  <span class="ot">=</span> <span class="fu">ts.intersect</span>(</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    rec,</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">soiL6 =</span> stats<span class="sc">::</span><span class="fu">lag</span>(soi, <span class="sc">-</span><span class="dv">6</span>),</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">dL6 =</span> stats<span class="sc">::</span><span class="fu">lag</span>(dummy, <span class="sc">-</span><span class="dv">6</span>),</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">dframe =</span> <span class="cn">TRUE</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(rec <span class="sc">~</span> soiL6 <span class="sc">*</span> dL6, <span class="at">data =</span> fish, <span class="at">na.action =</span> <span class="cn">NULL</span>))</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = rec ~ soiL6 * dL6, data = fish, na.action = NULL)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-63.291 -15.821   2.224  15.791  61.788 
+
+Coefficients:
+            Estimate Std. Error t value   Pr(&gt;|t|)    
+(Intercept)   74.479      2.865  25.998    &lt; 2e-16 ***
+soiL6        -15.358      7.401  -2.075     0.0386 *  
+dL6           -1.139      3.711  -0.307     0.7590    
+soiL6:dL6    -51.244      9.523  -5.381 0.00000012 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 21.84 on 443 degrees of freedom
+Multiple R-squared:  0.4024,    Adjusted R-squared:  0.3984 
+F-statistic: 99.43 on 3 and 443 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    fish<span class="sc">$</span>soiL6,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    fish<span class="sc">$</span>rec,</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">'p'</span>,</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="dv">4</span>,</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> <span class="st">'rec'</span>,</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">'soiL6'</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">lowess</span>(fish<span class="sc">$</span>soiL6, fish<span class="sc">$</span>rec), <span class="at">col =</span> <span class="dv">4</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(fish<span class="sc">$</span>soiL6, <span class="fu">fitted</span>(fit), <span class="at">pch =</span> <span class="st">'+'</span>, <span class="at">col =</span> <span class="dv">6</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-2_10" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-2_10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter_2_files/figure-html/fig-2_10-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2_10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;16: 新鱼数量(<span class="math inline">\(R_t\)</span>)和SOI滞后6个月(<span class="math inline">\(S_{t-6}\)</span>)
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><a href="#fig-2_10" class="quarto-xref">图&nbsp;16</a>中“+”是回归的拟合值，直线是lowess的拟合值。</p>
+<p><a href="#fig-2_10_1" class="quarto-xref">图&nbsp;17</a>对回归拟合后的残差进行了探索。</p>
+<div class="cell" data-layout-nrow="2">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(<span class="fu">resid</span>(fit))</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">acf1</span>(<span class="fu">resid</span>(fit))</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-2_10_1" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-2_10_1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-2_10_1" style="flex-basis: 100.0%;justify-content: flex-start;">
+<div id="fig-2_10_1-1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-2_10_1-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter_2_files/figure-html/fig-2_10_1-1.png" class="img-fluid figure-img" data-ref-parent="fig-2_10_1" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-2_10_1-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) 原始值
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-2_10_1" style="flex-basis: 100.0%;justify-content: flex-start;">
+<div id="fig-2_10_1-2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-2_10_1-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter_2_files/figure-html/fig-2_10_1-2.png" class="img-fluid figure-img" data-ref-parent="fig-2_10_1" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-2_10_1-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) ACF
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2_10_1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;17: 残差
+</figcaption>
+</figure>
+</div>
+</div>
+<p>可见残差不是白噪声，还需要进一步分解，这也在第三章进行讨论。</p>
+</section>
+<section id="使用回归发现噪声中的信号" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="使用回归发现噪声中的信号"><span class="header-section-number">2.4</span> 使用回归发现噪声中的信号</h2>
+<p>第一章2.5小节中我们根据下面的模型生成了500个观测值。</p>
+<p><span class="math display">\[
+x_t=A\cos(2\pi\omega t+\phi)+w_t
+\]</span></p>
+<p>其中<span class="math inline">\(\omega=1/50\)</span>，<span class="math inline">\(A=2\)</span>，<span class="math inline">\(\phi=0.6\pi\)</span>，<span class="math inline">\(\sigma_w=5\)</span>。也就是：</p>
+<p><span class="math display">\[
+x_t=2\cos(2\pi\frac{t+15}{50})+w_t
+\]</span></p>
+<p>假设<span class="math inline">\(\omega=1/50\)</span>已知，<span class="math inline">\(A\)</span>和<span class="math inline">\(\phi\)</span>是未知参数。可以得到：</p>
+<p><span class="math display">\[
+A\cos(2\pi\omega t+\phi)=\beta_1\cos(2\pi\omega t)+\beta_2\sin(2\pi\omega t)
+\]</span></p>
+<p>其中<span class="math inline">\(\beta_1=A\cos(\phi)\)</span>，<span class="math inline">\(\beta_2=-A\sin(\phi)\)</span>。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">90210</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">cos</span>(<span class="dv">2</span> <span class="sc">*</span> pi <span class="sc">*</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">500</span> <span class="sc">/</span> <span class="dv">50</span> <span class="sc">+</span> <span class="fl">0.6</span> <span class="sc">*</span> pi) <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">500</span>, <span class="dv">0</span>, <span class="dv">5</span>)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>z1 <span class="ot">=</span> <span class="fu">cos</span>(<span class="dv">2</span> <span class="sc">*</span> pi <span class="sc">*</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">500</span> <span class="sc">/</span> <span class="dv">50</span>)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>z2 <span class="ot">=</span> <span class="fu">sin</span>(<span class="dv">2</span> <span class="sc">*</span> pi <span class="sc">*</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">500</span> <span class="sc">/</span> <span class="dv">50</span>)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>sum_fit <span class="ot">=</span> <span class="fu">summary</span>(fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(x <span class="sc">~</span> <span class="dv">0</span> <span class="sc">+</span> z1 <span class="sc">+</span> z2))</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>sum_fit</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = x ~ 0 + z1 + z2)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-14.8584  -3.8525  -0.3186   3.3487  15.5440 
+
+Coefficients:
+   Estimate Std. Error t value      Pr(&gt;|t|)    
+z1  -0.7442     0.3274  -2.273        0.0235 *  
+z2  -1.9949     0.3274  -6.093 0.00000000223 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 5.177 on 498 degrees of freedom
+Multiple R-squared:  0.07827,   Adjusted R-squared:  0.07456 
+F-statistic: 21.14 on 2 and 498 DF,  p-value: 0.000000001538</code></pre>
+</div>
+</div>
+<p>得到<span class="math inline">\(\hat\beta_1\)</span>为-0.744，<span class="math inline">\(\hat\beta_2\)</span>为-1.995。而实际值为<span class="math inline">\(\beta_1=2\cos(0.6\pi)\approx-0.62\)</span>和<span class="math inline">\(\beta_2=-2\sin(0.6\pi)\approx-1.90\)</span>。可见即使信噪比很小，我们也可以使用回归找出其中的信号。<a href="#fig-2_11" class="quarto-xref">图&nbsp;18</a>展示了拟合结果。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(x, <span class="at">col=</span><span class="fu">astsa.col</span>(<span class="dv">4</span>,.<span class="dv">7</span>), <span class="at">ylab=</span><span class="fu">expression</span>(<span class="fu">hat</span>(x)))</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">fitted</span>(fit), <span class="at">col=</span><span class="dv">2</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-2_11" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-2_11-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter_2_files/figure-html/fig-2_11-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2_11-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;18: 拟合结果
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
 
 
 
