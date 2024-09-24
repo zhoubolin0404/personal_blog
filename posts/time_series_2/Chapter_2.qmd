@@ -619,7 +619,7 @@ lag1.plot(soi, 12, col=astsa.col(4, .3), cex=1.5, pch=20)
 
 可以观察到，在滞后$h=1,\ 2,\ 11,\ 12$处强相关，这和[@fig-2_8_1]里观察到的一致。
 
-```{r}
+```{r,results='hide'}
 #| label: fig-2_8_1
 #| fig-cap: SOI的ACF
 acf1(soi, main="SOI")

@@ -32,7 +32,7 @@
     "href": "posts/time_series_2/Chapter_2.html#散点图矩阵",
     "title": "时间序列分析：第二章",
     "section": "2.2 散点图矩阵",
-    "text": "2.2 散点图矩阵\n散点图矩阵可以帮助我们观察数据的相关性和是否是线性关系。图 13展示了SOI在\\(t\\)(\\(S_t\\))和\\(t-h\\)(\\(S_{t-h}\\))时的相关性，右上角是相关系数，红线是局部加权的散点图平滑(Locally Weighted Scatterplot Smoothing，lowess)。\n\nlag1.plot(soi, 12, col=astsa.col(4, .3), cex=1.5, pch=20)\n\n\n\n\n\n\n\n图 13: SOI散点图矩阵\n\n\n\n\n\n可以观察到，在滞后\\(h=1,\\ 2,\\ 11,\\ 12\\)处强相关，这和图 14里观察到的一致。\n\nacf1(soi, main=\"SOI\")\n\n [1]  0.60  0.37  0.21  0.05 -0.11 -0.19 -0.18 -0.10  0.05  0.22  0.36  0.41\n[13]  0.31  0.10 -0.06 -0.17 -0.29 -0.37 -0.32 -0.19 -0.04  0.15  0.31  0.35\n[25]  0.25  0.10 -0.03 -0.16 -0.28 -0.37 -0.32 -0.16 -0.02  0.17  0.33  0.39\n[37]  0.30  0.16  0.00 -0.13 -0.24 -0.27 -0.25 -0.13  0.06  0.21  0.38  0.40\n\n\n\n\n\n\n\n\n图 14: SOI的ACF\n\n\n\n\n\n图 15展示了新鱼数量系列\\(t\\)时(\\(R_t\\))和\\(S_{t-h}\\)的相关性。\n\nlag2.plot(soi, rec, 8, col=astsa.col(4, .3), cex=1.5, pch=20)\n\n\n\n\n\n\n\n图 15: SOI和新鱼数量散点图矩阵\n\n\n\n\n\n可以观察到是非线性相关，且SOI正值和负值与新鱼数量的关系不一样。"
+    "text": "2.2 散点图矩阵\n散点图矩阵可以帮助我们观察数据的相关性和是否是线性关系。图 13展示了SOI在\\(t\\)(\\(S_t\\))和\\(t-h\\)(\\(S_{t-h}\\))时的相关性，右上角是相关系数，红线是局部加权的散点图平滑(Locally Weighted Scatterplot Smoothing，lowess)。\n\nlag1.plot(soi, 12, col=astsa.col(4, .3), cex=1.5, pch=20)\n\n\n\n\n\n\n\n图 13: SOI散点图矩阵\n\n\n\n\n\n可以观察到，在滞后\\(h=1,\\ 2,\\ 11,\\ 12\\)处强相关，这和图 14里观察到的一致。\n\nacf1(soi, main=\"SOI\")\n\n\n\n\n\n\n\n图 14: SOI的ACF\n\n\n\n\n\n图 15展示了新鱼数量系列\\(t\\)时(\\(R_t\\))和\\(S_{t-h}\\)的相关性。\n\nlag2.plot(soi, rec, 8, col=astsa.col(4, .3), cex=1.5, pch=20)\n\n\n\n\n\n\n\n图 15: SOI和新鱼数量散点图矩阵\n\n\n\n\n\n可以观察到是非线性相关，且SOI正值和负值与新鱼数量的关系不一样。"
   },
   {
     "objectID": "posts/time_series/index.html",
