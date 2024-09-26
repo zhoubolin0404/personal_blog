@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.555">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="周博霖">
 <meta name="dcterms.date" content="2024-09-06">
 
-<title>Zhou Bolin’s blog - 时间序列分析：第一章</title>
+<title>时间序列分析：第一章 – Zhou Bolin’s blog</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -35,7 +35,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -123,7 +123,7 @@ div.csl-indent {
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -168,7 +168,7 @@ window.Quarto = {
     </a>
   </div>
             <div id="quarto-search" class="" title="搜索"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="展开或折叠导航栏" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="展开或折叠导航栏" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -184,7 +184,7 @@ window.Quarto = {
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -374,7 +374,7 @@ window.Quarto = {
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(jj, <span class="at">col =</span> <span class="dv">4</span>, <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">xlab =</span> <span class="st">"时间"</span>, <span class="at">ylab =</span> <span class="st">"季度每股收益"</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-强生公司季度每股收益" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-强生公司季度每股收益" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-强生公司季度每股收益-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-强生公司季度每股收益-1.png" class="img-fluid figure-img" width="672">
@@ -418,7 +418,7 @@ Frequency = 1
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(gtemp_land, <span class="at">col =</span> <span class="dv">4</span>, <span class="at">type =</span> <span class="st">"o"</span>, <span class="at">xlab =</span> <span class="st">"时间"</span>, <span class="at">ylab =</span> <span class="st">"全球温度偏差/℃"</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-gm" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-gm" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-gm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-gm-1.png" class="img-fluid figure-img" width="672">
@@ -447,7 +447,7 @@ $class
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(speech)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-语音数据" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-语音数据" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-语音数据-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-语音数据-1.png" class="img-fluid figure-img" width="672">
@@ -473,7 +473,7 @@ $class
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(djiar, <span class="at">col =</span> <span class="dv">4</span>, <span class="at">main =</span> <span class="st">"DJIA Returns"</span>) </span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-djiar" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-djiar" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-djiar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-djiar-1.png" class="img-fluid figure-img" width="672">
@@ -495,7 +495,7 @@ $class
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(soi, <span class="at">col =</span> <span class="dv">4</span>, <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">main =</span> <span class="st">"Southern Oscillation Index"</span>)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(rec, <span class="at">col =</span> <span class="dv">4</span>, <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">main =</span> <span class="st">"Recruitment"</span>) </span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-SOI" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-SOI" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-SOI-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-SOI-1.png" class="img-fluid figure-img" width="672">
@@ -516,7 +516,7 @@ $class
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(fmri1[, <span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>], <span class="at">col =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">ylab =</span> <span class="st">"BOLD"</span>, <span class="at">main =</span> <span class="st">"大脑皮层"</span>, <span class="at">spaghetti =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(fmri1[, <span class="dv">6</span><span class="sc">:</span><span class="dv">9</span>], <span class="at">col =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">ylab =</span> <span class="st">"BOLD"</span>, <span class="at">main =</span> <span class="st">"丘脑和小脑"</span>, <span class="at">spaghetti =</span> <span class="cn">TRUE</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-fMRI" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-fMRI" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-fMRI-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-fMRI-1.png" class="img-fluid figure-img" width="672">
@@ -531,7 +531,7 @@ $class
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(fmri1[, <span class="dv">2</span><span class="sc">:</span><span class="dv">9</span>], <span class="at">col =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span>.<span class="dv">6</span>,.<span class="dv">6</span>))</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-fMRI_each" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-fMRI_each" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-fMRI_each-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-fMRI_each-1.png" class="img-fluid figure-img" width="672">
@@ -557,7 +557,7 @@ $class
 <span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">"seconds"</span>, <span class="at">side =</span> <span class="dv">1</span>, <span class="at">line =</span> <span class="fl">1.75</span>, <span class="at">cex =</span> .<span class="dv">9</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-fMRI_each_2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-fMRI_each_2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-fMRI_each_2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-fMRI_each_2-1.png" class="img-fluid figure-img" width="672">
@@ -578,7 +578,7 @@ $class
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(EQ5,  <span class="at">col =</span> <span class="dv">4</span>, <span class="at">main =</span> <span class="st">"地震"</span>)</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(EXP6, <span class="at">col =</span> <span class="dv">4</span>, <span class="at">main =</span> <span class="st">"爆炸"</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-earthquakes" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-earthquakes" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-earthquakes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-earthquakes-1.png" class="img-fluid figure-img" width="672">
@@ -607,7 +607,7 @@ $class
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(w, <span class="at">col =</span> <span class="dv">4</span>, <span class="at">main =</span> <span class="st">"white noise"</span>)</span>
 <span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(v, <span class="at">col =</span> <span class="dv">4</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>), <span class="at">main =</span> <span class="st">"moving average"</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-white_noise" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-white_noise" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-white_noise-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-white_noise-1.png" class="img-fluid figure-img" width="672">
@@ -642,7 +642,7 @@ $class
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> stats<span class="sc">::</span><span class="fu">filter</span>(w, <span class="at">filter =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span>.<span class="dv">9</span>), <span class="at">method =</span> <span class="st">"recursive"</span>)[<span class="sc">-</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>)]</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(x, <span class="at">col =</span> <span class="dv">4</span>, <span class="at">main =</span> <span class="st">"自回归"</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-autoregressions" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-autoregressions" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-autoregressions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-autoregressions-1.png" class="img-fluid figure-img" width="672">
@@ -676,7 +676,7 @@ x_t=\delta+x_{t-1}+w_t
 <span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="dv">4</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
 <span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> <span class="dv">0</span>, <span class="at">b =</span> .<span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-rw" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-rw" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-rw-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-rw-1.png" class="img-fluid figure-img" width="672">
@@ -711,7 +711,7 @@ A\cos(2\pi\omega t+\phi)
 <span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(cs <span class="sc">+</span> w, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">main =</span> <span class="fu">expression</span>(x[t] <span class="sc">==</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">cos</span>(<span class="dv">2</span> <span class="sc">*</span> pi <span class="sc">*</span> t <span class="sc">/</span> <span class="dv">50</span> <span class="sc">+</span> .<span class="dv">6</span> <span class="sc">*</span> pi) <span class="sc">+</span> <span class="fu">N</span>(<span class="dv">0</span>, <span class="dv">1</span>)))</span>
 <span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(cs <span class="sc">+</span> <span class="dv">5</span> <span class="sc">*</span> w, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">main =</span> <span class="fu">expression</span>(x[t] <span class="sc">==</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">cos</span>(<span class="dv">2</span> <span class="sc">*</span> pi <span class="sc">*</span> t <span class="sc">/</span> <span class="dv">50</span> <span class="sc">+</span> .<span class="dv">6</span> <span class="sc">*</span> pi) <span class="sc">+</span> <span class="fu">N</span>(<span class="dv">0</span>, <span class="dv">25</span>)))</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-cos" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-cos" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-cos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-cos-1.png" class="img-fluid figure-img" width="672">
@@ -1005,7 +1005,7 @@ U=\sum_{j=1}^ma_jX_j\ 和\ V=\sum_{k=1}^rb_kY_k
 <p>例子如<a href="#fig-chicken" class="quarto-xref">图&nbsp;14</a>所示。</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-chicken" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-chicken" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-chicken-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-chicken-1.png" class="img-fluid figure-img" width="672">
@@ -1205,7 +1205,7 @@ y_t=Ax_{t-\ell}+w_t
 <span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>( <span class="dv">9</span>, <span class="fl">1.1</span>, <span class="st">'x leads'</span>)</span>
 <span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="sc">-</span><span class="dv">8</span>, <span class="fl">1.1</span>, <span class="st">'y leads'</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-CCovF" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-CCovF" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-CCovF-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-CCovF-1.png" class="img-fluid figure-img" width="672">
@@ -1353,7 +1353,7 @@ x_t=\mu+\sum_{j=-\infty}^{\infty}\psi_jw_{t-j},\ \sum_{j=-\infty}^{\infty}|\psi_
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(stats<span class="sc">::</span><span class="fu">lag</span>(soi, <span class="sc">-</span><span class="dv">6</span>), soi, <span class="at">col =</span> <span class="dv">4</span>, <span class="at">type =</span> <span class="st">'p'</span>, <span class="at">xlab =</span> <span class="st">'lag(soi,-6)'</span>)</span>
 <span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a> <span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="at">legend =</span> r[<span class="dv">6</span>], <span class="at">bg =</span> <span class="st">"white"</span>, <span class="at">adj =</span> .<span class="dv">25</span>, <span class="at">cex =</span> <span class="fl">0.8</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-soi_acf" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-soi_acf" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-soi_acf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-soi_acf-1.png" class="img-fluid figure-img" width="672">
@@ -1439,7 +1439,7 @@ Autocorrelations of series 'y2', by lag
 <div class="cell">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">acf1</span>(speech, <span class="dv">250</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-speech_acf" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-speech_acf" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-speech_acf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-speech_acf-1.png" class="img-fluid figure-img" width="672">
@@ -1472,7 +1472,7 @@ Autocorrelations of series 'y2', by lag
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">acf1</span>(rec, <span class="at">main=</span><span class="st">"新鱼数量"</span>)</span>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ccf2</span>(soi, rec, <span class="at">main=</span><span class="st">"SOI vs 新鱼数量"</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-soirec_acf" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-soirec_acf" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-soirec_acf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-soirec_acf-1.png" class="img-fluid figure-img" width="672">
@@ -1504,7 +1504,7 @@ Autocorrelations of series 'y2', by lag
 <span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ccf2</span>(X, Y, <span class="dv">24</span>)</span>
 <span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ccf2</span>(X, Yw, <span class="dv">24</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span>.<span class="dv">6</span>, .<span class="dv">6</span>))</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-prewhitening" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-prewhitening" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-prewhitening-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-prewhitening-1.png" class="img-fluid figure-img" width="672">
@@ -1556,7 +1556,7 @@ Autocorrelations of series 'y2', by lag
 <span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">zlab =</span> <span class="st">"temperature"</span></span>
 <span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-earthtam2d" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-earthtam2d" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-earthtam2d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-earthtam2d-1.png" class="img-fluid figure-img" width="672">
@@ -1572,7 +1572,7 @@ Autocorrelations of series 'y2', by lag
 <div class="cell">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(<span class="fu">rowMeans</span>(soiltemp), <span class="at">xlab =</span> <span class="st">"row"</span>, <span class="at">ylab =</span> <span class="st">"Average Temperature"</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-earthtamrow" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-earthtamrow" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-earthtamrow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-earthtamrow-1.png" class="img-fluid figure-img" width="672">
@@ -1665,18 +1665,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1708,7 +1697,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -1716,7 +1727,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {

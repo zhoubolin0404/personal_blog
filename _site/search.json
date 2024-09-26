@@ -49,6 +49,41 @@
     "text": "2.4 使用回归发现噪声中的信号\n第一章2.5小节中我们根据下面的模型生成了500个观测值。\n\\[\nx_t=A\\cos(2\\pi\\omega t+\\phi)+w_t\n\\]\n其中\\(\\omega=1/50\\)，\\(A=2\\)，\\(\\phi=0.6\\pi\\)，\\(\\sigma_w=5\\)。也就是：\n\\[\nx_t=2\\cos(2\\pi\\frac{t+15}{50})+w_t\n\\]\n假设\\(\\omega=1/50\\)已知，\\(A\\)和\\(\\phi\\)是未知参数。可以得到：\n\\[\nA\\cos(2\\pi\\omega t+\\phi)=\\beta_1\\cos(2\\pi\\omega t)+\\beta_2\\sin(2\\pi\\omega t)\n\\]\n其中\\(\\beta_1=A\\cos(\\phi)\\)，\\(\\beta_2=-A\\sin(\\phi)\\)。\n\nset.seed(90210)\nx = 2 * cos(2 * pi * 1:500 / 50 + 0.6 * pi) + rnorm(500, 0, 5)\nz1 = cos(2 * pi * 1:500 / 50)\nz2 = sin(2 * pi * 1:500 / 50)\nsum_fit = summary(fit &lt;- lm(x ~ 0 + z1 + z2))\nsum_fit\n\n\nCall:\nlm(formula = x ~ 0 + z1 + z2)\n\nResiduals:\n     Min       1Q   Median       3Q      Max \n-14.8584  -3.8525  -0.3186   3.3487  15.5440 \n\nCoefficients:\n   Estimate Std. Error t value      Pr(&gt;|t|)    \nz1  -0.7442     0.3274  -2.273        0.0235 *  \nz2  -1.9949     0.3274  -6.093 0.00000000223 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 5.177 on 498 degrees of freedom\nMultiple R-squared:  0.07827,   Adjusted R-squared:  0.07456 \nF-statistic: 21.14 on 2 and 498 DF,  p-value: 0.000000001538\n\n\n得到\\(\\hat\\beta_1\\)为-0.744，\\(\\hat\\beta_2\\)为-1.995。而实际值为\\(\\beta_1=2\\cos(0.6\\pi)\\approx-0.62\\)和\\(\\beta_2=-2\\sin(0.6\\pi)\\approx-1.90\\)。可见即使信噪比很小，我们也可以使用回归找出其中的信号。图 18展示了拟合结果。\n\ntsplot(x, col=astsa.col(4,.7), ylab=expression(hat(x)))\nlines(fitted(fit), col=2, lwd=2)\n\n\n\n\n\n\n\n图 18: 拟合结果"
   },
   {
+    "objectID": "posts/time_series_2/Chapter_2.html#移动平均平滑",
+    "href": "posts/time_series_2/Chapter_2.html#移动平均平滑",
+    "title": "时间序列分析：第二章",
+    "section": "3.1 移动平均平滑",
+    "text": "3.1 移动平均平滑\n\\(x_t\\)为观测值，那么\n\\[\nm_t=\\sum_{j=-k}^k a_jx_{t-j}\n\\tag{12}\\]\n是数据的对称移动平均值，其中\\(a_j=a_{-j}\\ge0\\)且\\(\\sum_{j=-k}^k a_j=1\\)。\n\n\n\n\n\n\n提示\n\n\n\n式 12可以理解为\\(x_t\\)及其前\\(k\\)个和后\\(k\\)个数据加权后取平均，且加权值是对称的。\n\n\n图 19展示了月度SOI序列，使用式 12进行平滑，权重为\\(a_0=a_{\\pm1}=\\cdots=a_{\\pm5}=1/12\\)，\\(a_{\\pm6}=1/24\\)，\\(k=6\\)。这种方法消除了明显的年度温度循环，有助于强调厄尔尼诺循环。\n\n\n\n\n\n\n提示\n\n\n\n\\(k=6\\)差不多涵盖了一年，\\(a_{\\pm6}=1/24\\)让一年边缘的数值更小，可以减缓年度变换的波动。\n\n\n\nwgts = c(.5, rep(1,11), .5)/12\nsoif = stats::filter(soi, sides=2, filter=wgts)\ntsplot(soi, col=4)\nlines(soif, lwd=2, col=6)\npar(fig = c(.75, 1, .75, 1), new = TRUE)\nnwgts = c(rep(0,20), wgts, rep(0,20))\nplot(nwgts, type=\"l\", ylim = c(-.02,.1), xaxt='n', yaxt='n', ann=FALSE)\n\n\n\n\n\n\n\n图 19: SOI移动平均平滑\n\n\n\n\n\n图 19右上角展示了{#eq-2_37}“boxcar”类型权重的形状(未按比例绘制)。\n这种处理方法可以突出厄尔尼诺现象，但看起来波动太大，可以使用正态分布权重来获得更平滑的拟合。"
+  },
+  {
+    "objectID": "posts/time_series_2/Chapter_2.html#核平滑kernel-smoothing",
+    "href": "posts/time_series_2/Chapter_2.html#核平滑kernel-smoothing",
+    "title": "时间序列分析：第二章",
+    "section": "3.2 核平滑(Kernel Smoothing)",
+    "text": "3.2 核平滑(Kernel Smoothing)\n核平滑是一种移动平均平滑器，使用权重函数或核函数来平均观测值。\n\\[\nm_t=\\sum_{i=1}^nw_i(t)x_i\n\\]\n其中\n\\[\nw_i(t)=K\\left(\\frac{t-i}{b}\\right)\\bigg/\\sum_{j=1}^nK\\left(\\frac{t-j}{b}\\right)\n\\tag{13}\\]\n是权重，\\(K(\\bullet)\\)是核函数。实例中我们常用的是正态核\\(K(z)=\\frac{1}{\\sqrt{2\\pi}}\\exp(-z^2/2)\\)。\nR中可以使用ksmooth函数来实现核平滑。\n\n\n\n\n\n\n提示\n\n\n\n\nksmooth(x,  # 通常是时间\n        y,  # 值\n        kernel = c(\"box\", \"normal\"),  # 核函数的类型\n        bandwidth,  # 带宽\n        range.x,  # 自变量的取值范围\n        n.points = 100)  # 输出的平滑曲线上的点的数量\n\n\n\n带宽是式 13中的\\(b\\)，其作用是对核进行缩放，使四分位数为0.25*带宽，带宽越大，平滑效果越强，趋势越明显，但细节可能被忽略；带宽越小，平滑程度越弱，噪声保留得更多。标准正态分布的四分位数约为\\(\\pm0.674\\)。\n图 20展示了\\(b=1\\)对应一年的平滑。\n\ntsplot(soi, col=4)\nlines(ksmooth(time(soi), soi, \"normal\", bandwidth=1), lwd=2, col=6)\npar(fig = c(.75, 1, .75, 1), new = TRUE)\ncurve(dnorm, -3, 3,  xaxt='n', yaxt='n', ann=FALSE)\n\n\n\n\n\n\n\n图 20: SOI核平滑"
+  },
+  {
+    "objectID": "posts/time_series_2/Chapter_2.html#lowess",
+    "href": "posts/time_series_2/Chapter_2.html#lowess",
+    "title": "时间序列分析：第二章",
+    "section": "3.3 lowess",
+    "text": "3.3 lowess\n平滑时间图的另一种方法是最近邻回归(nearest neighbor regression)。简单来说\\(k\\)-最近邻回归就是使用\\(\\{x_{t-k/2},\\ \\cdots,\\ x_t,\\ \\cdots,\\ x_{t+k/2}\\}\\)进行回归来预测\\(x_t\\)，然后设置\\(m_t=\\hat x_t\\)。\nlowess是一种很复杂的平滑方法，但基本思想类似最近邻回归。lowess通过局部加权回归拟合每个数据点的邻域。在每个点周围选择一定比例的相邻点，给这些点赋予权重，离中心点越近的点权重越大，离得越远的点权重越小。然后在该局部范围内拟合一个线性回归模型，并用这个局部模型预测当前点的平滑值。\nR中可以使用lowess函数来实现核平滑。\n\n\n\n\n\n\n提示\n\n\n\n\nlowess(x,\n       y,\n       f = 2 / 3,  # 平滑参数，控制平滑的程度。\n       iter = 3,  # 迭代次数，用于减少异常值的影响\n       delta = 0.01 * diff(range(x)))  # 一个用于减少计算量的参数，但对结果的精确度影响很小\n\nf值表示选取周围占整体数据比重多少的值进行估计。\n\n较大的f值会使用更多的邻域点，生成较为平滑的曲线，适合总体趋势比较平缓的数据。\n较小的f值会使用更少的邻域点，生成较为敏感的曲线，更好地捕捉局部细节和急剧变化，但容易受到噪声的影响。\n\n\n\n\ntrend(soi, lowess=TRUE)\nlines(lowess(soi, f=.05), lwd=2, col=6)\n\n\n\n\n\n\n\n图 21: SOI局部加权散点图平滑(lowess)\n\n\n\n\n\n图 21中，较为平缓的线是\\(f=2/3\\)默认值时的情况，较为曲折的线是\\(f=0.05\\)，即使用5%数据获得估计值时的情况。前者可以观察到太平洋长期变暖，后者可以观察厄尔尼诺现象。"
+  },
+  {
+    "objectID": "posts/time_series_2/Chapter_2.html#平滑样条smoothing-splines",
+    "href": "posts/time_series_2/Chapter_2.html#平滑样条smoothing-splines",
+    "title": "时间序列分析：第二章",
+    "section": "3.4 平滑样条(Smoothing Splines)",
+    "text": "3.4 平滑样条(Smoothing Splines)\n平滑样条的核心思想是通过最小化一个损失函数来找到一条平滑的曲线，该损失函数可以兼顾数据的拟合度和曲线的光滑性。\n使用平滑样条进行平滑，首先是使用一个和时间\\(t\\)相关的三次项\\(m_t\\)来估计\\(x_t\\)。即：\n\\[\nm_t=\\beta_0+\\beta_1t+\\beta_2t^2+\\beta_3t^3\n\\]\n而\\(x_t=m_t+w_t\\)。\n在此基础上，将时间划分进\\(k\\)个区间，即\\([t_0=1,t_1],\\ [t_1+1,t_2], \\cdots,\\ [t_{k-1}+1,t_k=n]\\)。\\(t_0,\\ t_1,\\  \\cdots,\\ t_k\\)被成为节点(knot)。在每个区间中进行上述的拟合，因为阶数为3，所以叫三次样条(cubic splines)。\n之后是构建损失函数：\n\\[\n\\sum_{t=1}^n[x_t-m_t]^2+\\lambda\\int(m_t'')^2\\operatorname{d}t\n\\]\n其中\\(m_t\\)是每个\\(t\\)组成的区间里的三次样条，\\(\\lambda&gt;0\\)。\n用开车来理解公式，\\(m_t\\)就是车在时间\\(t\\)处的距离，\\(m_t''\\)就是瞬时加速度，\\(\\int(m_t'')^2\\operatorname{d}t\\)反映了加速和减速的总量，越小说明速度越平缓，反映到函数上就是越平滑。\\(\\lambda\\)是加速和减速的总量的权重，主要进行调整的参数。\n\\(\\sum_{t=1}^n[x_t-m_t]^2\\)部分表示拟合，\\(\\lambda\\int(m_t'')^2\\operatorname{d}t\\)部分表示平滑程度，两者之和最小就是在当前\\(\\lambda\\)下拟合和平滑程度整体的最优解。\nR中可以使用smooth.spline函数来实现lowess。\n\n\n\n\n\n\n提示\n\n\n\n\nsmooth.spline(x, y, \n              spar = NULL,  # 平滑参数，控制平滑程度(不等于$\\lambda$)\n              df = NULL, ...)  # 自由度，控制平滑度的另一种方式，spar和df不能同时使用\n\n更多信息使用?smooth.spline查看。\n\n\n图 22中直线spar值为0.5，虚线spar值为1。\n\ntsplot(soi)\nlines(smooth.spline(time(soi), soi, spar=0.5), lwd=2, col=4)\nlines(smooth.spline(time(soi), soi, spar= 1), lty=2, lwd=2, col=2)\n\n\n\n\n\n\n\n图 22: SOI平滑样条"
+  },
+  {
+    "objectID": "posts/time_series_2/Chapter_2.html#平滑一个序列作为另一个序列的函数",
+    "href": "posts/time_series_2/Chapter_2.html#平滑一个序列作为另一个序列的函数",
+    "title": "时间序列分析：第二章",
+    "section": "3.5 平滑一个序列作为另一个序列的函数",
+    "text": "3.5 平滑一个序列作为另一个序列的函数\n使用小节 1.2.2中的例子进行展示。图 23是用lowess平滑的\\(M_t\\)作为\\(T_t\\)的函数。\n\ntsplot(tempr, cmort, type=\"p\", xlab=\"Temperature\", ylab=\"Mortality\", pch=20, col=4)\nlines(lowess(tempr, cmort), col=6, lwd=2)\n\n\n\n\n\n\n\n图 23: lowess平滑后的死亡率作为温度的函数\n\n\n\n\n\n可见在极端温度下死亡率会增高，且极端低温死亡率高于极端高温，最低死亡率出现在80-90℉之间。"
+  },
+  {
     "objectID": "posts/time_series/index.html",
     "href": "posts/time_series/index.html",
     "title": "时间序列分析：第一章",
@@ -242,7 +277,7 @@
     "href": "index.html",
     "title": "周博霖",
     "section": "",
-    "text": "时间序列分析：第二章\n\n\n时间序列回归和探索性数据分析\n\n\n\n学习笔记\n\n\n统计方法\n\n\n时间序列分析\n\n\n\n\n\n\n\n\n\nSep 11, 2024\n\n\n周博霖\n\n\n\n\n\n\n\n\n\n\n\n\nSDM-PSI Reference Manual(中文翻译)\n\n\n\n\n\n\nmeta\n\n\nSDM-PSI\n\n\n\n\n\n\n\n\n\nSep 9, 2024\n\n\n周博霖\n\n\n\n\n\n\n\n\n\n\n\n\n时间序列分析：第一章习题答案\n\n\n\n\n\n\n学习笔记\n\n\n统计方法\n\n\n时间序列分析\n\n\n\n\n\n\n\n\n\nSep 7, 2024\n\n\n周博霖\n\n\n\n\n\n\n\n\n\n\n\n\n时间序列分析：第一章\n\n\n时间序列的特征\n\n\n\n学习笔记\n\n\n统计方法\n\n\n时间序列分析\n\n\n\n\n\n\n\n\n\nSep 6, 2024\n\n\n周博霖\n\n\n\n\n\n\n\n\n\n\n\n\n心理语言学\n\n\n\n\n\n\n学习笔记\n\n\n心理语言学\n\n\n\n\n\n\n\n\n\nAug 9, 2024\n\n\n周博霖\n\n\n\n\n\n\n无匹配项"
+    "text": "时间序列分析：第二章\n\n\n时间序列回归和探索性数据分析\n\n\n\n学习笔记\n\n\n统计方法\n\n\n时间序列分析\n\n\n\n\n\n\n\n\n\nSep 26, 2024\n\n\n周博霖\n\n\n\n\n\n\n\n\n\n\n\n\n时间序列分析：第一章习题答案\n\n\n\n\n\n\n学习笔记\n\n\n统计方法\n\n\n时间序列分析\n\n\n\n\n\n\n\n\n\nSep 20, 2024\n\n\n周博霖\n\n\n\n\n\n\n\n\n\n\n\n\nSDM-PSI Reference Manual(中文翻译)\n\n\n\n\n\n\nmeta\n\n\nSDM-PSI\n\n\n\n\n\n\n\n\n\nSep 9, 2024\n\n\n周博霖\n\n\n\n\n\n\n\n\n\n\n\n\n时间序列分析：第一章\n\n\n时间序列的特征\n\n\n\n学习笔记\n\n\n统计方法\n\n\n时间序列分析\n\n\n\n\n\n\n\n\n\nSep 6, 2024\n\n\n周博霖\n\n\n\n\n\n\n\n\n\n\n\n\n心理语言学\n\n\n\n\n\n\n学习笔记\n\n\n心理语言学\n\n\n\n\n\n\n\n\n\nAug 9, 2024\n\n\n周博霖\n\n\n\n\n\n\n无匹配项"
   },
   {
     "objectID": "posts/SDM-PSI/SDM-PSI.html",

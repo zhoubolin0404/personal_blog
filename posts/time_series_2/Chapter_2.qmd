@@ -2,7 +2,7 @@
 title: "时间序列分析：第二章"
 subtitle: "时间序列回归和探索性数据分析"
 author: "周博霖"
-date: "2024/9/11"
+date: "2024/9/26"
 categories: [学习笔记,统计方法,时间序列分析]
 image: "cover.png"
 bibliography: references.bib
@@ -258,7 +258,7 @@ $$
 AIC和BIC的具体值并不是关注的重点，更需要关注的是一组模型中，同一算法下值的变化，值越小越好。
 :::
 
-### 模型选择
+### 模型选择{#sec-1}
 
 [@fig-card]展示1970-1979年间洛杉矶温度、污染和心血管死亡率的变化。展现出强烈的对于冬夏季节的变化，且死亡率整体为下降趋势。
 
@@ -737,3 +737,176 @@ sum_fit
 tsplot(x, col=astsa.col(4,.7), ylab=expression(hat(x)))
 lines(fitted(fit), col=2, lwd=2)
 ```
+
+# 时间序列中的平滑
+
+## 移动平均平滑
+
+$x_t$为观测值，那么
+
+$$
+m_t=\sum_{j=-k}^k a_jx_{t-j}
+$${#eq-2_37}
+
+是数据的对称移动平均值，其中$a_j=a_{-j}\ge0$且$\sum_{j=-k}^k a_j=1$。
+
+:::{.callout-tip}
+[@eq-2_37]可以理解为$x_t$及其前$k$个和后$k$个数据加权后取平均，且加权值是对称的。
+:::
+
+[@fig-2_12]展示了月度SOI序列，使用[@eq-2_37]进行平滑，权重为$a_0=a_{\pm1}=\cdots=a_{\pm5}=1/12$，$a_{\pm6}=1/24$，$k=6$。这种方法消除了明显的年度温度循环，有助于强调厄尔尼诺循环。
+
+:::{.callout-tip}
+$k=6$差不多涵盖了一年，$a_{\pm6}=1/24$让一年边缘的数值更小，可以减缓年度变换的波动。
+:::
+
+```{r}
+#| label: fig-2_12
+#| fig-cap: SOI移动平均平滑
+wgts = c(.5, rep(1,11), .5)/12
+soif = stats::filter(soi, sides=2, filter=wgts)
+tsplot(soi, col=4)
+lines(soif, lwd=2, col=6)
+par(fig = c(.75, 1, .75, 1), new = TRUE)
+nwgts = c(rep(0,20), wgts, rep(0,20))
+plot(nwgts, type="l", ylim = c(-.02,.1), xaxt='n', yaxt='n', ann=FALSE)
+```
+
+[@fig-2_12]右上角展示了{#eq-2_37}"boxcar"类型权重的形状(未按比例绘制)。
+
+这种处理方法可以突出厄尔尼诺现象，但看起来波动太大，可以使用正态分布权重来获得更平滑的拟合。
+
+## 核平滑(Kernel Smoothing)
+
+核平滑是一种移动平均平滑器，使用权重函数或核函数来平均观测值。
+
+$$
+m_t=\sum_{i=1}^nw_i(t)x_i
+$$
+
+其中
+
+$$
+w_i(t)=K\left(\frac{t-i}{b}\right)\bigg/\sum_{j=1}^nK\left(\frac{t-j}{b}\right)
+$${#eq-2_39}
+
+是权重，$K(\bullet)$是核函数。实例中我们常用的是正态核$K(z)=\frac{1}{\sqrt{2\pi}}\exp(-z^2/2)$。
+
+`R`中可以使用`ksmooth`函数来实现核平滑。
+
+:::{.callout-tip}
+```{r,eval=FALSE}
+ksmooth(x,  # 通常是时间
+        y,  # 值
+        kernel = c("box", "normal"),  # 核函数的类型
+        bandwidth,  # 带宽
+        range.x,  # 自变量的取值范围
+        n.points = 100)  # 输出的平滑曲线上的点的数量
+```
+:::
+
+带宽是[@eq-2_39]中的$b$，其作用是对核进行缩放，使四分位数为0.25*带宽，带宽越大，平滑效果越强，趋势越明显，但细节可能被忽略；带宽越小，平滑程度越弱，噪声保留得更多。标准正态分布的四分位数约为$\pm0.674$。
+
+[@fig-2_13]展示了$b=1$对应一年的平滑。
+
+```{r}
+#| label: fig-2_13
+#| fig-cap: SOI核平滑
+tsplot(soi, col=4)
+lines(ksmooth(time(soi), soi, "normal", bandwidth=1), lwd=2, col=6)
+par(fig = c(.75, 1, .75, 1), new = TRUE)
+curve(dnorm, -3, 3,  xaxt='n', yaxt='n', ann=FALSE)
+```
+
+## lowess
+
+平滑时间图的另一种方法是最近邻回归(nearest neighbor regression)。简单来说$k$-最近邻回归就是使用$\{x_{t-k/2},\ \cdots,\ x_t,\ \cdots,\ x_{t+k/2}\}$进行回归来预测$x_t$，然后设置$m_t=\hat x_t$。
+
+lowess是一种很复杂的平滑方法，但基本思想类似最近邻回归。lowess通过局部加权回归拟合每个数据点的邻域。在每个点周围选择一定比例的相邻点，给这些点赋予权重，离中心点越近的点权重越大，离得越远的点权重越小。然后在该局部范围内拟合一个线性回归模型，并用这个局部模型预测当前点的平滑值。
+
+`R`中可以使用`lowess`函数来实现核平滑。
+
+:::{.callout-tip}
+```{r,eval=FALSE}
+lowess(x,
+       y,
+       f = 2 / 3,  # 平滑参数，控制平滑的程度。
+       iter = 3,  # 迭代次数，用于减少异常值的影响
+       delta = 0.01 * diff(range(x)))  # 一个用于减少计算量的参数，但对结果的精确度影响很小
+```
+f值表示选取周围占整体数据比重多少的值进行估计。
+
+- 较大的f值会使用更多的邻域点，生成较为平滑的曲线，适合总体趋势比较平缓的数据。
+
+- 较小的f值会使用更少的邻域点，生成较为敏感的曲线，更好地捕捉局部细节和急剧变化，但容易受到噪声的影响。
+:::
+
+```{r}
+#| label: fig-2_14
+#| fig-cap: SOI局部加权散点图平滑(lowess)
+trend(soi, lowess=TRUE)
+lines(lowess(soi, f=.05), lwd=2, col=6)
+```
+
+[@fig-2_14]中，较为平缓的线是$f=2/3$默认值时的情况，较为曲折的线是$f=0.05$，即使用5%数据获得估计值时的情况。前者可以观察到太平洋长期变暖，后者可以观察厄尔尼诺现象。
+
+## 平滑样条(Smoothing Splines)
+
+平滑样条的核心思想是通过最小化一个损失函数来找到一条平滑的曲线，该损失函数可以兼顾数据的拟合度和曲线的光滑性。
+
+使用平滑样条进行平滑，首先是使用一个和时间$t$相关的三次项$m_t$来估计$x_t$。即：
+
+$$
+m_t=\beta_0+\beta_1t+\beta_2t^2+\beta_3t^3
+$$
+
+而$x_t=m_t+w_t$。
+
+在此基础上，将时间划分进$k$个区间，即$[t_0=1,t_1],\ [t_1+1,t_2], \cdots,\ [t_{k-1}+1,t_k=n]$。$t_0,\ t_1,\  \cdots,\ t_k$被成为节点(knot)。在每个区间中进行上述的拟合，因为阶数为3，所以叫三次样条(cubic splines)。
+
+之后是构建损失函数：
+
+$$
+\sum_{t=1}^n[x_t-m_t]^2+\lambda\int(m_t'')^2\operatorname{d}t
+$$
+
+其中$m_t$是每个$t$组成的区间里的三次样条，$\lambda>0$。
+
+用开车来理解公式，$m_t$就是车在时间$t$处的距离，$m_t''$就是瞬时加速度，$\int(m_t'')^2\operatorname{d}t$反映了加速和减速的总量，越小说明速度越平缓，反映到函数上就是越平滑。$\lambda$是加速和减速的总量的权重，主要进行调整的参数。
+
+$\sum_{t=1}^n[x_t-m_t]^2$部分表示拟合，$\lambda\int(m_t'')^2\operatorname{d}t$部分表示平滑程度，两者之和最小就是在当前$\lambda$下拟合和平滑程度整体的最优解。
+
+`R`中可以使用`smooth.spline`函数来实现lowess。
+
+:::{.callout-tip}
+```{r,eval=FALSE}
+smooth.spline(x, y, 
+              spar = NULL,  # 平滑参数，控制平滑程度(不等于$\lambda$)
+              df = NULL, ...)  # 自由度，控制平滑度的另一种方式，spar和df不能同时使用
+```
+
+更多信息使用`?smooth.spline`查看。
+:::
+
+[@fig-2_15]中直线`spar`值为0.5，虚线`spar`值为1。
+
+```{r}
+#| label: fig-2_15
+#| fig-cap: SOI平滑样条
+tsplot(soi)
+lines(smooth.spline(time(soi), soi, spar=0.5), lwd=2, col=4)
+lines(smooth.spline(time(soi), soi, spar= 1), lty=2, lwd=2, col=2)
+```
+
+## 平滑一个序列作为另一个序列的函数
+
+使用[@sec-1]中的例子进行展示。[@fig-2_16]是用lowess平滑的$M_t$作为$T_t$的函数。
+
+```{r}
+#| label: fig-2_16
+#| fig-cap: lowess平滑后的死亡率作为温度的函数
+tsplot(tempr, cmort, type="p", xlab="Temperature", ylab="Mortality", pch=20, col=4)
+lines(lowess(tempr, cmort), col=6, lwd=2)
+```
+
+可见在极端温度下死亡率会增高，且极端低温死亡率高于极端高温，最低死亡率出现在80-90℉之间。

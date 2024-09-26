@@ -1,7 +1,7 @@
 ---
 title: "时间序列分析：第一章习题答案"
 author: "周博霖"
-date: "2024/9/7"
+date: "2024/9/20"
 categories: [学习笔记,统计方法,时间序列分析]
 image: "cover.png"
 bibliography: references.bib

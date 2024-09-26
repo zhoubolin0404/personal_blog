@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.555">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="周博霖">
-<meta name="dcterms.date" content="2024-09-11">
+<meta name="dcterms.date" content="2024-09-26">
 
-<title>Zhou Bolin’s blog - 时间序列分析：第二章</title>
+<title>时间序列分析：第二章 – Zhou Bolin’s blog</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -35,7 +35,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -123,7 +123,7 @@ div.csl-indent {
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -168,7 +168,7 @@ window.Quarto = {
     </a>
   </div>
             <div id="quarto-search" class="" title="搜索"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="展开或折叠导航栏" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="展开或折叠导航栏" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -184,7 +184,7 @@ window.Quarto = {
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -216,7 +216,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">发布于</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">September 11, 2024</p>
+        <p class="date">September 26, 2024</p>
       </div>
     </div>
     
@@ -238,7 +238,7 @@ window.Quarto = {
   <li><a href="#多元线性回归" id="toc-多元线性回归" class="nav-link" data-scroll-target="#多元线性回归"><span class="header-section-number">1.2</span> 多元线性回归</a>
   <ul class="collapse">
   <li><a href="#信息准则" id="toc-信息准则" class="nav-link" data-scroll-target="#信息准则"><span class="header-section-number">1.2.1</span> 信息准则</a></li>
-  <li><a href="#模型选择" id="toc-模型选择" class="nav-link" data-scroll-target="#模型选择"><span class="header-section-number">1.2.2</span> 模型选择</a></li>
+  <li><a href="#sec-1" id="toc-sec-1" class="nav-link" data-scroll-target="#sec-1"><span class="header-section-number">1.2.2</span> 模型选择</a></li>
   <li><a href="#sec-lagreg" id="toc-sec-lagreg" class="nav-link" data-scroll-target="#sec-lagreg"><span class="header-section-number">1.2.3</span> 滞后回归(Lagged Regression)</a></li>
   </ul></li>
   </ul></li>
@@ -255,6 +255,14 @@ window.Quarto = {
   <li><a href="#散点图矩阵" id="toc-散点图矩阵" class="nav-link" data-scroll-target="#散点图矩阵"><span class="header-section-number">2.2</span> 散点图矩阵</a></li>
   <li><a href="#滞后回归续" id="toc-滞后回归续" class="nav-link" data-scroll-target="#滞后回归续"><span class="header-section-number">2.3</span> 滞后回归(续)</a></li>
   <li><a href="#使用回归发现噪声中的信号" id="toc-使用回归发现噪声中的信号" class="nav-link" data-scroll-target="#使用回归发现噪声中的信号"><span class="header-section-number">2.4</span> 使用回归发现噪声中的信号</a></li>
+  </ul></li>
+  <li><a href="#时间序列中的平滑" id="toc-时间序列中的平滑" class="nav-link" data-scroll-target="#时间序列中的平滑"><span class="header-section-number">3</span> 时间序列中的平滑</a>
+  <ul class="collapse">
+  <li><a href="#移动平均平滑" id="toc-移动平均平滑" class="nav-link" data-scroll-target="#移动平均平滑"><span class="header-section-number">3.1</span> 移动平均平滑</a></li>
+  <li><a href="#核平滑kernel-smoothing" id="toc-核平滑kernel-smoothing" class="nav-link" data-scroll-target="#核平滑kernel-smoothing"><span class="header-section-number">3.2</span> 核平滑(Kernel Smoothing)</a></li>
+  <li><a href="#lowess" id="toc-lowess" class="nav-link" data-scroll-target="#lowess"><span class="header-section-number">3.3</span> lowess</a></li>
+  <li><a href="#平滑样条smoothing-splines" id="toc-平滑样条smoothing-splines" class="nav-link" data-scroll-target="#平滑样条smoothing-splines"><span class="header-section-number">3.4</span> 平滑样条(Smoothing Splines)</a></li>
+  <li><a href="#平滑一个序列作为另一个序列的函数" id="toc-平滑一个序列作为另一个序列的函数" class="nav-link" data-scroll-target="#平滑一个序列作为另一个序列的函数"><span class="header-section-number">3.5</span> 平滑一个序列作为另一个序列的函数</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -322,7 +330,7 @@ x_t=\beta_0+\beta_1z_{t1}+\beta_2z_{t2}+\cdots+\beta_qz_{tq}+w_t
 <p><a href="#fig-chicken" class="quarto-xref">图&nbsp;1</a>展示了2001年8月到2016年7月美国某码头鸡肉每月价格，直线是线性回归的拟合。</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-chicken" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-chicken" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-chicken-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Chapter_2_files/figure-html/fig-chicken-1.png" class="img-fluid figure-img" width="672">
@@ -444,7 +452,7 @@ F=\frac{(\operatorname{SSE}_r-\operatorname{SSE}/(q-r))}{\operatorname{SSE}/(n-q
 \]</span></p>
 <p>在自由度为<span class="math inline">\(q-r\)</span>和<span class="math inline">\(n-q-1\)</span>的<span class="math inline">\(F\)</span>分布中进行检验。</p>
 <p>整体逻辑是看添加上其他自变量，是否显著增加拟合效果。如果<span class="math inline">\(\operatorname{H}_0\)</span>为真，则可以化简模型，反之则不可以。</p>
-<div id="tbl-ranova" class="quarto-float anchored">
+<div id="tbl-ranova" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ranova-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 表&nbsp;1: 回归分析的方差分析
@@ -552,12 +560,12 @@ R^2=\frac{\operatorname{SSE}_0-\operatorname{SSE}}{\operatorname{SSE}_0}\\
 </div>
 </section>
 </section>
-<section id="模型选择" class="level3" data-number="1.2.2">
-<h3 data-number="1.2.2" class="anchored" data-anchor-id="模型选择"><span class="header-section-number">1.2.2</span> 模型选择</h3>
+<section id="sec-1" class="level3" data-number="1.2.2">
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="sec-1"><span class="header-section-number">1.2.2</span> 模型选择</h3>
 <p><a href="#fig-card" class="quarto-xref">图&nbsp;2</a>展示1970-1979年间洛杉矶温度、污染和心血管死亡率的变化。展现出强烈的对于冬夏季节的变化，且死亡率整体为下降趋势。</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-card" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-card" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-card-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Chapter_2_files/figure-html/fig-card-1.png" class="img-fluid figure-img" width="672">
@@ -571,7 +579,7 @@ R^2=\frac{\operatorname{SSE}_0-\operatorname{SSE}}{\operatorname{SSE}_0}\\
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-cardcor" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-cardcor" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-cardcor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Chapter_2_files/figure-html/fig-cardcor-1.png" class="img-fluid figure-img" width="672">
@@ -594,7 +602,7 @@ M_t=\beta_0+\beta_1t+\beta_2(T_t-T.)+\beta_3(T_t-T.)^2+w_t
 M_t=\beta_0+\beta_1t+\beta_2(T_t-T.)+\beta_3(T_t-T.)^2+\beta_4P_t+w_t
 \tag{7}\]</span></span></p>
 <p><a href="#eq-2_18" class="quarto-xref">式&nbsp;4</a>是简单的趋势模型；<a href="#eq-2_19" class="quarto-xref">式&nbsp;5</a>额外添加了线性的温度变量；<a href="#eq-2_20" class="quarto-xref">式&nbsp;6</a>温度变量是二次的；<a href="#eq-2_21" class="quarto-xref">式&nbsp;7</a>还添加了污染变量。</p>
-<div id="tbl-mort" class="quarto-float anchored">
+<div id="tbl-mort" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mort-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 表&nbsp;2: 模型汇总
@@ -711,7 +719,7 @@ F-statistic:   185 on 4 and 503 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ccf2</span>(soi, rec, <span class="at">main=</span><span class="st">"SOI vs 新鱼数量"</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-soirec_ccf" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-soirec_ccf" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-soirec_ccf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Chapter_2_files/figure-html/fig-soirec_ccf-1.png" class="img-fluid figure-img" width="672">
@@ -788,7 +796,7 @@ F-statistic: 253.5 on 1 and 445 DF,  p-value: &lt; 2.2e-16</code></pre>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(<span class="fu">resid</span>(fit))</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">acf1</span>(<span class="fu">resid</span>(fit))</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-soiresid" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-soiresid" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-soiresid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Chapter_2_files/figure-html/fig-soiresid-1.png" class="img-fluid figure-img" width="672">
@@ -838,7 +846,7 @@ x_t=\mu_t+y_t
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(<span class="fu">detrend</span>(chicken), <span class="at">main =</span> <span class="st">"去趋势"</span>)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(<span class="fu">diff</span>(chicken), <span class="at">main =</span> <span class="st">"差分"</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-chicken_detrended" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-chicken_detrended" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-chicken_detrended-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Chapter_2_files/figure-html/fig-chicken_detrended-1.png" class="img-fluid figure-img" width="672">
@@ -856,7 +864,7 @@ x_t=\mu_t+y_t
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">acf1</span>(<span class="fu">detrend</span>(chicken), <span class="dv">48</span>, <span class="at">main =</span> <span class="st">"去趋势"</span>)</span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">acf1</span>(<span class="fu">diff</span>(chicken), <span class="dv">48</span>, <span class="at">main =</span> <span class="st">"差分"</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-chicken_detrendedacf" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-chicken_detrendedacf" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-chicken_detrendedacf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Chapter_2_files/figure-html/fig-chicken_detrendedacf-1.png" class="img-fluid figure-img" width="672">
@@ -921,7 +929,7 @@ x_t=B^{-1}Bx_t=B^{-1}x_{t-1}
 <p><a href="#fig-gm" class="quarto-xref">图&nbsp;8</a>看起来像随机游走，对其进行差分，结果如<a href="#fig-gmacf" class="quarto-xref">图&nbsp;9</a>所示。</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-gm" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-gm" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-gm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Chapter_2_files/figure-html/fig-gm-1.png" class="img-fluid figure-img" width="672">
@@ -938,7 +946,7 @@ x_t=B^{-1}Bx_t=B^{-1}x_{t-1}
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(<span class="fu">diff</span>(gtemp_land), <span class="at">type =</span> <span class="st">"o"</span>)</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">acf1</span>(<span class="fu">diff</span>(gtemp_land), <span class="dv">48</span>, <span class="at">main =</span> <span class="st">""</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-gmacf" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-gmacf" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-gmacf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Chapter_2_files/figure-html/fig-gmacf-1.png" class="img-fluid figure-img" width="672">
@@ -983,7 +991,7 @@ y_t=\begin{cases}
 <span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">log</span>(varve), <span class="at">main=</span><span class="st">""</span>, <span class="at">col=</span><span class="dv">4</span>)</span>
 <span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a> <span class="fu">qqline</span>(<span class="fu">log</span>(varve), <span class="at">col=</span><span class="dv">2</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-2_7" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-2_7" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2_7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Chapter_2_files/figure-html/fig-2_7-1.png" class="img-fluid figure-img" width="672">
@@ -1004,7 +1012,7 @@ y_t=\begin{cases}
 <div aria-describedby="fig-2_7acf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-2_7acf" style="flex-basis: 100.0%;justify-content: flex-start;">
-<div id="fig-2_7acf-1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-2_7acf-1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-2_7acf-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Chapter_2_files/figure-html/fig-2_7acf-1.png" class="img-fluid figure-img" data-ref-parent="fig-2_7acf" width="672">
@@ -1018,7 +1026,7 @@ y_t=\begin{cases}
 </div>
 <div class="quarto-layout-row">
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-2_7acf" style="flex-basis: 100.0%;justify-content: flex-start;">
-<div id="fig-2_7acf-2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-2_7acf-2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-2_7acf-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Chapter_2_files/figure-html/fig-2_7acf-2.png" class="img-fluid figure-img" data-ref-parent="fig-2_7acf" width="672">
@@ -1045,7 +1053,7 @@ y_t=\begin{cases}
 <div aria-describedby="fig-2_7acf1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-2_7acf1" style="flex-basis: 100.0%;justify-content: flex-start;">
-<div id="fig-2_7acf1-1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-2_7acf1-1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-2_7acf1-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Chapter_2_files/figure-html/fig-2_7acf1-1.png" class="img-fluid figure-img" data-ref-parent="fig-2_7acf1" width="672">
@@ -1059,7 +1067,7 @@ y_t=\begin{cases}
 </div>
 <div class="quarto-layout-row">
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-2_7acf1" style="flex-basis: 100.0%;justify-content: flex-start;">
-<div id="fig-2_7acf1-2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-2_7acf1-2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-2_7acf1-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Chapter_2_files/figure-html/fig-2_7acf1-2.png" class="img-fluid figure-img" data-ref-parent="fig-2_7acf1" width="672">
@@ -1087,7 +1095,7 @@ y_t=\begin{cases}
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lag1.plot</span>(soi, <span class="dv">12</span>, <span class="at">col=</span><span class="fu">astsa.col</span>(<span class="dv">4</span>, .<span class="dv">3</span>), <span class="at">cex=</span><span class="fl">1.5</span>, <span class="at">pch=</span><span class="dv">20</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-2_8" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-2_8" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2_8-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Chapter_2_files/figure-html/fig-2_8-1.png" class="img-fluid figure-img" width="672">
@@ -1103,7 +1111,7 @@ y_t=\begin{cases}
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">acf1</span>(soi, <span class="at">main=</span><span class="st">"SOI"</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-2_8_1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-2_8_1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2_8_1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Chapter_2_files/figure-html/fig-2_8_1-1.png" class="img-fluid figure-img" width="672">
@@ -1119,7 +1127,7 @@ y_t=\begin{cases}
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lag2.plot</span>(soi, rec, <span class="dv">8</span>, <span class="at">col=</span><span class="fu">astsa.col</span>(<span class="dv">4</span>, .<span class="dv">3</span>), <span class="at">cex=</span><span class="fl">1.5</span>, <span class="at">pch=</span><span class="dv">20</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-2_9" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-2_9" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2_9-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Chapter_2_files/figure-html/fig-2_9-1.png" class="img-fluid figure-img" width="672">
@@ -1192,7 +1200,7 @@ F-statistic: 99.43 on 3 and 443 DF,  p-value: &lt; 2.2e-16</code></pre>
 <span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">lowess</span>(fish<span class="sc">$</span>soiL6, fish<span class="sc">$</span>rec), <span class="at">col =</span> <span class="dv">4</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
 <span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(fish<span class="sc">$</span>soiL6, <span class="fu">fitted</span>(fit), <span class="at">pch =</span> <span class="st">'+'</span>, <span class="at">col =</span> <span class="dv">6</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-2_10" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-2_10" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2_10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Chapter_2_files/figure-html/fig-2_10-1.png" class="img-fluid figure-img" width="672">
@@ -1214,7 +1222,7 @@ F-statistic: 99.43 on 3 and 443 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div aria-describedby="fig-2_10_1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-2_10_1" style="flex-basis: 100.0%;justify-content: flex-start;">
-<div id="fig-2_10_1-1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-2_10_1-1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-2_10_1-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Chapter_2_files/figure-html/fig-2_10_1-1.png" class="img-fluid figure-img" data-ref-parent="fig-2_10_1" width="672">
@@ -1228,7 +1236,7 @@ F-statistic: 99.43 on 3 and 443 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <div class="quarto-layout-row">
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-2_10_1" style="flex-basis: 100.0%;justify-content: flex-start;">
-<div id="fig-2_10_1-2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-2_10_1-2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-2_10_1-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Chapter_2_files/figure-html/fig-2_10_1-2.png" class="img-fluid figure-img" data-ref-parent="fig-2_10_1" width="672">
@@ -1297,7 +1305,7 @@ F-statistic: 21.14 on 2 and 498 DF,  p-value: 0.000000001538</code></pre>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(x, <span class="at">col=</span><span class="fu">astsa.col</span>(<span class="dv">4</span>,.<span class="dv">7</span>), <span class="at">ylab=</span><span class="fu">expression</span>(<span class="fu">hat</span>(x)))</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">fitted</span>(fit), <span class="at">col=</span><span class="dv">2</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-2_11" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-2_11" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2_11-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Chapter_2_files/figure-html/fig-2_11-1.png" class="img-fluid figure-img" width="672">
@@ -1309,6 +1317,242 @@ F-statistic: 21.14 on 2 and 498 DF,  p-value: 0.000000001538</code></pre>
 </div>
 </div>
 </div>
+</section>
+</section>
+<section id="时间序列中的平滑" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> 时间序列中的平滑</h1>
+<section id="移动平均平滑" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="移动平均平滑"><span class="header-section-number">3.1</span> 移动平均平滑</h2>
+<p><span class="math inline">\(x_t\)</span>为观测值，那么</p>
+<p><span id="eq-2_37"><span class="math display">\[
+m_t=\sum_{j=-k}^k a_jx_{t-j}
+\tag{12}\]</span></span></p>
+<p>是数据的对称移动平均值，其中<span class="math inline">\(a_j=a_{-j}\ge0\)</span>且<span class="math inline">\(\sum_{j=-k}^k a_j=1\)</span>。</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+提示
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><a href="#eq-2_37" class="quarto-xref">式&nbsp;12</a>可以理解为<span class="math inline">\(x_t\)</span>及其前<span class="math inline">\(k\)</span>个和后<span class="math inline">\(k\)</span>个数据加权后取平均，且加权值是对称的。</p>
+</div>
+</div>
+<p><a href="#fig-2_12" class="quarto-xref">图&nbsp;19</a>展示了月度SOI序列，使用<a href="#eq-2_37" class="quarto-xref">式&nbsp;12</a>进行平滑，权重为<span class="math inline">\(a_0=a_{\pm1}=\cdots=a_{\pm5}=1/12\)</span>，<span class="math inline">\(a_{\pm6}=1/24\)</span>，<span class="math inline">\(k=6\)</span>。这种方法消除了明显的年度温度循环，有助于强调厄尔尼诺循环。</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+提示
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(k=6\)</span>差不多涵盖了一年，<span class="math inline">\(a_{\pm6}=1/24\)</span>让一年边缘的数值更小，可以减缓年度变换的波动。</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>wgts <span class="ot">=</span> <span class="fu">c</span>(.<span class="dv">5</span>, <span class="fu">rep</span>(<span class="dv">1</span>,<span class="dv">11</span>), .<span class="dv">5</span>)<span class="sc">/</span><span class="dv">12</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>soif <span class="ot">=</span> stats<span class="sc">::</span><span class="fu">filter</span>(soi, <span class="at">sides=</span><span class="dv">2</span>, <span class="at">filter=</span>wgts)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(soi, <span class="at">col=</span><span class="dv">4</span>)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(soif, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">col=</span><span class="dv">6</span>)</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">fig =</span> <span class="fu">c</span>(.<span class="dv">75</span>, <span class="dv">1</span>, .<span class="dv">75</span>, <span class="dv">1</span>), <span class="at">new =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>nwgts <span class="ot">=</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">20</span>), wgts, <span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">20</span>))</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(nwgts, <span class="at">type=</span><span class="st">"l"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span>.<span class="dv">02</span>,.<span class="dv">1</span>), <span class="at">xaxt=</span><span class="st">'n'</span>, <span class="at">yaxt=</span><span class="st">'n'</span>, <span class="at">ann=</span><span class="cn">FALSE</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-2_12" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-2_12-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter_2_files/figure-html/fig-2_12-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2_12-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;19: SOI移动平均平滑
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><a href="#fig-2_12" class="quarto-xref">图&nbsp;19</a>右上角展示了{#eq-2_37}“boxcar”类型权重的形状(未按比例绘制)。</p>
+<p>这种处理方法可以突出厄尔尼诺现象，但看起来波动太大，可以使用正态分布权重来获得更平滑的拟合。</p>
+</section>
+<section id="核平滑kernel-smoothing" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="核平滑kernel-smoothing"><span class="header-section-number">3.2</span> 核平滑(Kernel Smoothing)</h2>
+<p>核平滑是一种移动平均平滑器，使用权重函数或核函数来平均观测值。</p>
+<p><span class="math display">\[
+m_t=\sum_{i=1}^nw_i(t)x_i
+\]</span></p>
+<p>其中</p>
+<p><span id="eq-2_39"><span class="math display">\[
+w_i(t)=K\left(\frac{t-i}{b}\right)\bigg/\sum_{j=1}^nK\left(\frac{t-j}{b}\right)
+\tag{13}\]</span></span></p>
+<p>是权重，<span class="math inline">\(K(\bullet)\)</span>是核函数。实例中我们常用的是正态核<span class="math inline">\(K(z)=\frac{1}{\sqrt{2\pi}}\exp(-z^2/2)\)</span>。</p>
+<p><code>R</code>中可以使用<code>ksmooth</code>函数来实现核平滑。</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+提示
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ksmooth</span>(x,  <span class="co"># 通常是时间</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>        y,  <span class="co"># 值</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">kernel =</span> <span class="fu">c</span>(<span class="st">"box"</span>, <span class="st">"normal"</span>),  <span class="co"># 核函数的类型</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>        bandwidth,  <span class="co"># 带宽</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>        range.x,  <span class="co"># 自变量的取值范围</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">n.points =</span> <span class="dv">100</span>)  <span class="co"># 输出的平滑曲线上的点的数量</span></span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<p>带宽是<a href="#eq-2_39" class="quarto-xref">式&nbsp;13</a>中的<span class="math inline">\(b\)</span>，其作用是对核进行缩放，使四分位数为0.25*带宽，带宽越大，平滑效果越强，趋势越明显，但细节可能被忽略；带宽越小，平滑程度越弱，噪声保留得更多。标准正态分布的四分位数约为<span class="math inline">\(\pm0.674\)</span>。</p>
+<p><a href="#fig-2_13" class="quarto-xref">图&nbsp;20</a>展示了<span class="math inline">\(b=1\)</span>对应一年的平滑。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(soi, <span class="at">col=</span><span class="dv">4</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">ksmooth</span>(<span class="fu">time</span>(soi), soi, <span class="st">"normal"</span>, <span class="at">bandwidth=</span><span class="dv">1</span>), <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">col=</span><span class="dv">6</span>)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">fig =</span> <span class="fu">c</span>(.<span class="dv">75</span>, <span class="dv">1</span>, .<span class="dv">75</span>, <span class="dv">1</span>), <span class="at">new =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(dnorm, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>,  <span class="at">xaxt=</span><span class="st">'n'</span>, <span class="at">yaxt=</span><span class="st">'n'</span>, <span class="at">ann=</span><span class="cn">FALSE</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-2_13" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-2_13-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter_2_files/figure-html/fig-2_13-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2_13-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;20: SOI核平滑
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="lowess" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="lowess"><span class="header-section-number">3.3</span> lowess</h2>
+<p>平滑时间图的另一种方法是最近邻回归(nearest neighbor regression)。简单来说<span class="math inline">\(k\)</span>-最近邻回归就是使用<span class="math inline">\(\{x_{t-k/2},\ \cdots,\ x_t,\ \cdots,\ x_{t+k/2}\}\)</span>进行回归来预测<span class="math inline">\(x_t\)</span>，然后设置<span class="math inline">\(m_t=\hat x_t\)</span>。</p>
+<p>lowess是一种很复杂的平滑方法，但基本思想类似最近邻回归。lowess通过局部加权回归拟合每个数据点的邻域。在每个点周围选择一定比例的相邻点，给这些点赋予权重，离中心点越近的点权重越大，离得越远的点权重越小。然后在该局部范围内拟合一个线性回归模型，并用这个局部模型预测当前点的平滑值。</p>
+<p><code>R</code>中可以使用<code>lowess</code>函数来实现核平滑。</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+提示
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lowess</span>(x,</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>       y,</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">f =</span> <span class="dv">2</span> <span class="sc">/</span> <span class="dv">3</span>,  <span class="co"># 平滑参数，控制平滑的程度。</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">iter =</span> <span class="dv">3</span>,  <span class="co"># 迭代次数，用于减少异常值的影响</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">delta =</span> <span class="fl">0.01</span> <span class="sc">*</span> <span class="fu">diff</span>(<span class="fu">range</span>(x)))  <span class="co"># 一个用于减少计算量的参数，但对结果的精确度影响很小</span></span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>f值表示选取周围占整体数据比重多少的值进行估计。</p>
+<ul>
+<li><p>较大的f值会使用更多的邻域点，生成较为平滑的曲线，适合总体趋势比较平缓的数据。</p></li>
+<li><p>较小的f值会使用更少的邻域点，生成较为敏感的曲线，更好地捕捉局部细节和急剧变化，但容易受到噪声的影响。</p></li>
+</ul>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">trend</span>(soi, <span class="at">lowess=</span><span class="cn">TRUE</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">lowess</span>(soi, <span class="at">f=</span>.<span class="dv">05</span>), <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">col=</span><span class="dv">6</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-2_14" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-2_14-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter_2_files/figure-html/fig-2_14-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2_14-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;21: SOI局部加权散点图平滑(lowess)
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><a href="#fig-2_14" class="quarto-xref">图&nbsp;21</a>中，较为平缓的线是<span class="math inline">\(f=2/3\)</span>默认值时的情况，较为曲折的线是<span class="math inline">\(f=0.05\)</span>，即使用5%数据获得估计值时的情况。前者可以观察到太平洋长期变暖，后者可以观察厄尔尼诺现象。</p>
+</section>
+<section id="平滑样条smoothing-splines" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="平滑样条smoothing-splines"><span class="header-section-number">3.4</span> 平滑样条(Smoothing Splines)</h2>
+<p>平滑样条的核心思想是通过最小化一个损失函数来找到一条平滑的曲线，该损失函数可以兼顾数据的拟合度和曲线的光滑性。</p>
+<p>使用平滑样条进行平滑，首先是使用一个和时间<span class="math inline">\(t\)</span>相关的三次项<span class="math inline">\(m_t\)</span>来估计<span class="math inline">\(x_t\)</span>。即：</p>
+<p><span class="math display">\[
+m_t=\beta_0+\beta_1t+\beta_2t^2+\beta_3t^3
+\]</span></p>
+<p>而<span class="math inline">\(x_t=m_t+w_t\)</span>。</p>
+<p>在此基础上，将时间划分进<span class="math inline">\(k\)</span>个区间，即<span class="math inline">\([t_0=1,t_1],\ [t_1+1,t_2], \cdots,\ [t_{k-1}+1,t_k=n]\)</span>。<span class="math inline">\(t_0,\ t_1,\  \cdots,\ t_k\)</span>被成为节点(knot)。在每个区间中进行上述的拟合，因为阶数为3，所以叫三次样条(cubic splines)。</p>
+<p>之后是构建损失函数：</p>
+<p><span class="math display">\[
+\sum_{t=1}^n[x_t-m_t]^2+\lambda\int(m_t'')^2\operatorname{d}t
+\]</span></p>
+<p>其中<span class="math inline">\(m_t\)</span>是每个<span class="math inline">\(t\)</span>组成的区间里的三次样条，<span class="math inline">\(\lambda&gt;0\)</span>。</p>
+<p>用开车来理解公式，<span class="math inline">\(m_t\)</span>就是车在时间<span class="math inline">\(t\)</span>处的距离，<span class="math inline">\(m_t''\)</span>就是瞬时加速度，<span class="math inline">\(\int(m_t'')^2\operatorname{d}t\)</span>反映了加速和减速的总量，越小说明速度越平缓，反映到函数上就是越平滑。<span class="math inline">\(\lambda\)</span>是加速和减速的总量的权重，主要进行调整的参数。</p>
+<p><span class="math inline">\(\sum_{t=1}^n[x_t-m_t]^2\)</span>部分表示拟合，<span class="math inline">\(\lambda\int(m_t'')^2\operatorname{d}t\)</span>部分表示平滑程度，两者之和最小就是在当前<span class="math inline">\(\lambda\)</span>下拟合和平滑程度整体的最优解。</p>
+<p><code>R</code>中可以使用<code>smooth.spline</code>函数来实现lowess。</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+提示
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">smooth.spline</span>(x, y, </span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">spar =</span> <span class="cn">NULL</span>,  <span class="co"># 平滑参数，控制平滑程度(不等于$\lambda$)</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">df =</span> <span class="cn">NULL</span>, ...)  <span class="co"># 自由度，控制平滑度的另一种方式，spar和df不能同时使用</span></span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>更多信息使用<code>?smooth.spline</code>查看。</p>
+</div>
+</div>
+<p><a href="#fig-2_15" class="quarto-xref">图&nbsp;22</a>中直线<code>spar</code>值为0.5，虚线<code>spar</code>值为1。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(soi)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">smooth.spline</span>(<span class="fu">time</span>(soi), soi, <span class="at">spar=</span><span class="fl">0.5</span>), <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">col=</span><span class="dv">4</span>)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">smooth.spline</span>(<span class="fu">time</span>(soi), soi, <span class="at">spar=</span> <span class="dv">1</span>), <span class="at">lty=</span><span class="dv">2</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">col=</span><span class="dv">2</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-2_15" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-2_15-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter_2_files/figure-html/fig-2_15-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2_15-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;22: SOI平滑样条
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="平滑一个序列作为另一个序列的函数" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="平滑一个序列作为另一个序列的函数"><span class="header-section-number">3.5</span> 平滑一个序列作为另一个序列的函数</h2>
+<p>使用<a href="#sec-1" class="quarto-xref">小节&nbsp;1.2.2</a>中的例子进行展示。<a href="#fig-2_16" class="quarto-xref">图&nbsp;23</a>是用lowess平滑的<span class="math inline">\(M_t\)</span>作为<span class="math inline">\(T_t\)</span>的函数。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tsplot</span>(tempr, cmort, <span class="at">type=</span><span class="st">"p"</span>, <span class="at">xlab=</span><span class="st">"Temperature"</span>, <span class="at">ylab=</span><span class="st">"Mortality"</span>, <span class="at">pch=</span><span class="dv">20</span>, <span class="at">col=</span><span class="dv">4</span>)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">lowess</span>(tempr, cmort), <span class="at">col=</span><span class="dv">6</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-2_16" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-2_16-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter_2_files/figure-html/fig-2_16-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2_16-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;23: lowess平滑后的死亡率作为温度的函数
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>可见在极端温度下死亡率会增高，且极端低温死亡率高于极端高温，最低死亡率出现在80-90℉之间。</p>
 
 
 
@@ -1358,18 +1602,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1401,7 +1634,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -1409,7 +1664,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
