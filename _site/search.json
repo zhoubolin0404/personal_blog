@@ -4,7 +4,7 @@
     "href": "posts/time_series_2/Chapter_2.html",
     "title": "时间序列分析：第二章",
     "section": "",
-    "text": "主要参考书籍为Shumway和Stoffer(2017)的Time Series Analysis and Its Applications: With R Examples。\n该书第五版正在制作，配套astsa包中的部分数据集会逐渐更新，所以后期也许会换成第五版内容。\n该内容为学习笔记，会很碎片化，同时参考了作者在github上给出的代码。\n在本章中，我们将介绍时间序列背景下的经典多元线性回归、模型选择、非平稳时间序列预处理(如趋势去除)的探索性数据分析、差分(differencing)和后移算子(backshift operator)的概念、方差稳定和时间序列的非参数平滑。"
+    "text": "重要\n\n\n\n第五版年底出版，目前暂停更新\n主要参考书籍为Shumway和Stoffer(2017)的Time Series Analysis and Its Applications: With R Examples。\n该书第五版正在制作，配套astsa包中的部分数据集会逐渐更新，所以后期也许会换成第五版内容。\n该内容为学习笔记，会很碎片化，同时参考了作者在github上给出的代码。\n在本章中，我们将介绍时间序列背景下的经典多元线性回归、模型选择、非平稳时间序列预处理(如趋势去除)的探索性数据分析、差分(differencing)和后移算子(backshift operator)的概念、方差稳定和时间序列的非参数平滑。"
   },
   {
     "objectID": "posts/time_series_2/Chapter_2.html#简单线性回归",
@@ -88,7 +88,7 @@
     "href": "posts/time_series/index.html",
     "title": "时间序列分析：第一章",
     "section": "",
-    "text": "主要参考书籍为Shumway和Stoffer(2017)的Time Series Analysis and Its Applications: With R Examples。\n该书第五版正在制作，配套astsa包中的部分数据集会逐渐更新，所以后期也许会换成第五版内容。\n该内容为学习笔记，会很碎片化，同时参考了作者在github上给出的代码。\n时间序列分析适用情境：\n两种不同但不一定互斥的时间序列分析方法："
+    "text": "重要\n\n\n\n第五版年底出版，目前暂停更新\n主要参考书籍为Shumway和Stoffer(2017)的Time Series Analysis and Its Applications: With R Examples。\n该书第五版正在制作，配套astsa包中的部分数据集会逐渐更新，所以后期也许会换成第五版内容。\n该内容为学习笔记，会很碎片化，同时参考了作者在github上给出的代码。\n时间序列分析适用情境：\n两种不同但不一定互斥的时间序列分析方法："
   },
   {
     "objectID": "posts/time_series/index.html#强生公司季度每股收益",
