@@ -277,63 +277,70 @@
     "href": "index.html",
     "title": "周博霖",
     "section": "",
-    "text": "时间序列分析：第二章\n\n\n时间序列回归和探索性数据分析\n\n\n\n学习笔记\n\n\n统计方法\n\n\n时间序列分析\n\n\n\n\n\n\n\n\n\nSep 26, 2024\n\n\n周博霖\n\n\n\n\n\n\n\n\n\n\n\n\n时间序列分析：第一章习题答案\n\n\n\n\n\n\n学习笔记\n\n\n统计方法\n\n\n时间序列分析\n\n\n\n\n\n\n\n\n\nSep 20, 2024\n\n\n周博霖\n\n\n\n\n\n\n\n\n\n\n\n\nSDM-PSI Reference Manual(中文翻译)\n\n\n\n\n\n\nmeta\n\n\nSDM-PSI\n\n\n\n\n\n\n\n\n\nSep 9, 2024\n\n\n周博霖\n\n\n\n\n\n\n\n\n\n\n\n\n时间序列分析：第一章\n\n\n时间序列的特征\n\n\n\n学习笔记\n\n\n统计方法\n\n\n时间序列分析\n\n\n\n\n\n\n\n\n\nSep 6, 2024\n\n\n周博霖\n\n\n\n\n\n\n\n\n\n\n\n\n心理语言学\n\n\n\n\n\n\n学习笔记\n\n\n心理语言学\n\n\n\n\n\n\n\n\n\nAug 9, 2024\n\n\n周博霖\n\n\n\n\n\n\n无匹配项"
+    "text": "时间序列分析：第二章\n\n\n时间序列回归和探索性数据分析\n\n\n\n学习笔记\n\n\n统计方法\n\n\n时间序列分析\n\n\n\n\n\n\n\n\n\nSep 26, 2024\n\n\n周博霖\n\n\n\n\n\n\n\n\n\n\n\n\n时间序列分析：第一章习题答案\n\n\n\n\n\n\n学习笔记\n\n\n统计方法\n\n\n时间序列分析\n\n\n\n\n\n\n\n\n\nSep 20, 2024\n\n\n周博霖\n\n\n\n\n\n\n\n\n\n\n\n\nSDM-PSI Reference Manual(中文翻译)——施工中\n\n\n\n\n\n\nmeta\n\n\nSDM-PSI\n\n\n\n\n\n\n\n\n\nSep 9, 2024\n\n\n周博霖\n\n\n\n\n\n\n\n\n\n\n\n\n时间序列分析：第一章\n\n\n时间序列的特征\n\n\n\n学习笔记\n\n\n统计方法\n\n\n时间序列分析\n\n\n\n\n\n\n\n\n\nSep 6, 2024\n\n\n周博霖\n\n\n\n\n\n\n\n\n\n\n\n\n心理语言学\n\n\n\n\n\n\n学习笔记\n\n\n心理语言学\n\n\n\n\n\n\n\n\n\nAug 9, 2024\n\n\n周博霖\n\n\n\n\n\n\n无匹配项"
   },
   {
     "objectID": "posts/SDM-PSI/SDM-PSI.html",
     "href": "posts/SDM-PSI/SDM-PSI.html",
-    "title": "SDM-PSI Reference Manual(中文翻译)",
+    "title": "SDM-PSI Reference Manual(中文翻译)——施工中",
     "section": "",
     "text": "SDM-PSI参考手册"
   },
   {
-    "objectID": "posts/SDM-PSI/SDM-PSI.html#介绍-1",
-    "href": "posts/SDM-PSI/SDM-PSI.html#介绍-1",
-    "title": "SDM-PSI Reference Manual(中文翻译)",
-    "section": "1.1 介绍",
-    "text": "1.1 介绍\nSeed-based d Mapping (以前称为Signed Differential Mapping) with Permutation of Subject Images (即SDM-PSI) 是一种使用神经成像技术 (如fMRI、VBM、DTI或PET) 对脑活动或结构差异进行元分析研究的统计技术。它也可以指由SDM项目组开发的一款用于进行这种元分析的特定软件。"
-  },
-  {
     "objectID": "posts/SDM-PSI/SDM-PSI.html#方法概述",
     "href": "posts/SDM-PSI/SDM-PSI.html#方法概述",
-    "title": "SDM-PSI Reference Manual(中文翻译)",
-    "section": "1.2 方法概述",
-    "text": "1.2 方法概述\nSDM采用并结合了以往方法 (如ALE或MKDA) 的多种优良特性，并引入了一系列改进和新特性。为避免在同一个体素中同时出现正负结果 (这是以前方法中常见的问题) ，引入了一项新特性，即在同一张图中表示正差异和负差异，从而获得了signed differential map (“SDM”) 。在2.11版本中引入的另一项重要改进是效应量的使用 (effect-size SDM或“ES-SDM”) ，这使得可以将报告的峰值坐标 (peak coordinates) 与统计参数图 (statistical parametric maps) 相结合，从而进行更全面和更精确的元分析。另一项改进是在4.11版本中引入的，使用各向异性内核 (anisotropic kernels) 在重建效应量图 (effect size images) 时考虑空间协方差的各向异性。\n在6.11版本中，实施了这一方法的新一代技术 (结合Permutation of Subject Images的SDM，即SDM-PSI) 。SDM-PSI的一些新特性包括：\n\n基于MetaNSUE算法的 (几乎) 无偏效应量估计(Albajes-Eizagirre et al., 2019)。\n使用常见的置换检验进行多重比较的Familywise校正，即permuting subject images (PSI) 。需要注意的是，以前的方法使用的是空间收敛性检验 (tests for spatial convergence) ，这些检验依赖于空间假设，而这些假设可能不成立，并且在存在多重效应时统计功效较低(Albajes-Eizagirre & Radua, 2018)。\nFreedman-Lane-based permutation，因其最佳的统计特性而选用(Winkler et al., 2014)。\nThreshold-free cluster enhancement (TFCE) ，在模拟研究中，这种统计方法既不过于保守，也不过于宽松 (而基于体素的统计过于严格，基于簇的统计则过于宽松) (Smith & Nichols, 2009)。\n\n该方法分为五步。首先，根据SDM的纳入标准，选择簇峰的坐标 (如：患者与健康对照者之间差异最大的体素) 以及统计图 (如果有的话) 。其次，对于只有峰坐标的研究，估计可能的效应量图的上下限。第三，使用MetaNSUE来估计最可能的效应量及其标准误，并通过在这些估计值中加入噪声，在上下限范围内生成多个插补。第四，分别对每个插补的数据集进行元分析，然后使用Rubin’s rules将这些插补的元分析数据集合并。最后，重建主体图像，以便运行标准置换检验 (standard permutation test) ，在每一组置换的图像上重复该过程，并保存最终图像的最大统计值；这些最大值的分布用于对多重比较进行family-wise误差校正。"
+    "title": "SDM-PSI Reference Manual(中文翻译)——施工中",
+    "section": "1.1 方法概述",
+    "text": "1.1 方法概述\nSDM采用并结合了以往方法 (如ALE或MKDA) 的多种优良特性，并引入了一系列改进和新特性。为避免在同一个体素中同时出现正负结果 (这是以前方法中常见的问题) ，引入了一项新特性，即在同一张图中表示正差异和负差异，从而获得了signed differential map (“SDM”) 。在2.11版本中引入的另一项重要改进是效应量的使用 (effect-size SDM或“ES-SDM”) ，这使得可以将报告的峰值坐标 (peak coordinates) 与统计参数图 (statistical parametric maps) 相结合，从而进行更全面和更精确的元分析。另一项改进是在4.11版本中引入的，使用各向异性内核 (anisotropic kernels) 在重建效应量图 (effect size images) 时考虑空间协方差的各向异性。\n在6.11版本中，实施了这一方法的新一代技术 (结合Permutation of Subject Images的SDM，即SDM-PSI) 。SDM-PSI的一些新特性包括：\n\n基于MetaNSUE算法的 (几乎) 无偏效应量估计(Albajes-Eizagirre, Solanes, & Radua, 2019)。\n使用常见的置换检验进行多重比较的Familywise校正，即permuting subject images (PSI) 。需要注意的是，以前的方法使用的是空间收敛性检验 (tests for spatial convergence) ，这些检验依赖于空间假设，而这些假设可能不成立，并且在存在多重效应时统计功效较低(Albajes-Eizagirre & Radua, 2018)。\nFreedman-Lane-based permutation，因其最佳的统计特性而选用(Winkler et al., 2014)。\nThreshold-free cluster enhancement (TFCE) ，在模拟研究中，这种统计方法既不过于保守，也不过于宽松 (而基于体素的统计过于严格，基于簇的统计则过于宽松) (Smith & Nichols, 2009)。\n\n该方法分为五步。首先，根据SDM的纳入标准，选择簇峰的坐标 (如：患者与健康对照者之间差异最大的体素) 以及统计图 (如果有的话) 。其次，对于只有峰坐标的研究，估计可能的效应量图的上下限。第三，使用MetaNSUE来估计最可能的效应量及其标准误，并通过在这些估计值中加入噪声，在上下限范围内生成多个插补。第四，分别对每个插补的数据集进行元分析，然后使用Rubin’s rules将这些插补的元分析数据集合并。最后，重建主体图像，以便运行标准置换检验 (standard permutation test) ，在每一组置换的图像上重复该过程，并保存最终图像的最大统计值；这些最大值的分布用于对多重比较进行family-wise误差校正。"
   },
   {
     "objectID": "posts/SDM-PSI/SDM-PSI.html#峰值坐标的包含准则",
     "href": "posts/SDM-PSI/SDM-PSI.html#峰值坐标的包含准则",
-    "title": "SDM-PSI Reference Manual(中文翻译)",
-    "section": "1.3 峰值坐标的包含准则",
-    "text": "1.3 峰值坐标的包含准则\n在神经影像学研究中，某些大脑区域 (如先验的感兴趣的区域) 常常会使用比其他区域更宽松的阈值标准进行分析。这种做法并不罕见。然而，如果在元分析中包含了这种研究内存在区域阈值差异的研究，那么结果可能会偏向这些区域，因为这些区域可能仅仅因为研究者在其上应用了更宽松的阈值而更容易被报告出来。为了解决这个问题，SDM引入了一种坐标选择标准，可以概括为：\n“尽管不同的研究可能使用不同的阈值，但在纳入的每一个研究内，应该确保整个大脑使用相同的阈值”。"
+    "title": "SDM-PSI Reference Manual(中文翻译)——施工中",
+    "section": "1.2 峰值坐标的包含准则",
+    "text": "1.2 峰值坐标的包含准则\n在神经影像学研究中，某些大脑区域 (如先验的感兴趣的区域) 常常会使用比其他区域更宽松的阈值标准进行分析。这种做法并不罕见。然而，如果在元分析中包含了这种研究内存在区域阈值差异的研究，那么结果可能会偏向这些区域，因为这些区域可能仅仅因为研究者在其上应用了更宽松的阈值而更容易被报告出来。为了解决这个问题，SDM引入了一种坐标选择标准，可以概括为：\n“尽管不同的研究可能使用不同的阈值，但在纳入的每一个研究内，应该确保整个大脑使用相同的阈值”。"
   },
   {
     "objectID": "posts/SDM-PSI/SDM-PSI.html#研究的预处理",
     "href": "posts/SDM-PSI/SDM-PSI.html#研究的预处理",
-    "title": "SDM-PSI Reference Manual(中文翻译)",
-    "section": "1.4 研究的预处理",
-    "text": "1.4 研究的预处理\n统计参数图的预处理相对简单，它们会被直接配准到SDM模板上，并将\\(t\\)值转换为效应量。对于仅有峰值坐标的研究，则为每个研究在特定的掩膜 (mask) 内 (如灰质体积、皮层厚度、白质、TBSS、脑脊液等) 创建可能效应量的上下阈图。这是通过各向异性非归一化的高斯核 (anisotropic un-normalized Gaussian Kernel) 来实现的，依据特定的灰质、白质、分数各向异性或脑脊液相关模板，使得与峰值坐标相关性更高的体素具有与峰值相似的效应量。在每个研究内，由接近各向异性核得到的值通过平方距离加权平均进行组合。"
+    "title": "SDM-PSI Reference Manual(中文翻译)——施工中",
+    "section": "1.3 研究的预处理",
+    "text": "1.3 研究的预处理\n统计参数图的预处理相对简单，它们会被直接配准到SDM模板上，并将\\(t\\)值转换为效应量。对于仅有峰值坐标的研究，则为每个研究在特定的掩膜 (mask) 内 (如灰质体积、皮层厚度、白质、TBSS、脑脊液等) 创建可能效应量的上下阈图。这是通过各向异性非归一化的高斯核 (anisotropic un-normalized Gaussian Kernel) 来实现的，依据特定的灰质、白质、分数各向异性或脑脊液相关模板，使得与峰值坐标相关性更高的体素具有与峰值相似的效应量。在每个研究内，由接近各向异性核得到的值通过平方距离加权平均进行组合。"
   },
   {
     "objectID": "posts/SDM-PSI/SDM-PSI.html#统计比较",
     "href": "posts/SDM-PSI/SDM-PSI.html#统计比较",
-    "title": "SDM-PSI Reference Manual(中文翻译)",
-    "section": "1.5 统计比较",
-    "text": "1.5 统计比较\nSDM提供了几种不同的统计分析方法，以通过敏感性和异质性分析来补充主要结果。\n\n主要的统计分析是均值分析，其过程是计算不同研究中体素值的平均值。该平均值会通过方差的倒数进行加权，并考虑研究间 (inter-study) 的异质性。\n亚组分析是应用于研究组的均值分析，以便研究异质性。\n线性模型分析 (如元回归) 是均值分析的广义形式，允许组间比较和潜在混杂因素的研究。\n\n这些分析的统计显著性通过未经校正的\\(p\\)值或FWER校正的\\(p\\)值来评估。还可以提取原子标签 (atomical label) 或坐标中的值以进行进一步处理或图形化表示。"
+    "title": "SDM-PSI Reference Manual(中文翻译)——施工中",
+    "section": "1.4 统计比较",
+    "text": "1.4 统计比较\nSDM提供了几种不同的统计分析方法，以通过敏感性和异质性分析来补充主要结果。\n\n主要的统计分析是均值分析，其过程是计算不同研究中体素值的平均值。该平均值会通过方差的倒数进行加权，并考虑研究间 (inter-study) 的异质性。\n亚组分析是应用于研究组的均值分析，以便研究异质性。\n线性模型分析 (如元回归) 是均值分析的广义形式，允许组间比较和潜在混杂因素的研究。\n\n这些分析的统计显著性通过未经校正的\\(p\\)值或FWER校正的\\(p\\)值来评估。还可以提取原子标签 (atomical label) 或坐标中的值以进行进一步处理或图形化表示。"
   },
   {
     "objectID": "posts/SDM-PSI/SDM-PSI.html#sdm软件",
     "href": "posts/SDM-PSI/SDM-PSI.html#sdm软件",
-    "title": "SDM-PSI Reference Manual(中文翻译)",
-    "section": "1.6 SDM软件",
-    "text": "1.6 SDM软件\nSDM是由SDM项目组开发的软件，用于帮助基于体素的神经成像数据的元分析。它作为免费软件发布，包括命令行和图形界面。"
+    "title": "SDM-PSI Reference Manual(中文翻译)——施工中",
+    "section": "1.5 SDM软件",
+    "text": "1.5 SDM软件\nSDM是由SDM项目组开发的软件，用于帮助基于体素的神经成像数据的元分析。它作为免费软件发布，包括命令行和图形界面。"
   },
   {
     "objectID": "posts/SDM-PSI/SDM-PSI.html#sec-Preparing_the_folder",
     "href": "posts/SDM-PSI/SDM-PSI.html#sec-Preparing_the_folder",
-    "title": "SDM-PSI Reference Manual(中文翻译)",
+    "title": "SDM-PSI Reference Manual(中文翻译)——施工中",
     "section": "2.1 准备文件夹",
-    "text": "2.1 准备文件夹\nSDM软件假设元分析所需的所有文件都在同一个文件夹中。\n\n2.1.1 图像文件\n如果有群体水平 (group-level) 的统计参数图可用，强烈建议使用这些图像文件而不是峰值坐标。这些图像文件必须是NIfTI格式的，并且可以通过SDM的“Convert images”功能轻松适配。注意从其他软件转换的NIfTI文件有时可能会失效，例如，可能导致空白图像或翻转图像。因此，我们强烈建议使用脑图查看器 (如MRICron、FSLView或SPM Display) 进行以下检查：\n\n转换后的文件是否为正确的大脑图像。\n左右两侧是否未翻转。\n预处理的峰值是否与文献中报告的峰值相似。\n\n如果转换失败，你可以尝试首先将原始NIfTI文件复制到元分析目录中，然后用MRICron打开并保存该副本，最后用SDM进行转换。这似乎能修复SDM无法正确转换文件的小问题。\n如果左右两侧翻转，您可以尝试使用FSL (“fslswapdim [filename] -x y z [filename]”) 、MRICro (“Save as…”: “Flip Left/Right”) 或SPM (“Display”: “resize {x} = -1”) 修复问题。\n\n\n2.1.2 文本文件\n每项研究的峰值坐标必须写入文本文件，文件名应为研究名称加上以下扩展名之一：\n\n.spm_mni.txt：SPM坐标在MNI空间中(如Walker2004.spm_mni.txt)；\n.spm_brett.txt：使用Brett转换将SPM坐标从MNI空间转换到Talairach空间(如Brown2009.spm_brett.txt)；\n.spm_tal.txt：SPM坐标在正确的Talairach空间中(如Williams1999.tal.txt)。这种情况很少见或仅用于特殊分析，请务必确认是否应使用.spm_mni.txt或.spm_brett.txt；\n.fsl_mni.txt：FSL坐标在MNI空间中(如Walker2004.spm_mni.txt)；\n.fsl_brett.txt：使用Brett转换将FSL坐标从MNI空间转换到Talairach空间(如Taylor2002.spm_brett.txt)；\n.fsl_tal.txt：FSL坐标在正确的Talairach空间中(如Davies2013.tal.txt)。这种情况很少见或仅用于特殊分析，请务必确认是否应使用.fsl_mni.txt或.fsl_brett.txt；\n.other_mni.txt：非FSL坐标和SPM坐标在MNI空间中(如Hall2004.spm_mni.txt)；\n.other_brett.txt：使用Brett转换将非FSL坐标和SPM坐标从MNI空间转换到Talairach空间(如Evans2005.other_brett.txt)；\n.other_tal.txt：非FSL坐标和SPM坐标在正确的Talairach空间中(如Wright2004.tal.txt)。\n\n\n\n\n\n\n\n提示\n\n\n\n这部分完全按照原文翻译的，命名的示例应该是有问题的。\n\n\n每个坐标必须按照以下格式写成一行：x,y,z,t，其中t要么是正的t值或’p’(正差异，如激活，对照组&gt;控制组)，要么是负的t值或’n’(负差异，如去激活，对照组&lt;控制组)。示例如下：\n-8, 46, 3, 3.42\n12, 2, 2, -4.43\n18, 22, 4, n\n你可以通过在线的Convert peaks utility，轻松将p值和z分数转换为t值。\n\n\n2.1.3 指定文件夹\n点击[Change meta-analysis]\n或\n在Meta-analyses菜单中选择[Change meta-analysis]"
+    "text": "2.1 准备文件夹\nSDM软件假设元分析所需的所有文件都在同一个文件夹中。\n\n2.1.1 图像文件\n如果有群体水平 (group-level) 的统计参数图可用，强烈建议使用这些图像文件而不是峰值坐标。这些图像文件必须是NIfTI格式的，并且可以通过SDM的“Convert images”功能轻松适配。注意从其他软件转换的NIfTI文件有时可能会失效，例如，可能导致空白图像或翻转图像。因此，我们强烈建议使用脑图查看器 (如MRICron、FSLView或SPM Display) 进行以下检查：\n\n转换后的文件是否为正确的大脑图像。\n左右两侧是否未翻转。\n预处理的峰值是否与文献中报告的峰值相似。\n\n如果转换失败，你可以尝试首先将原始NIfTI文件复制到元分析目录中，然后用MRICron打开并保存该副本，最后用SDM进行转换。这似乎能修复SDM无法正确转换文件的小问题。\n如果左右两侧翻转，您可以尝试使用FSL (“fslswapdim [filename] -x y z [filename]”) 、MRICro (“Save as…”: “Flip Left/Right”) 或SPM (“Display”: “resize {x} = -1”) 修复问题。\n\n\n2.1.2 文本文件\n每项研究的峰值坐标必须写入文本文件，文件名应为研究名称加上以下扩展名之一：\n\n.spm_mni.txt：SPM坐标在MNI空间中 (如Walker2004.spm_mni.txt)；\n.spm_brett.txt：使用Brett转换将SPM坐标从MNI空间转换到Talairach空间 (如Brown2009.spm_brett.txt)；\n.spm_tal.txt：SPM坐标在正确的Talairach空间中 (如Williams1999.tal.txt)。这种情况很少见或仅用于特殊分析，请务必确认是否应使用.spm_mni.txt或.spm_brett.txt；\n.fsl_mni.txt：FSL坐标在MNI空间中 (如Walker2004.spm_mni.txt)；\n.fsl_brett.txt：使用Brett转换将FSL坐标从MNI空间转换到Talairach空间 (如Taylor2002.spm_brett.txt)；\n.fsl_tal.txt：FSL坐标在正确的Talairach空间中 (如Davies2013.tal.txt)。这种情况很少见或仅用于特殊分析，请务必确认是否应使用.fsl_mni.txt或.fsl_brett.txt；\n.other_mni.txt：非FSL坐标和SPM坐标在MNI空间中 (如Hall2004.spm_mni.txt)；\n.other_brett.txt：使用Brett转换将非FSL坐标和SPM坐标从MNI空间转换到Talairach空间 (如Evans2005.other_brett.txt)；\n.other_tal.txt：非FSL坐标和SPM坐标在正确的Talairach空间中 (如Wright2004.tal.txt)。\n\n\n\n\n\n\n\n提示\n\n\n\n这部分完全按照原文翻译的，命名的示例应该是有问题的。\n\n\n每个坐标必须按照以下格式写成一行：x,y,z,t，其中t要么是正的t值或’p’(正差异，如激活，对照组&gt;控制组)，要么是负的t值或’n’(负差异，如去激活，对照组&lt;控制组)。示例如下：\n-8, 46, 3, 3.42\n12, 2, 2, -4.43\n18, 22, 4, n\n你可以通过在线的Convert peaks utility，轻松将p值和z分数转换为t值。\n\n\n2.1.3 指定文件夹\n点击Change meta-analysis\n或\n在Meta-analyses菜单中选择Change meta-analysis"
+  },
+  {
+    "objectID": "posts/SDM-PSI/SDM-PSI.html#sec-Creation_of_the_SDM_table",
+    "href": "posts/SDM-PSI/SDM-PSI.html#sec-Creation_of_the_SDM_table",
+    "title": "SDM-PSI Reference Manual(中文翻译)——施工中",
+    "section": "2.2 创建SDM表",
+    "text": "2.2 创建SDM表\n纳入元分析的研究的名称、患者组的样本量和使用的阈值，必须在SDM表的列中指定。你还可以指定其他变量，这些变量将在后续计算中作为指标、回归量或筛选条件。\n\n2.2.1 创建或编辑表\n点击SDM table editor按钮\n或\n在Meta-analyses菜单中选择SDM table editor打开下面内容：\n\n\n\n2.2.2 表的主要列\n\nn1 (必须有)：主要样本的大小，如每个研究中患者人数。\nn2 (仅适用于两样本对比)：对照样本的大小，如每个研究中健康控制组人数。\nt_thr：研究中用于threshold maps的值。\nmean1和sd1 (仅适用于全局过程)：主要样本中全局测量的平均值 (和标准差)，如患者的全局灰质。\nmean2和sd2 (仅适用于两样本对比时的全局过程)：对照样本中全局测量的平均值 (和标准差)。\n\n\n\n2.2.3 备选方案\nSDM表保存在一个名为sdm_table.txt的文本文件中，因此你可以使用任何文本编辑器或如Microsoft Excel一样的其他软件创建或修改它。这种情况下，建议之后使用SDM软件中的表格编辑器打开新表格以确保该表格被正确识别。"
+  },
+  {
+    "objectID": "posts/SDM-PSI/SDM-PSI.html#sec-Preprocessing",
+    "href": "posts/SDM-PSI/SDM-PSI.html#sec-Preprocessing",
+    "title": "SDM-PSI Reference Manual(中文翻译)——施工中",
+    "section": "2.3 预处理",
+    "text": "2.3 预处理\n这是准备工作的最后一步。对于峰值坐标研究，需要计算每个体素可能效应量的下界和上界图像。对于原始图像可用的研究，当需要时，唯一需要执行的步骤是将原始图像转换为效应量图像。\n\n2.3.1 对研究进行预处理\n点击Preprocessing\n或\n在Meta-analyses菜单中选择Preprocessing打开下面内容：\n\n\n\n2.3.2 注意事项\n请注意，这将删除此文件夹中之前的元分析。\n每项研究的最大值和最小值将被写入一个名为pp.htm的文本文件(注意：这些值可能不是绝对的最大值和最小值)，而重建的图像将分别保存为一组名为pp_(study).nii.gz的NIfTI文件，如pp_Smith2000.nii.gz。这些文件对于检查坐标是否被正确读取非常有用。\nSDM软件中包含了几种尺寸为 ?mm X ?mm X ?mm (其中?是可用的体素大小，目前只有2mm X 2mm X 2mm) 的以MNI为基础的掩膜和相关模板。这些掩膜和模板包括：灰质 (也适用于fMRI和PET)、白质、分数各向异性、脑脊液、大脑及颅内结构。如果需要其他掩膜或模板，请与我们联系。\n\n\n2.3.3 命令行和批量处理\npp correlation_template,degree_of_anisotropy,isotropic_fwhm,mask,voxel_size\n示例：\npp fractional_anisotropy,0.8,20,white_matter,2\n\n\n\n\n\n\n提示\n\n\n\npp 相关样本,各向异性程度,各向同性全宽半高,体素大小\n\n\n\n\n2.3.4 参考文献\n当前方法：Albajes-Eizagirre, Solanes, Vieta, et al. (2019)\n效应量和方差：Radua et al. (2012)\n各向异性内核(anisotropic kernels)：Radua et al. (2014)\n白质模板：Radua et al. (2011)\nTBSS预处理：Peters et al. (2012)\nFreeSurfer模板：Li et al. (2020)"
   },
   {
     "objectID": "posts/time_series_1_pro/Chapter_1_sol.html",
